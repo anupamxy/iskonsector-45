@@ -164,7 +164,7 @@ export default function Home() {
           <img
             src={images.krishnaArt}
             alt="Sri Krishna"
-            className="aspect-[4/3] w-full rounded-[var(--radius-card)] object-cover shadow-[var(--shadow-card)]"
+            className="aspect-[4/3] w-full rounded-[var(--radius-card)] object-cover object-[50%_20%] shadow-[var(--shadow-card)]"
           />
           <div>
             <p className="text-eyebrow mb-3 text-primary">Our Story</p>

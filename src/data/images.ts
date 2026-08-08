@@ -3,7 +3,7 @@ export const images = {
   prabhupada: "/images/leadership/prabhupada.png",
   gopalKrishnaGoswami: "/images/leadership/guru.jpg",
   guruPrasadSwami: "/images/leadership/guru-prasad-swami.jpg",
-  krishnaArt: "/images/decorative/krishna-stock.jpg",
+  krishnaArt: "/images/decorative/krishna-deity.jpg",
   krishna1: "/images/decorative/krishna1.jpg",
   paymentQr: "/images/donation/payment-qr.jpg",
   home: {
@@ -35,6 +35,12 @@ export const images = {
   iyfIcon: "/images/icons/iyf-icon.png",
   lifeMembershipIcon: "/images/icons/life-membership-icon.png",
   radhashtamiBanner: "/images/radhashtami/banner.jpg",
+  radhashtamiCarousel: [
+    "/images/radhashtami/carousel-1.jpg",
+    "/images/radhashtami/carousel-2.jpg",
+    "/images/radhashtami/carousel-3.jpg",
+    "/images/radhashtami/carousel-4.jpg",
+  ],
   jhulanYatraBanner: "/images/jhulan-yatra/banner.jpg",
   balramaPurnimaBanner: "/images/balrama-purnima/banner.jpg",
   prabhupadaAppearanceBanner: "/images/prabhupada-appearance/banner.jpg",
@@ -48,6 +54,12 @@ export const images = {
     fruitsBasket: "/images/janmashtami/fruits-basket.jpg",
     aartiThali: "/images/janmashtami/aarti-thali.jpg",
     abhishekam: "/images/janmashtami/abhishekam.jpg",
+    carousel: [
+      "/images/janmashtami/carousel-1.jpg",
+      "/images/janmashtami/carousel-2.jpg",
+      "/images/janmashtami/carousel-3.jpg",
+      "/images/janmashtami/carousel-4.jpg",
+    ],
   },
   ramNavamiBanner: "/images/ramnavami/banner.jpg",
   rathYatra: {

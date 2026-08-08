@@ -16,6 +16,8 @@ export default function FestivalDetail() {
     return <Navigate to="/festivals" replace />;
   }
 
+  const hasHeroMedia = Boolean(festival.videoId || festival.heroImages?.length);
+
   const dateLabel = festival.date
     ? festival.endDate
       ? `${new Date(festival.date).toLocaleDateString("en-IN", { day: "numeric" })} – ${new Date(
@@ -36,6 +38,7 @@ export default function FestivalDetail() {
         title={festival.heading}
         subtitle={festival.tagline}
         videoId={festival.videoId}
+        images={festival.heroImages}
       >
         {(dateLabel || festival.timeLabel) && (
           <div className="mt-6 flex flex-wrap gap-3">
@@ -53,7 +56,7 @@ export default function FestivalDetail() {
         )}
       </PageHero>
 
-      {festival.schedule && festival.videoId && (
+      {festival.schedule && hasHeroMedia && (
         <section className="section-pad bg-cream-alt">
           <div className="container-page">
             <SectionHeading eyebrow="Event Day" title="Celebration Schedule" />
@@ -64,7 +67,7 @@ export default function FestivalDetail() {
         </section>
       )}
 
-      {!festival.videoId && festival.bannerImage && (
+      {!hasHeroMedia && festival.bannerImage && (
         <div className="container-page">
           <img
             src={festival.bannerImage}
@@ -147,7 +150,7 @@ export default function FestivalDetail() {
         </section>
       )}
 
-      {festival.schedule && !festival.videoId && (
+      {festival.schedule && !hasHeroMedia && (
         <section className="section-pad bg-cream-alt">
           <div className="container-page">
             <SectionHeading eyebrow="Event Day" title="Celebration Schedule" />

@@ -19,6 +19,8 @@ export interface Festival {
   showInHomeHero?: boolean;
   /** YouTube video ID (not a full URL). When set, plays muted/looping as the page's hero background instead of the static banner. */
   videoId?: string;
+  /** Photo URLs — when set (and no videoId), auto-advances as a crossfading hero background instead of the static banner. */
+  heroImages?: string[];
   /** ISO date-time string, e.g. "2026-09-04T00:00:00" — only set when a real, confirmed date is known. */
   date?: string;
   /** Set for multi-day festivals — countdown still targets `date`, but the label shows the full range. */
@@ -78,7 +80,7 @@ export const festivals: Festival[] = [
     bannerImage: images.janmashtami.banner,
     bannerPosition: "center top",
     showInHomeHero: true,
-    videoId: "1Vii30uDEqQ",
+    heroImages: images.janmashtami.carousel,
     date: "2026-09-04T00:00:00",
     schedule: [
       { time: "Sunrise", activity: "Fast begins" },
@@ -203,12 +205,87 @@ export const festivals: Festival[] = [
     tagline: "She is Love. She is Grace. She is Radharani. Celebrate Her divine appearance with love and devotion.",
     bannerImage: images.radhashtamiBanner,
     showInHomeHero: true,
+    heroImages: images.radhashtamiCarousel,
     date: "2026-09-19T17:00:00",
     timeLabel: "5:00 PM – 8:00 PM",
-    notes: [
-      "Srimati Radharani is the embodiment of pure devotional love (prema) for Sri Krishna, and Radhashtami celebrates Her appearance in this world.",
-      "Devotees observe the day with kirtan, abhishekam, and offerings of flowers and garlands to Sri Sri Radha Gopinath.",
-      "Worship of Radharani on this day is considered especially auspicious for deepening one's own devotional service.",
+    schedule: [
+      { time: "Morning", activity: "Fast begins" },
+      { time: "11:01 AM – 1:28 PM", activity: "Madhyahna Kaal — Radha-Krishna Abhishek" },
+      { time: "1:28 PM", activity: "Deity Decoration & Maha Aarti" },
+      { time: "After Aarti", activity: "Prasadam & Fast-Breaking" },
+      { time: "Evening", activity: "Kirtan & Community Celebration" },
+    ],
+    verse:
+      "तप्त-काञ्चन-गौराङ्गी राधे वृन्दावनेश्वरी। वृषभानु-सुते देवी प्रणमामि हरि-प्रिये॥",
+    verseRef: "Traditional pranam mantra to Srimati Radharani",
+    significance:
+      "Radhashtami celebrates the appearance of Srimati Radharani, the eternal consort of Sri Krishna and the embodiment of pure, selfless devotional love (prema). She appeared in Barsana to King Vrishabhanu and Queen Kirtida, and is worshipped as Krishna's closest associate — inseparable from Him, as the moon is from moonlight. The festival falls on Ashtami of Shukla Paksha in the month of Bhadrapada, just over a week after Janmashtami. Unlike Krishna's midnight appearance, Radharani's is celebrated at Madhyahna Kaal — the middle of the day — reflecting Her role as the gentle, embracing energy who leads every soul toward Krishna. Devotees hold that approaching Krishna through Radharani's mercy is the most complete path of devotion, making this day especially dear to Vaishnavas.",
+    muhurat: [
+      { label: "Festival", value: "Radhashtami (Radha Ashtami)" },
+      { label: "Date", value: "Saturday, 19 September 2026" },
+      { label: "Madhyahna Kaal Puja Muhurat", value: "11:01 AM – 1:28 PM" },
+      { label: "Vrat Parana (Fast-Breaking Time)", value: "After 1:28 PM" },
+      { label: "Tithi", value: "Ashtami, Shukla Paksha, Bhadrapada" },
+    ],
+    howCelebrated: [
+      {
+        title: "Fasting Until Noon",
+        body: "Devotees observe a fast — partial or full, as per capacity — from the morning until the Madhyahna Kaal worship concludes.",
+      },
+      {
+        title: "Kirtan & Bhajans",
+        body: "The temple resounds with kirtan and bhajans glorifying Srimati Radharani's boundless love and grace throughout the day.",
+      },
+      {
+        title: "Radha-Krishna Abhishek",
+        body: "At Madhyahna Kaal — the midday hour of Her appearance — Sri Sri Radha Gopinath are ceremonially bathed with panchamrit and other sacred offerings.",
+      },
+      {
+        title: "Deity Decoration",
+        body: "The deities are adorned in fresh flowers and new outfits befitting Radharani as the Queen of Vrindavan.",
+      },
+      {
+        title: "Breaking the Fast",
+        body: "Following the midday aarti, devotees honor sanctified prasadam together, breaking the fast in a spirit of gratitude.",
+      },
+      {
+        title: "Evening Celebration",
+        body: "Many devotees join the temple again in the evening for community kirtan and celebration, continuing the day's festive spirit.",
+      },
+    ],
+    vratVidhi: [
+      "Devotees may observe a Nirjala (waterless), Phalahar (fruits, milk, and nuts), or Satvik (simple vegetarian) fast, according to their capacity.",
+      "Tamasic foods — onion, garlic, alcohol, and non-vegetarian items — are avoided through the day.",
+      "Worship centers on Madhyahna Kaal (midday), not midnight, reflecting Radharani's own gentle and embracing nature.",
+      "The fast is properly broken (parana) only after the midday abhishek and aarti have concluded.",
+      "As with Janmashtami, the emphasis is less on austerity and more on remembering and glorifying Radharani throughout the day.",
+    ],
+    faqs: [
+      {
+        question: "Why is Radhashtami celebrated at noon instead of midnight like Janmashtami?",
+        answer:
+          "Krishna's appearance is marked at midnight (Nishita Kaal), while Radharani's is marked at Madhyahna Kaal — midday. This year that window falls around 11:01 AM to 1:28 PM, which is when the main abhishek and aarti take place.",
+      },
+      {
+        question: "Do I need to fast on Radhashtami?",
+        answer:
+          "Fasting is a common and encouraged tradition, but it isn't mandatory to visit or take part in the celebrations. Devotees are welcome regardless of whether they fast.",
+      },
+      {
+        question: "What time should I come for the celebration?",
+        answer:
+          "The main puja is at midday, and the temple also holds an evening community celebration from around 5:00 PM. Please call or WhatsApp us closer to the day for our exact program timing.",
+      },
+      {
+        question: "Can I sponsor a seva if I can't attend in person?",
+        answer:
+          "Yes — every seva on this page can be sponsored online or over WhatsApp, and we'll offer it on your behalf as part of the celebration.",
+      },
+      {
+        question: "Is prasadam served to everyone?",
+        answer:
+          "Yes, sanctified prasadam is offered to all visitors after the midday aarti, regardless of whether a seva was sponsored.",
+      },
     ],
   },
   {

@@ -10,6 +10,7 @@ const RULES = [
   { test: (p) => p.startsWith("home/hero-"), maxWidth: 1400 },
   { test: (p) => p.startsWith("home/seva-"), maxWidth: 700 },
   { test: (p) => p.endsWith("banner.jpg") || p.endsWith("banner.png"), maxWidth: 1400 },
+  { test: (p) => p.includes("/carousel-"), maxWidth: 1400 },
   { test: (p) => p.startsWith("contact/"), maxWidth: 80 },
   { test: (p) => p.startsWith("leadership/"), maxWidth: 400 },
   { test: (p) => p.startsWith("icons/"), maxWidth: 300 },

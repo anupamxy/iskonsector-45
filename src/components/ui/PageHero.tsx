@@ -1,4 +1,4 @@
-import { useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { ChevronRight, Volume2 } from "lucide-react";
 
@@ -14,8 +14,35 @@ interface PageHeroProps {
   breadcrumb?: Crumb[];
   /** YouTube video ID (not a full URL) — when set, plays muted/looping as the hero background. */
   videoId?: string;
+  /** Photo URLs — when set (and no videoId), auto-advances as a crossfading hero background. */
+  images?: string[];
   /** Extra content rendered below the subtitle, inside the hero (e.g. date/time pills). */
   children?: ReactNode;
+}
+
+function ImageCarousel({ images }: { images: string[] }) {
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    if (images.length <= 1) return;
+    const id = setInterval(() => setActive((i) => (i + 1) % images.length), 4500);
+    return () => clearInterval(id);
+  }, [images.length]);
+
+  return (
+    <>
+      {images.map((src, i) => (
+        <img
+          key={src}
+          src={src}
+          alt=""
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${
+            i === active ? "opacity-100" : "opacity-0"
+          }`}
+        />
+      ))}
+    </>
+  );
 }
 
 function forcePlay(iframe: HTMLIFrameElement) {
@@ -31,18 +58,24 @@ function forcePlay(iframe: HTMLIFrameElement) {
   });
 }
 
-export default function PageHero({ eyebrow, title, subtitle, breadcrumb, videoId, children }: PageHeroProps) {
+export default function PageHero({ eyebrow, title, subtitle, breadcrumb, videoId, images, children }: PageHeroProps) {
   const [videoReady, setVideoReady] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const hasMedia = Boolean(videoId || images?.length);
 
   return (
     <div
       className={`relative overflow-hidden bg-gradient-to-br from-ink to-ink-deep py-16 text-white sm:py-20 ${
-        videoId ? "min-h-[420px] sm:min-h-[520px]" : ""
+        hasMedia ? "min-h-[420px] sm:min-h-[520px]" : ""
       }`}
       style={videoId ? { containerType: "size" } : undefined}
     >
-      {videoId ? (
+      {images?.length ? (
+        <>
+          <ImageCarousel images={images} />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-deep via-ink-deep/70 to-ink-deep/40" />
+        </>
+      ) : videoId ? (
         <>
           <iframe
             key={videoId}

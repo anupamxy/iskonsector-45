@@ -42,9 +42,9 @@ function useCountdown(target?: string) {
 
 function CountdownBox({ value, label }: { value: number; label: string }) {
   return (
-    <div className="flex w-16 flex-col items-center rounded-xl bg-black/40 py-2 backdrop-blur sm:w-20">
-      <span className="font-display text-2xl text-white sm:text-3xl">{String(value).padStart(2, "0")}</span>
-      <span className="text-[0.6rem] uppercase tracking-wider text-white/70">{label}</span>
+    <div className="flex w-12 flex-col items-center rounded-lg bg-black/40 py-1.5 backdrop-blur sm:w-16 sm:rounded-xl sm:py-2 md:w-20">
+      <span className="font-display text-lg text-white sm:text-2xl md:text-3xl">{String(value).padStart(2, "0")}</span>
+      <span className="text-[0.55rem] uppercase tracking-wider text-white/70 sm:text-[0.6rem]">{label}</span>
     </div>
   );
 }
@@ -62,7 +62,7 @@ function Slide({ festival, showNav, onPrev, onNext }: SlideProps) {
 
   return (
     <div
-      className="relative flex h-[440px] w-full cursor-pointer flex-col justify-end overflow-hidden bg-ink-deep sm:h-[500px] md:h-[560px]"
+      className="relative flex h-[240px] w-full cursor-pointer flex-col justify-end overflow-hidden bg-ink-deep sm:h-[420px] md:h-[500px] lg:h-[560px]"
       onClick={() => navigate(`/festivals/${festival.slug}`)}
     >
       {festival.bannerImage && (
@@ -78,11 +78,11 @@ function Slide({ festival, showNav, onPrev, onNext }: SlideProps) {
       {/* Scrim so the countdown/buttons stay legible over the photo. */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent" />
 
-      <div className="container-page relative flex flex-col gap-4 pb-10 sm:pb-14">
+      <div className="container-page relative flex flex-col gap-2 pb-4 sm:gap-4 sm:pb-10 md:pb-14">
         {countdown && !countdown.isPast && (
-          <div className="flex flex-col gap-2">
-            <span className="text-eyebrow text-primary-light">Begins In</span>
-            <div className="flex gap-2.5">
+          <div className="flex flex-col gap-1 sm:gap-2">
+            <span className="text-eyebrow text-[0.6rem] text-primary-light sm:text-[0.72rem]">Begins In</span>
+            <div className="flex gap-1.5 sm:gap-2.5">
               <CountdownBox value={countdown.days} label="Days" />
               <CountdownBox value={countdown.hours} label="Hrs" />
               <CountdownBox value={countdown.minutes} label="Min" />
@@ -91,13 +91,23 @@ function Slide({ festival, showNav, onPrev, onNext }: SlideProps) {
           </div>
         )}
 
-        <div className="flex flex-wrap gap-3" onClick={(e) => e.stopPropagation()}>
-          <Button to={`/festivals/${festival.slug}`} size="lg">
-            View Details
-          </Button>
-          <Button to="/donate" variant="ghost" size="lg">
-            Offer Seva
-          </Button>
+        <div onClick={(e) => e.stopPropagation()}>
+          <div className="flex flex-wrap gap-2 sm:hidden">
+            <Button to={`/festivals/${festival.slug}`} size="md">
+              View Details
+            </Button>
+            <Button to="/donate" variant="ghost" size="md">
+              Offer Seva
+            </Button>
+          </div>
+          <div className="hidden flex-wrap gap-3 sm:flex">
+            <Button to={`/festivals/${festival.slug}`} size="lg">
+              View Details
+            </Button>
+            <Button to="/donate" variant="ghost" size="lg">
+              Offer Seva
+            </Button>
+          </div>
         </div>
       </div>
 
