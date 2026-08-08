@@ -19,8 +19,8 @@ export interface Festival {
   showInHomeHero?: boolean;
   /** YouTube video ID (not a full URL). When set, plays muted/looping as the page's hero background instead of the static banner. */
   videoId?: string;
-  /** Photo URLs — when set (and no videoId), auto-advances as a crossfading hero background instead of the static banner. */
-  heroImages?: string[];
+  /** Photos — when set (and no videoId), auto-advances as a crossfading hero background instead of the static banner. */
+  heroImages?: { src: string; position?: string }[];
   /** ISO date-time string, e.g. "2026-09-04T00:00:00" — only set when a real, confirmed date is known. */
   date?: string;
   /** Set for multi-day festivals — countdown still targets `date`, but the label shows the full range. */

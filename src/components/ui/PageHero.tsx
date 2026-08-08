@@ -14,13 +14,15 @@ interface PageHeroProps {
   breadcrumb?: Crumb[];
   /** YouTube video ID (not a full URL) — when set, plays muted/looping as the hero background. */
   videoId?: string;
-  /** Photo URLs — when set (and no videoId), auto-advances as a crossfading hero background. */
-  images?: string[];
+  /** Photos — when set (and no videoId), auto-advances as a crossfading hero background.
+   * `position` is a CSS object-position value (e.g. "50% 20%") to keep the subject in frame
+   * when the wide hero band crops a portrait/square source photo. Defaults to centered. */
+  images?: { src: string; position?: string }[];
   /** Extra content rendered below the subtitle, inside the hero (e.g. date/time pills). */
   children?: ReactNode;
 }
 
-function ImageCarousel({ images }: { images: string[] }) {
+function ImageCarousel({ images }: { images: { src: string; position?: string }[] }) {
   const [active, setActive] = useState(0);
 
   useEffect(() => {
@@ -31,14 +33,15 @@ function ImageCarousel({ images }: { images: string[] }) {
 
   return (
     <>
-      {images.map((src, i) => (
+      {images.map((image, i) => (
         <img
-          key={src}
-          src={src}
+          key={image.src}
+          src={image.src}
           alt=""
           className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${
             i === active ? "opacity-100" : "opacity-0"
           }`}
+          style={{ objectPosition: image.position ?? "center" }}
         />
       ))}
     </>
