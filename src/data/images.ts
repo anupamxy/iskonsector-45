@@ -44,6 +44,8 @@ export const images = {
     goldKalash: "/images/janmashtami/gold-kalash.jpg",
     silverKalash: "/images/janmashtami/silver-kalash.jpg",
     platinumKalash: "/images/janmashtami/platinum-kalash.jpg",
+    garlandSeva: "/images/janmashtami/garland-seva.jpg",
+    fruitsBasket: "/images/janmashtami/fruits-basket.jpg",
     aartiThali: "/images/janmashtami/aarti-thali.jpg",
     abhishekam: "/images/janmashtami/abhishekam.jpg",
   },

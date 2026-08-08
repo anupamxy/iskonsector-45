@@ -13,7 +13,10 @@ export default function SevaCard({ label, amount, description, seva, image }: Se
   return (
     <Card className="overflow-hidden p-0">
       {image && (
-        <img src={image} alt={label} className="aspect-square w-full object-cover" />
+        <div className="relative overflow-hidden">
+          <img src={image} alt={label} className="aspect-square w-full object-cover" />
+          <div className="shimmer-sweep pointer-events-none absolute inset-0" />
+        </div>
       )}
       <div className="flex flex-1 flex-col p-6">
         <h4 className="text-lg text-ink">{label}</h4>

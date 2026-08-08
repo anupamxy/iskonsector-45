@@ -172,9 +172,9 @@ export const festivals: Festival[] = [
         heading: "Online Abhishek Services",
         tiers: [
           { label: "Flower Seva", amount: 11000, image: images.janmashtami.abhishekam },
-          { label: "Garland Seva", amount: 11000 },
-          { label: "Fruits Basket", amount: 2100 },
-          { label: "Cake (25 kg)", amount: 25000 },
+          { label: "Garland Seva", amount: 11000, image: images.janmashtami.garlandSeva },
+          { label: "Fruits Basket", amount: 2100, image: images.janmashtami.fruitsBasket },
+          { label: "Cake (25 kg)", amount: 25000, image: images.govindas.cateringBirthday },
           { label: "Makhan Misri Seva", amount: 31000 },
           { label: "Sadhu Seva", amount: 51000 },
           { label: "Deities Dress", amount: 51000 },

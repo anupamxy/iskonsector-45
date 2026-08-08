@@ -89,4 +89,27 @@
       padding-block: 76px;
     }
   }
+
+  .shimmer-sweep {
+    background: linear-gradient(
+      75deg,
+      transparent 40%,
+      rgba(255, 255, 255, 0.55) 50%,
+      transparent 60%
+    );
+    background-size: 250% 250%;
+    background-position: -50% -50%;
+    animation: shimmer-sweep 4.5s ease-in-out infinite;
+  }
+
+  @keyframes shimmer-sweep {
+    0%,
+    15% {
+      background-position: -50% -50%;
+    }
+    50%,
+    100% {
+      background-position: 150% 150%;
+    }
+  }
 }

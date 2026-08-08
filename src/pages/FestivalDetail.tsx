@@ -162,7 +162,7 @@ export default function FestivalDetail() {
         <section className="section-pad">
           <div className="container-page">
             <SectionHeading eyebrow="Sponsor a Seva" title="Offerings & Sevas" />
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-6" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))" }}>
               {festival.sevaTiers.map((tier) => (
                 <SevaCard
                   key={tier.label}
@@ -181,7 +181,7 @@ export default function FestivalDetail() {
         <section key={group.heading} className="section-pad bg-cream-alt">
           <div className="container-page">
             <SectionHeading eyebrow="Additional Sevas" title={group.heading} />
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-6" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))" }}>
               {group.tiers.map((tier) => (
                 <SevaCard
                   key={tier.label}
