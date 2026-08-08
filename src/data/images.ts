@@ -38,7 +38,7 @@ export const images = {
   radhashtamiCarousel: [
     { src: "/images/radhashtami/carousel-1.jpg", position: "50% 20%" },
     { src: "/images/radhashtami/carousel-2.jpg", position: "50% 25%" },
-    { src: "/images/radhashtami/carousel-3.jpg", position: "50% 60%" },
+    { src: "/images/radhashtami/carousel-3.jpg", position: "50% 50%" },
     { src: "/images/radhashtami/carousel-4.jpg", position: "50% 18%" },
   ],
   jhulanYatraBanner: "/images/jhulan-yatra/banner.jpg",
@@ -54,6 +54,10 @@ export const images = {
     fruitsBasket: "/images/janmashtami/fruits-basket.jpg",
     aartiThali: "/images/janmashtami/aarti-thali.jpg",
     abhishekam: "/images/janmashtami/abhishekam.jpg",
+    makhanMisri: "/images/janmashtami/makhan-misri.jpg",
+    sadhuSeva: "/images/janmashtami/sadhu-seva.jpg",
+    deitiesDress: "/images/janmashtami/deities-dress.jpg",
+    mahaAbhishekam: "/images/janmashtami/maha-abhishekam.jpg",
     carousel: [
       { src: "/images/janmashtami/carousel-1.jpg", position: "50% 30%" },
       { src: "/images/janmashtami/carousel-2.jpg", position: "50% 18%" },
