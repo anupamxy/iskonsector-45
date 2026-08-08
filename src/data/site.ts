@@ -1,0 +1,135 @@
+export const siteInfo = {
+  name: "ISKCON Gurugram, Sector 45",
+  templeName: "Sri Sri Radha Gopinath Mandir",
+  tagline:
+    "A serene temple dedicated to Lord Krishna and spiritual awakening — join us for kirtans, abhishekam, and blessings.",
+  description:
+    "ISKCON Gurugram, Sector 45 is a spiritual sanctuary dedicated to spreading the timeless wisdom of the Bhagavad Gita, nurturing devotion through seva, festivals, and kirtan, and guiding souls toward Krishna consciousness.",
+  address: {
+    line1: "Plot No 0, near Delhi Public School",
+    line2: "Sector 45, Block C, Uday Nagar",
+    city: "Gurugram",
+    state: "Haryana",
+    pincode: "122003",
+    full: "Plot No 0, near Delhi Public School, Sector 45, Block C, Uday Nagar, Sector 45, Gurugram, Haryana 122003",
+  },
+  phones: {
+    primary: "+91 93117 67088",
+    primaryTel: "+919311767088",
+    secondary: "+91 78887 85681",
+    secondaryTel: "+917888785681",
+  },
+  sevaDesk: {
+    phone: "+91 98186 34115",
+    phoneTel: "+919818634115",
+    hours: "Monday–Saturday, 9:00 AM–6:00 PM",
+    note: "Seva & donations desk",
+  },
+  whatsapp: {
+    number: "+91 93117 67088",
+    tel: "919311767088",
+    link: "https://wa.me/919311767088",
+  },
+  email: "iskcongurugram.sec45@gmail.com",
+  mapsUrl: "https://maps.app.goo.gl/9aW5jhTP4fCjeLJQ8",
+  mapsEmbedQuery: "ISKCON Sector 45 Gurugram",
+  social: {
+    facebook: "https://www.facebook.com/iskconsector45gurgaon",
+    instagram: "https://www.instagram.com/iskcon_sector45_gurugram/?hl=en",
+    youtube: "https://www.youtube.com/channel/UCT0Bz5LmtYHp0LjtNyYBcjQ",
+  },
+  bank: {
+    accountHolder: "ISKCON",
+    bankName: "HDFC Bank Ltd",
+    accountNumber: "50100058031762",
+    ifsc: "HDFC0000090",
+  },
+  taxExemption: {
+    section: "80-G",
+    refNo: "AAATI0017PF20219",
+    note: "Tax exemption available under the Income Tax Act, 1961.",
+  },
+  copyright: `© ${new Date().getFullYear()} ISKCON Gurugram, Sector 45. All rights reserved.`,
+} as const;
+
+export interface NavChild {
+  label: string;
+  to: string;
+}
+
+export interface NavItem {
+  label: string;
+  to?: string;
+  children?: NavChild[];
+}
+
+export const primaryNav: NavItem[] = [
+  { label: "Home", to: "/" },
+  { label: "About", to: "/about" },
+  {
+    label: "Temple & Seva",
+    to: "/temple",
+    children: [
+      { label: "Food For Life", to: "/food-for-life" },
+      { label: "Govinda's On Wheel", to: "/govindas-on-wheel" },
+      { label: "Life Patron", to: "/life-patron" },
+      { label: "DYPH", to: "/dyph" },
+      { label: "Gita Daan", to: "/gita-daan" },
+    ],
+  },
+  {
+    label: "Festivals",
+    to: "/festivals",
+    children: [
+      { label: "Jhulan Yatra", to: "/festivals/jhulan-yatra" },
+      { label: "Balarama Purnima", to: "/festivals/balrama-purnima" },
+      { label: "Janmashtami", to: "/festivals/janmashtami" },
+      { label: "Srila Prabhupada Appearance Day", to: "/festivals/srila-prabhupada-appearance-day" },
+      { label: "Radhashtami", to: "/festivals/radhashtami" },
+      { label: "Ram Navami", to: "/festivals/ram-navami" },
+      { label: "Rath Yatra", to: "/festivals/rath-yatra" },
+    ],
+  },
+  {
+    label: "Explore",
+    children: [
+      { label: "Gallery", to: "/gallery" },
+      { label: "Gift Shop", to: "/gift-shop" },
+      { label: "Lecture Videos", to: "/lecture-videos" },
+      { label: "FAQ", to: "/faq" },
+    ],
+  },
+  { label: "Contact", to: "/contact" },
+];
+
+export const footerNav = {
+  explore: [
+    { label: "About Us", to: "/about" },
+    { label: "Temple & Seva", to: "/temple" },
+    { label: "Festivals", to: "/festivals" },
+    { label: "Gallery", to: "/gallery" },
+    { label: "Lecture Videos", to: "/lecture-videos" },
+    { label: "FAQ", to: "/faq" },
+  ],
+  involved: [
+    { label: "Donate", to: "/donate" },
+    { label: "Life Patron", to: "/life-patron" },
+    { label: "Gita Daan", to: "/gita-daan" },
+    { label: "DYPH", to: "/dyph" },
+    { label: "Gift Shop", to: "/gift-shop" },
+  ],
+  legal: [
+    { label: "Privacy Policy", to: "/privacy-policy" },
+    { label: "Terms & Conditions", to: "/terms-and-conditions" },
+    { label: "Cookie Policy", to: "/cookie-policy" },
+    { label: "Refund Policy", to: "/refund-policy" },
+  ],
+};
+
+export const mobileAppBar = [
+  { label: "Home", to: "/", icon: "home" },
+  { label: "Temple", to: "/temple", icon: "temple" },
+  { label: "Donate", to: "/donate", icon: "donate" },
+  { label: "Festivals", to: "/festivals", icon: "festival" },
+  { label: "Contact", to: "/contact", icon: "contact" },
+] as const;
