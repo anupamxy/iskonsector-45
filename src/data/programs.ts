@@ -33,21 +33,21 @@ export const govindasOnWheel = {
       { name: "Paneer Masala Dosa", price: 115 },
       { name: "Butter Masala Dosa", price: 90 },
       { name: "Idli Sambar", price: 55 },
-    ] satisfies MenuItem[],
+    ] as MenuItem[],
     Chinese: [
       { name: "Veg Noodles", price: 105 },
       { name: "Manchurian", price: 130 },
       { name: "Chilli Paneer", price: 160 },
       { name: "Samosa", price: 15 },
       { name: "Fried Rice", price: 110 },
-    ] satisfies MenuItem[],
+    ] as MenuItem[],
     "Special Thali": [
       {
         name: "Govinda Special Thali",
         price: 160,
         items: "Shahi Paneer, Mix Veg, Dal Makhani, Jeera Rice, Tawa Roti (4), Gulab Jamun",
       },
-    ] satisfies MenuItem[],
+    ] as MenuItem[],
   },
   catering: [
     "Birthday",
