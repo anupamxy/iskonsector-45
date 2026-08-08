@@ -30,7 +30,7 @@ export default function Footer() {
       <div className="container-page grid grid-cols-1 gap-10 py-14 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr]">
         <div>
           <Link to="/" className="mb-4 flex items-center gap-2.5">
-            <img src={images.logo} alt="ISKCON Gurugram Sector 45 logo" className="h-11 w-11 shrink-0 rounded-full object-cover" />
+            <img src={images.logo} alt="ISKCON Gurugram Sector 45 logo" className="h-11 w-11 shrink-0 rounded-lg bg-white/90 object-contain p-1" />
             <span className="font-display text-lg text-white">ISKCON Gurugram, Sector 45</span>
           </Link>
           <p className="mb-5 max-w-sm text-sm leading-relaxed text-white/60">{siteInfo.description}</p>

@@ -10,7 +10,7 @@ import { images } from "../../data/images";
 function Logo() {
   return (
     <Link to="/" className="flex items-center gap-2.5" onClick={() => window.scrollTo(0, 0)}>
-      <img src={images.logo} alt="ISKCON Gurugram Sector 45 logo" className="h-11 w-11 shrink-0 rounded-full object-cover shadow-[var(--shadow-cta)]" />
+      <img src={images.logo} alt="ISKCON Gurugram Sector 45 logo" className="h-11 w-11 shrink-0 object-contain" />
       <span className="leading-tight">
         <span className="block font-display text-lg text-ink">ISKCON Gurugram</span>
         <span className="text-eyebrow block text-secondary">Sector 45</span>
