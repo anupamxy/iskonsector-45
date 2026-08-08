@@ -30,7 +30,7 @@ import Badge from "../components/ui/Badge";
 import { siteInfo } from "../data/site";
 import { founder, leadership, pillars } from "../data/about";
 import { deitySeva } from "../data/donations";
-import { festivals } from "../data/festivals";
+import { festivals, visibleFestivals } from "../data/festivals";
 import { images } from "../data/images";
 
 const impactStats = [
@@ -262,7 +262,7 @@ export default function Home() {
         <div className="container-page">
           <SectionHeading eyebrow="Vaishnava Calendar" title="All Festivals We Celebrate" />
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {festivals.map((festival) => (
+            {visibleFestivals.map((festival) => (
               <Link
                 key={festival.slug}
                 to={`/festivals/${festival.slug}`}

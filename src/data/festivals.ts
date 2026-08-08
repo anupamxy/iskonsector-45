@@ -336,3 +336,8 @@ export const festivals: Festival[] = [
 export function getFestival(slug: string) {
   return festivals.find((f) => f.slug === slug);
 }
+
+/** Slugs to surface in listings/nav for now — other festivals stay reachable by direct link. */
+const VISIBLE_SLUGS = ["janmashtami", "radhashtami"];
+
+export const visibleFestivals = festivals.filter((f) => VISIBLE_SLUGS.includes(f.slug));

@@ -81,13 +81,8 @@ export const primaryNav: NavItem[] = [
     label: "Festivals",
     to: "/festivals",
     children: [
-      { label: "Jhulan Yatra", to: "/festivals/jhulan-yatra" },
-      { label: "Balarama Purnima", to: "/festivals/balrama-purnima" },
       { label: "Janmashtami", to: "/festivals/janmashtami" },
-      { label: "Srila Prabhupada Appearance Day", to: "/festivals/srila-prabhupada-appearance-day" },
       { label: "Radhashtami", to: "/festivals/radhashtami" },
-      { label: "Ram Navami", to: "/festivals/ram-navami" },
-      { label: "Rath Yatra", to: "/festivals/rath-yatra" },
     ],
   },
   {

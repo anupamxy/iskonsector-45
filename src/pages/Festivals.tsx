@@ -4,7 +4,7 @@ import PageHero from "../components/ui/PageHero";
 import SectionHeading from "../components/ui/SectionHeading";
 import Card from "../components/ui/Card";
 import Button from "../components/ui/Button";
-import { festivals } from "../data/festivals";
+import { visibleFestivals } from "../data/festivals";
 import { siteInfo } from "../data/site";
 
 const whyCelebrate = [
@@ -39,7 +39,7 @@ export default function Festivals() {
         <div className="container-page">
           <SectionHeading eyebrow="Celebrate With Us" title="All Festivals" />
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
-            {festivals.map((festival) => (
+            {visibleFestivals.map((festival) => (
               <Link
                 key={festival.slug}
                 to={`/festivals/${festival.slug}`}
