@@ -7,7 +7,13 @@ export const images = {
   krishna1: "/images/decorative/krishna1.jpg",
   paymentQr: "/images/donation/payment-qr.jpg",
   home: {
-    hero: ["/images/home/hero-01.jpg", "/images/home/hero-02.jpg", "/images/home/hero-03.jpg"],
+    heroVideo: "/videos/home-hero.mp4",
+    hero: [
+      "/images/home/hero-01.jpg",
+      "/images/home/hero-02.jpg",
+      "/images/home/hero-03.jpg",
+      "/videos/home-hero.mp4",
+    ],
     sevaMangalaArti: "/images/home/seva-mangala-arti.jpg",
     sevaRajbhogaArti: "/images/home/seva-rajbhoga-arti.jpg",
     sevaMangalaBhoga: "/images/home/seva-mangala-bhoga.jpg",

@@ -7,6 +7,7 @@ import type { Festival } from "../../data/festivals";
 
 interface FestivalCountdownCarouselProps {
   festivals: Festival[];
+  videoSrc?: string;
 }
 
 function useCountdown(target?: string) {
@@ -141,42 +142,104 @@ function Slide({ festival, showNav, onPrev, onNext }: SlideProps) {
   );
 }
 
-export default function FestivalCountdownCarousel({ festivals }: FestivalCountdownCarouselProps) {
+interface VideoSlideProps {
+  src: string;
+  showNav: boolean;
+  onPrev: () => void;
+  onNext: () => void;
+}
+
+function VideoSlide({ src, showNav, onPrev, onNext }: VideoSlideProps) {
+  return (
+    <div className="relative flex h-[240px] w-full flex-col justify-end overflow-hidden bg-ink-deep sm:h-[420px] md:h-[500px] lg:h-[560px]">
+      <video src={src} className="absolute inset-0 h-full w-full object-cover" autoPlay loop muted playsInline />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+
+      {showNav && (
+        <>
+          <button
+            type="button"
+            onClick={onPrev}
+            aria-label="Previous slide"
+            className="absolute left-4 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur transition-colors hover:bg-white/25"
+          >
+            <ChevronLeft size={20} />
+          </button>
+          <button
+            type="button"
+            onClick={onNext}
+            aria-label="Next slide"
+            className="absolute right-4 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur transition-colors hover:bg-white/25"
+          >
+            <ChevronRight size={20} />
+          </button>
+        </>
+      )}
+    </div>
+  );
+}
+
+export default function FestivalCountdownCarousel({ festivals, videoSrc }: FestivalCountdownCarouselProps) {
   const [active, setActive] = useState(0);
+  const videoOffset = videoSrc ? 1 : 0;
+  const slideCount = festivals.length + videoOffset;
 
   useEffect(() => {
-    if (festivals.length <= 1) return;
-    const id = setInterval(() => setActive((i) => (i + 1) % festivals.length), 7000);
+    if (slideCount <= 1) return;
+    const id = setInterval(() => setActive((i) => (i + 1) % slideCount), 7000);
     return () => clearInterval(id);
-  }, [festivals.length]);
+  }, [slideCount]);
 
-  if (festivals.length === 0) return null;
+  if (slideCount === 0) return null;
 
-  const goPrev = () => setActive((i) => (i - 1 + festivals.length) % festivals.length);
-  const goNext = () => setActive((i) => (i + 1) % festivals.length);
+  const showNav = slideCount > 1;
+  const goPrev = () => setActive((i) => (i - 1 + slideCount) % slideCount);
+  const goNext = () => setActive((i) => (i + 1) % slideCount);
 
   return (
     <div className="relative">
-      {festivals.map((festival, i) => (
-        <div key={festival.slug} className={i === active ? "block" : "hidden"}>
-          <Slide festival={festival} showNav={festivals.length > 1} onPrev={goPrev} onNext={goNext} />
+      {videoSrc && (
+        <div className={active === 0 ? "block" : "hidden"}>
+          <VideoSlide src={videoSrc} showNav={showNav} onPrev={goPrev} onNext={goNext} />
         </div>
-      ))}
+      )}
+      {festivals.map((festival, i) => {
+        const slideIndex = i + videoOffset;
+        return (
+          <div key={festival.slug} className={slideIndex === active ? "block" : "hidden"}>
+            <Slide festival={festival} showNav={showNav} onPrev={goPrev} onNext={goNext} />
+          </div>
+        );
+      })}
 
-      {festivals.length > 1 && (
+      {showNav && (
         <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-1.5">
-          {festivals.map((festival, i) => (
+          {videoSrc && (
             <button
-              key={festival.slug}
               type="button"
-              onClick={() => setActive(i)}
-              aria-label={`Show ${festival.name}`}
+              onClick={() => setActive(0)}
+              aria-label="Show intro video"
               className={clsx(
                 "h-1.5 rounded-full bg-white transition-all",
-                i === active ? "w-6 opacity-100" : "w-1.5 opacity-50",
+                active === 0 ? "w-6 opacity-100" : "w-1.5 opacity-50",
               )}
             />
-          ))}
+          )}
+          {festivals.map((festival, i) => {
+            const slideIndex = i + videoOffset;
+            return (
+              <button
+                key={festival.slug}
+                type="button"
+                onClick={() => setActive(slideIndex)}
+                aria-label={`Show ${festival.name}`}
+                className={clsx(
+                  "h-1.5 rounded-full bg-white transition-all",
+                  slideIndex === active ? "w-6 opacity-100" : "w-1.5 opacity-50",
+                )}
+              />
+            );
+          })}
         </div>
       )}
     </div>

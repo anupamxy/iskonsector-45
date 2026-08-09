@@ -18,17 +18,27 @@ export default function HeroCarousel({ images, alt, className }: HeroCarouselPro
 
   return (
     <div className={clsx("relative aspect-[4/3] w-full overflow-hidden rounded-[var(--radius-card)] shadow-[var(--shadow-card-hover)]", className)}>
-      {images.map((src, i) => (
-        <img
-          key={src}
-          src={src}
-          alt={`${alt} ${i + 1}`}
-          className={clsx(
-            "absolute inset-0 h-full w-full object-cover transition-opacity duration-700",
-            i === active ? "opacity-100" : "opacity-0",
-          )}
-        />
-      ))}
+      {images.map((src, i) => {
+        const isVideo = /\.(mp4|webm|mov)$/i.test(src);
+        const slideClassName = clsx(
+          "absolute inset-0 h-full w-full object-cover transition-opacity duration-700",
+          i === active ? "opacity-100" : "opacity-0",
+        );
+
+        return isVideo ? (
+          <video
+            key={src}
+            src={src}
+            className={slideClassName}
+            autoPlay
+            loop
+            muted
+            playsInline
+          />
+        ) : (
+          <img key={src} src={src} alt={`${alt} ${i + 1}`} className={slideClassName} />
+        );
+      })}
       {images.length > 1 && (
         <div className="absolute inset-x-0 bottom-3 flex justify-center gap-1.5">
           {images.map((src, i) => (

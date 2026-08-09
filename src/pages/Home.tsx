@@ -116,7 +116,7 @@ export default function Home() {
     <div>
       {/* Hero */}
       {upcomingFestivals.length > 0 ? (
-        <FestivalCountdownCarousel festivals={upcomingFestivals} />
+        <FestivalCountdownCarousel festivals={upcomingFestivals} videoSrc={images.home.heroVideo} />
       ) : (
         <section className="relative overflow-hidden bg-gradient-to-br from-ink to-ink-deep text-white">
           <div className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-primary/20 blur-3xl" />
