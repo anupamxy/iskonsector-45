@@ -162,9 +162,9 @@ export default function Home() {
       <section className="section-pad">
         <div className="container-page grid grid-cols-1 items-center gap-14 lg:grid-cols-2">
           <img
-            src={images.krishnaArt}
-            alt="Sri Krishna"
-            className="aspect-[4/3] w-full rounded-[var(--radius-card)] object-cover object-[50%_20%] shadow-[var(--shadow-card)]"
+            src={images.prabhupadaTeaching}
+            alt="Srila Prabhupada"
+            className="aspect-[4/3] w-full rounded-[var(--radius-card)] object-cover object-[50%_15%] shadow-[var(--shadow-card)]"
           />
           <div>
             <p className="text-eyebrow mb-3 text-primary">Our Story</p>

@@ -1,6 +1,7 @@
 export const images = {
   logo: "/images/logo/logo.png",
   prabhupada: "/images/leadership/prabhupada.png",
+  prabhupadaTeaching: "/images/leadership/prabhupada-teaching.jpg",
   gopalKrishnaGoswami: "/images/leadership/guru.jpg",
   guruPrasadSwami: "/images/leadership/guru-prasad-swami.jpg",
   krishnaArt: "/images/decorative/krishna-deity.jpg",
