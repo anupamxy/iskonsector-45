@@ -13,7 +13,6 @@ import {
   Compass,
   ArrowRight,
   MessageCircle,
-  Image as ImageIcon,
   Gift,
   Video,
   Info,
@@ -24,9 +23,15 @@ import SectionHeading from "../components/ui/SectionHeading";
 import SevaCard from "../components/ui/SevaCard";
 import HeroCarousel from "../components/ui/HeroCarousel";
 import FestivalCountdownCarousel from "../components/ui/FestivalCountdownCarousel";
+import WelcomeBanner from "../components/ui/WelcomeBanner";
+import DailySchedule from "../components/ui/DailySchedule";
 import JoinFamilyForm from "../components/ui/JoinFamilyForm";
 import StatCounter from "../components/ui/StatCounter";
 import Badge from "../components/ui/Badge";
+import Reveal from "../components/ui/Reveal";
+import FestivalDateBadge from "../components/ui/FestivalDateBadge";
+import PhotoMarquee from "../components/ui/PhotoMarquee";
+import { YoutubeIcon } from "../components/ui/SocialIcons";
 import { siteInfo } from "../data/site";
 import { founder, leadership, pillars } from "../data/about";
 import { deitySeva } from "../data/donations";
@@ -44,7 +49,6 @@ const exploreLinks = [
   { icon: Info, label: "About Us", to: "/about" },
   { icon: HandHeart, label: "Temple & Seva", to: "/temple" },
   { icon: PartyPopper, label: "Festivals", to: "/festivals" },
-  { icon: ImageIcon, label: "Gallery", to: "/gallery" },
   { icon: Gift, label: "Gift Shop", to: "/gift-shop" },
   { icon: Video, label: "Lecture Videos", to: "/lecture-videos" },
 ];
@@ -70,10 +74,9 @@ const sevaImages: Record<string, string> = {
   Rajbhoga: images.home.sevaRajbhoga,
 };
 
-const galleryTeaser = [
-  ...images.galleryTemple.slice(0, 2),
-  ...images.galleryJanmashtami.slice(0, 2),
-];
+const allGalleryPhotos = [...images.galleryTemple, ...images.galleryJanmashtami, ...images.galleryCommunity];
+const marqueeRow1 = allGalleryPhotos.filter((_, i) => i % 2 === 0);
+const marqueeRow2 = allGalleryPhotos.filter((_, i) => i % 2 === 1);
 
 const quickLinks = [
   { icon: Clock, label: "Darshan Timings", to: "/faq" },
@@ -114,6 +117,8 @@ const programs = [
 export default function Home() {
   return (
     <div>
+      <WelcomeBanner />
+
       {/* Hero */}
       {upcomingFestivals.length > 0 ? (
         <FestivalCountdownCarousel festivals={upcomingFestivals} videoSrc={images.home.heroVideo} />
@@ -158,13 +163,15 @@ export default function Home() {
         </div>
       </section>
 
+      <DailySchedule />
+
       {/* About teaser */}
       <section className="section-pad">
         <div className="container-page grid grid-cols-1 items-center gap-14 lg:grid-cols-2">
           <img
             src={images.prabhupadaTeaching}
             alt="Srila Prabhupada"
-            className="aspect-[4/3] w-full rounded-[var(--radius-card)] object-cover object-[50%_15%] shadow-[var(--shadow-card)]"
+            className="aspect-[4/3] w-full rounded-[var(--radius-card)] object-cover object-[50%_38%] shadow-[var(--shadow-card)]"
           />
           <div>
             <p className="text-eyebrow mb-3 text-primary">Our Story</p>
@@ -258,26 +265,53 @@ export default function Home() {
       </section>
 
       {/* Festivals */}
-      <section className="section-pad bg-cream-alt">
-        <div className="container-page">
-          <SectionHeading eyebrow="Vaishnava Calendar" title="All Festivals We Celebrate" />
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {visibleFestivals.map((festival) => (
-              <Link
+      <section className="section-pad relative overflow-hidden bg-cream-alt">
+        <div className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 animate-float-slow rounded-full bg-primary/10 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-20 -left-16 h-64 w-64 animate-float-slower rounded-full bg-secondary/10 blur-3xl" />
+        <div className="container-page relative">
+          <Reveal>
+            <SectionHeading eyebrow="Vaishnava Calendar" title="All Festivals We Celebrate" />
+          </Reveal>
+          <div className="flex flex-wrap justify-center gap-6">
+            {visibleFestivals.map((festival, i) => (
+              <Reveal
                 key={festival.slug}
-                to={`/festivals/${festival.slug}`}
-                className="group flex flex-col rounded-[var(--radius-card)] bg-white p-6 shadow-[var(--shadow-card)] transition-all hover:-translate-y-1 hover:shadow-[var(--shadow-card-hover)]"
+                delay={i * 90}
+                className="w-full shrink-0 sm:w-[calc(50%-12px)] lg:w-[calc(25%-18px)]"
               >
-                <div className="flex items-start justify-between gap-3">
-                  <PartyPopper className="text-primary" size={26} />
-                  {festivalBadges[festival.slug] && <Badge tone="saffron">{festivalBadges[festival.slug]}</Badge>}
-                </div>
-                <h4 className="mt-4 text-xl text-ink">{festival.name}</h4>
-                <p className="mt-2 flex-1 text-sm text-muted">{festival.tagline}</p>
-                <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-secondary">
-                  View details <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
-                </span>
-              </Link>
+                <Link
+                  to={`/festivals/${festival.slug}`}
+                  className="group relative flex h-full flex-col overflow-hidden rounded-[var(--radius-card)] bg-white shadow-[var(--shadow-card)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[var(--shadow-card-hover)]"
+                >
+                  <div className="relative h-32 w-full overflow-hidden bg-cream-alt">
+                    {festival.bannerImage && (
+                      <img
+                        src={festival.bannerImage}
+                        alt={festival.name}
+                        className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
+                        style={{ objectPosition: festival.bannerPosition ?? "center" }}
+                      />
+                    )}
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-black/0 to-black/0" />
+                    {festival.date && <FestivalDateBadge date={festival.date} />}
+                    <span className="absolute left-4 top-4 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-primary shadow transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:scale-110">
+                      <PartyPopper size={16} />
+                    </span>
+                  </div>
+                  <div className="flex flex-1 flex-col p-6">
+                    {festivalBadges[festival.slug] && (
+                      <Badge tone="saffron" className="self-start">
+                        {festivalBadges[festival.slug]}
+                      </Badge>
+                    )}
+                    <h4 className="mt-4 text-xl text-ink">{festival.name}</h4>
+                    <p className="mt-2 flex-1 text-sm text-muted">{festival.tagline}</p>
+                    <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-secondary">
+                      View details <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1.5" />
+                    </span>
+                  </div>
+                </Link>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -304,25 +338,23 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Gallery teaser */}
-      <section className="section-pad bg-cream-alt">
+      {/* Moments of devotion — animated photo marquee */}
+      <section className="section-pad overflow-hidden bg-cream-alt">
         <div className="container-page">
-          <SectionHeading eyebrow="Moments of Devotion" title="From Our Gallery" />
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-            {galleryTeaser.map((src) => (
-              <img
-                key={src}
-                src={src}
-                alt="ISKCON Gurugram, Sector 45 gallery"
-                className="aspect-square w-full rounded-[var(--radius-card)] object-cover shadow-[var(--shadow-card)]"
-              />
-            ))}
+          <Reveal>
+            <SectionHeading eyebrow="Moments of Devotion" title="Life at ISKCON Gurugram, Sector 45" />
+          </Reveal>
+        </div>
+        <Reveal>
+          <div className="mt-4 flex flex-col gap-4">
+            <PhotoMarquee images={marqueeRow1} durationSeconds={48} />
+            <PhotoMarquee images={marqueeRow2} durationSeconds={56} reverse />
           </div>
-          <div className="mt-8 text-center">
-            <Button to="/gallery" variant="outline">
-              View Full Gallery
-            </Button>
-          </div>
+        </Reveal>
+        <div className="container-page mt-10 text-center">
+          <Button href={siteInfo.social.youtube} target="_blank" rel="noopener noreferrer" variant="outline">
+            <YoutubeIcon size={16} /> Watch More on YouTube
+          </Button>
         </div>
       </section>
 
@@ -339,7 +371,7 @@ export default function Home() {
               <div className="flex items-start gap-3">
                 <Clock size={18} className="mt-0.5 shrink-0 text-primary" />
                 <span className="text-muted">
-                  Darshan timings vary — call or WhatsApp us before you visit.
+                  Darshan Timings: {siteInfo.darshanTimings} — call or WhatsApp us before you visit.
                 </span>
               </div>
             </div>

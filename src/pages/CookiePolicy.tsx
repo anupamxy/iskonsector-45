@@ -1,6 +1,7 @@
 import PageHero from "../components/ui/PageHero";
 import LegalContent from "../components/ui/LegalContent";
 import { siteInfo } from "../data/site";
+import { images } from "../data/images";
 
 export default function CookiePolicy() {
   return (
@@ -9,6 +10,7 @@ export default function CookiePolicy() {
         breadcrumb={[{ label: "Home", to: "/" }, { label: "Cookie Policy" }]}
         eyebrow="Legal"
         title="Cookie Policy"
+        images={[{ src: images.pageHero.legal, position: "center 20%" }]}
       />
       <section className="section-pad">
         <div className="container-page">

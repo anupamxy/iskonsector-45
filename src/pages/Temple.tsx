@@ -56,6 +56,7 @@ export default function Temple() {
         eyebrow="Temple & Seva"
         title="Ways to Serve, Learn, and Belong"
         subtitle="ISKCON Gurugram, Sector 45 runs a family of seva programs — from feeding the community to youth courses and deity worship."
+        images={[{ src: images.pageHero.temple, position: "center 25%" }]}
       />
 
       <section className="section-pad">

@@ -1,6 +1,7 @@
 import PageHero from "../components/ui/PageHero";
 import LegalContent from "../components/ui/LegalContent";
 import { siteInfo } from "../data/site";
+import { images } from "../data/images";
 
 export default function PrivacyPolicy() {
   return (
@@ -9,6 +10,7 @@ export default function PrivacyPolicy() {
         breadcrumb={[{ label: "Home", to: "/" }, { label: "Privacy Policy" }]}
         eyebrow="Legal"
         title="Privacy Policy"
+        images={[{ src: images.pageHero.legal, position: "center 20%" }]}
       />
       <section className="section-pad">
         <div className="container-page">

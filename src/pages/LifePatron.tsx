@@ -19,6 +19,7 @@ export default function LifePatron() {
         eyebrow="Lifetime Membership"
         title={lifePatron.heading}
         subtitle={lifePatron.intro}
+        images={[{ src: images.pageHero.lifePatron, position: "center 30%" }]}
       />
 
       <div className="container-page">

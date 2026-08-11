@@ -43,14 +43,32 @@ export const images = {
   lifeMembershipIcon: "/images/icons/life-membership-icon.png",
   radhashtamiBanner: "/images/radhashtami/banner.jpg",
   radhashtamiCarousel: [
-    { src: "/images/radhashtami/carousel-1.jpg", position: "50% 20%" },
-    { src: "/images/radhashtami/carousel-2.jpg", position: "50% 25%" },
+    { src: "/images/radhashtami/carousel-1.jpg", position: "50% 20%", fit: "contain" as const },
+    { src: "/images/radhashtami/carousel-2.jpg", position: "50% 25%", fit: "contain" as const },
     { src: "/images/radhashtami/carousel-3.jpg", position: "50% 50%" },
-    { src: "/images/radhashtami/carousel-4.jpg", position: "50% 18%" },
+    { src: "/images/radhashtami/carousel-4.jpg", position: "50% 18%", fit: "contain" as const },
   ],
   jhulanYatraBanner: "/images/jhulan-yatra/banner.jpg",
+  // Public-domain devotional paintings (The Met Open Access, CC0) — evoking the monsoon
+  // garden setting of the swing pastime until real event photography is available.
+  jhulanYatraCarousel: [
+    { src: "/images/jhulan-yatra/hero-1.jpg", position: "50% 68%", fit: "contain" as const },
+    { src: "/images/jhulan-yatra/hero-2.jpg", position: "45% 38%", fit: "contain" as const },
+  ],
   balramaPurnimaBanner: "/images/balrama-purnima/banner.jpg",
+  // Public-domain Krishna-and-Balarama paintings (The Met Open Access, CC0).
+  balramaPurnimaCarousel: [
+    { src: "/images/balrama-purnima/hero-1.jpg", position: "35% 55%", fit: "contain" as const },
+    { src: "/images/balrama-purnima/hero-2.jpg", position: "30% 32%" },
+    { src: "/images/balrama-purnima/hero-3.jpg", position: "70% 55%" },
+  ],
   prabhupadaAppearanceBanner: "/images/prabhupada-appearance/banner.jpg",
+  // Clean photo crops taken from the festival banner's own artwork — the same
+  // photos, just cropped clear of its baked-in title/date text.
+  prabhupadaAppearanceCarousel: [
+    { src: "/images/prabhupada-appearance/hero-1.jpg", position: "center 30%", fit: "contain" as const },
+    { src: "/images/prabhupada-appearance/hero-2.jpg", position: "center 25%", fit: "contain" as const },
+  ],
   janmashtami: {
     banner: "/images/janmashtami/banner.jpg",
     bronzeKalash: "/images/janmashtami/bronze-kalash.jpg",
@@ -67,7 +85,7 @@ export const images = {
     mahaAbhishekam: "/images/janmashtami/maha-abhishekam.jpg",
     carousel: [
       { src: "/images/janmashtami/carousel-1.jpg", position: "50% 30%" },
-      { src: "/images/janmashtami/carousel-2.jpg", position: "50% 18%" },
+      { src: "/images/janmashtami/carousel-2.jpg", position: "50% 18%", fit: "contain" as const },
       { src: "/images/janmashtami/carousel-3.jpg", position: "50% 55%" },
       { src: "/images/janmashtami/carousel-4.jpg", position: "50% 45%" },
     ],
@@ -96,4 +114,27 @@ export const images = {
     (_, i) => `/images/gallery/temple-${String(i + 1).padStart(2, "0")}.jpg`,
   ),
   galleryJanmashtami: ["06", "07", "08"].map((n) => `/images/gallery/janmashtami-${n}.jpeg`),
+  galleryCommunity: Array.from(
+    { length: 7 },
+    (_, i) => `/images/gallery/community-${String(i + 1).padStart(2, "0")}.jpg`,
+  ),
+  // Real temple photography reused as page-top hero banners, for a consistent look
+  // across pages that don't have a dedicated banner of their own.
+  pageHero: {
+    about: "/images/leadership/prabhupada-teaching.jpg",
+    contact: "/images/gallery/community-06.jpg",
+    donate: "/images/decorative/krishna-deity.jpg",
+    dyph: "/images/gallery/community-07.jpg",
+    faq: "/images/gallery/temple-09.jpg",
+    festivals: "/images/gallery/temple-03.jpg",
+    foodForLife: "/images/gallery/community-04.jpg",
+    gallery: "/images/gallery/temple-06.jpg",
+    giftShop: "/images/gallery/temple-10.jpg",
+    gitaDaan: "/images/leadership/prabhupada.png",
+    govindasOnWheel: "/images/gallery/temple-07.jpg",
+    lifePatron: "/images/gallery/community-05.jpg",
+    lectureVideos: "/images/leadership/guru.jpg",
+    temple: "/images/gallery/temple-08.jpg",
+    legal: "/images/leadership/guru-prasad-swami.jpg",
+  },
 };

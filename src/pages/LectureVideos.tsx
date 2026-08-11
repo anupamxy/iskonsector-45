@@ -5,6 +5,7 @@ import Card from "../components/ui/Card";
 import Button from "../components/ui/Button";
 import { YoutubeIcon } from "../components/ui/SocialIcons";
 import { siteInfo } from "../data/site";
+import { images } from "../data/images";
 
 const topics = [
   { icon: BookOpen, title: "Bhagavad Gita Classes", body: "Explaining the Gita's teachings for everyday life." },
@@ -20,6 +21,7 @@ export default function LectureVideos() {
         eyebrow="Wisdom & Kirtan"
         title="Lecture Videos"
         subtitle="Our full video library lives on YouTube — Bhagavad Gita classes, kirtans, and festival recordings, updated regularly."
+        images={[{ src: images.pageHero.lectureVideos, position: "center 15%" }]}
       />
 
       <section className="section-pad">

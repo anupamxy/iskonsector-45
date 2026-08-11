@@ -11,7 +11,6 @@ import Dyph from "./pages/Dyph";
 import GitaDaan from "./pages/GitaDaan";
 import Festivals from "./pages/Festivals";
 import FestivalDetail from "./pages/FestivalDetail";
-import Gallery from "./pages/Gallery";
 import GiftShop from "./pages/GiftShop";
 import LectureVideos from "./pages/LectureVideos";
 import Donate from "./pages/Donate";
@@ -37,7 +36,6 @@ export default function App() {
         <Route path="/gita-daan" element={<GitaDaan />} />
         <Route path="/festivals" element={<Festivals />} />
         <Route path="/festivals/:slug" element={<FestivalDetail />} />
-        <Route path="/gallery" element={<Gallery />} />
         <Route path="/gift-shop" element={<GiftShop />} />
         <Route path="/lecture-videos" element={<LectureVideos />} />
         <Route path="/donate" element={<Donate />} />

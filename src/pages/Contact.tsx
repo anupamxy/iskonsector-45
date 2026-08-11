@@ -6,6 +6,7 @@ import Card from "../components/ui/Card";
 import Button from "../components/ui/Button";
 import JoinFamilyForm from "../components/ui/JoinFamilyForm";
 import { siteInfo } from "../data/site";
+import { images } from "../data/images";
 
 const quickActions = [
   { icon: Phone, label: "Call Us", value: siteInfo.phones.primary, href: `tel:${siteInfo.phones.primaryTel}` },
@@ -58,6 +59,7 @@ export default function Contact() {
         eyebrow="Get in Touch"
         title="Hare Krishna. We'd Love to Hear From You."
         subtitle="Whether you're planning a visit, booking a seva, or just have a question — reach out anytime."
+        images={[{ src: images.pageHero.contact, position: "center 35%" }]}
       />
 
       <section className="section-pad">

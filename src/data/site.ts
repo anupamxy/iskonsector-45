@@ -1,6 +1,10 @@
+import { visibleFestivals } from "./festivals";
+
 export const siteInfo = {
   name: "ISKCON Gurugram, Sector 45",
   templeName: "Sri Sri Radha Gopinath Mandir",
+  welcomeMessage: "Sri Sri Radha Gopinath Temple Welcomes You",
+  darshanTimings: "4:30 AM – 9:00 PM",
   tagline:
     "A serene temple dedicated to Lord Krishna and spiritual awakening — join us for kirtans, abhishekam, and blessings.",
   description:
@@ -80,15 +84,14 @@ export const primaryNav: NavItem[] = [
   {
     label: "Festivals",
     to: "/festivals",
-    children: [
-      { label: "Janmashtami", to: "/festivals/janmashtami" },
-      { label: "Radhashtami", to: "/festivals/radhashtami" },
-    ],
+    children: visibleFestivals.map((festival) => ({
+      label: festival.name,
+      to: `/festivals/${festival.slug}`,
+    })),
   },
   {
     label: "Explore",
     children: [
-      { label: "Gallery", to: "/gallery" },
       { label: "Gift Shop", to: "/gift-shop" },
       { label: "Lecture Videos", to: "/lecture-videos" },
       { label: "FAQ", to: "/faq" },
@@ -102,7 +105,6 @@ export const footerNav = {
     { label: "About Us", to: "/about" },
     { label: "Temple & Seva", to: "/temple" },
     { label: "Festivals", to: "/festivals" },
-    { label: "Gallery", to: "/gallery" },
     { label: "Lecture Videos", to: "/lecture-videos" },
     { label: "FAQ", to: "/faq" },
   ],

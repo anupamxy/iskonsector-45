@@ -20,7 +20,7 @@ export interface Festival {
   /** YouTube video ID (not a full URL). When set, plays muted/looping as the page's hero background instead of the static banner. */
   videoId?: string;
   /** Photos — when set (and no videoId), auto-advances as a crossfading hero background instead of the static banner. */
-  heroImages?: { src: string; position?: string }[];
+  heroImages?: { src: string; position?: string; fit?: "cover" | "contain" }[];
   /** ISO date-time string, e.g. "2026-09-04T00:00:00" — only set when a real, confirmed date is known. */
   date?: string;
   /** Set for multi-day festivals — countdown still targets `date`, but the label shows the full range. */
@@ -50,12 +50,63 @@ export const festivals: Festival[] = [
     heading: "Jhulan Yatra — The Swing Festival",
     tagline: "Come and get the chance to swing the divine couple, Sri Sri Radha Gopinath.",
     bannerImage: images.jhulanYatraBanner,
+    showInHomeHero: true,
+    heroImages: images.jhulanYatraCarousel,
     date: "2026-08-23T19:30:00",
     endDate: "2026-08-28T21:00:00",
     timeLabel: "7:30 PM – 9:00 PM",
-    notes: [
-      "During Jhulan Yatra, Sri Sri Radha Gopinath are lovingly placed on a decorated swing each evening, and devotees take turns swinging Them.",
-      "The festival is celebrated over five days leading up to Balarama Purnima, a joyful tradition observed across ISKCON temples worldwide.",
+    significance:
+      "Jhulan Yatra, also known as Hindola Utsav, celebrates one of the sweetest of Radha and Krishna's pastimes — swinging together beneath flowering vines in the rain-washed forests of Vrindavan during the monsoon month of Shravana. The festival begins on Shravana Shukla Ekadashi and continues for five days, climaxing on Shravana Purnima, the same day Lord Balarama's appearance is celebrated. In accordance with Srila Prabhupada's instruction, ISKCON temples observe all five days, decorating a swing with flowers and greenery each evening for Sri Sri Radha Gopinath. What makes the festival especially cherished is Jhulan Seva — every visitor is welcomed to personally swing the deities, a simple and joyful act of devotional service.",
+    muhurat: [
+      { label: "Festival", value: "Jhulan Yatra (Hindola Utsav)" },
+      { label: "Dates", value: "Sunday, 23 August – Friday, 28 August 2026" },
+      { label: "Tithi Span", value: "Shravana, Shukla Paksha — Ekadashi to Purnima" },
+      { label: "Daily Seva Time", value: "7:30 PM – 9:00 PM" },
+      { label: "Culminates With", value: "Balarama Purnima (28 August)" },
+    ],
+    howCelebrated: [
+      {
+        title: "Decorating the Swing",
+        body: "Each evening, a swing is lovingly decorated with flowers, vines, and lights for Sri Sri Radha Gopinath, recreating the monsoon bowers of Vrindavan.",
+      },
+      {
+        title: "Jhulan Seva",
+        body: "Every devotee present is given the opportunity to personally swing the deities — an intimate, hands-on act of devotional service.",
+      },
+      {
+        title: "Kirtan & Bhajans",
+        body: "The five evenings are filled with kirtan and songs glorifying Radha and Krishna's swinging pastimes together.",
+      },
+      {
+        title: "Five Days, Per Tradition",
+        body: "ISKCON temples observe the festival across all five days from Ekadashi to Purnima, following Srila Prabhupada's own instruction.",
+      },
+      {
+        title: "Leading into Balarama Purnima",
+        body: "The final evening of Jhulan Yatra falls on the same day as Lord Balarama's appearance, making it a doubly festive close.",
+      },
+    ],
+    faqs: [
+      {
+        question: "Do I really get to swing the deities myself?",
+        answer:
+          "Yes — this is what makes Jhulan Yatra special. Every visitor who comes during the seva window is welcomed to gently swing Sri Sri Radha Gopinath as an act of devotion.",
+      },
+      {
+        question: "Do I need to fast during Jhulan Yatra?",
+        answer:
+          "No, Jhulan Yatra isn't a fasting occasion — it's a joyous celebration. Just come by any evening during the five days.",
+      },
+      {
+        question: "What time should I come?",
+        answer:
+          "The swing seva and kirtan run from 7:30 PM to 9:00 PM each evening, 23 through 28 August.",
+      },
+      {
+        question: "Can I sponsor flowers or decoration for the swing?",
+        answer:
+          "Yes — reach out to us on WhatsApp or in person at the temple and we'll be glad to arrange it on your behalf.",
+      },
     ],
   },
   {
@@ -64,11 +115,74 @@ export const festivals: Festival[] = [
     heading: "Sri Balarama Purnima",
     tagline: "Celebrating the appearance of Lord Balarama, the first expansion of Sri Krishna and the original spiritual master.",
     bannerImage: images.balramaPurnimaBanner,
-    date: "2026-08-28T17:00:00",
-    timeLabel: "5:00 PM – 9:00 PM",
-    notes: [
-      "Lord Balarama is Krishna's elder brother and first expansion, the source of all spiritual masters and the strength behind Krishna's pastimes.",
-      "The day is celebrated with kirtan, abhishekam, and prasadam, marking the close of the Jhulan Yatra festivities.",
+    showInHomeHero: true,
+    heroImages: images.balramaPurnimaCarousel,
+    date: "2026-08-28T18:00:00",
+    timeLabel: "6:00 PM – 9:00 PM",
+    significance:
+      "Lord Balarama is Sri Krishna's elder brother and His first bodily expansion — Baladeva, or Sankarshana — revered in the Vaishnava tradition as the original spiritual master, the very source from which the entire disciplic succession of gurus descends. He embodies bala, spiritual strength, and stands as Krishna's constant companion and protector through the pastimes of Vrindavan and Dwaraka. Balarama Purnima, observed on the full-moon day of Shravana, marks His divine appearance and falls on the very evening the five-day Jhulan Yatra festival concludes — doubling the day's celebration. Devotees pray to Him for the steadiness and strength needed to remain fixed in spiritual life.",
+    muhurat: [
+      { label: "Festival", value: "Balarama Purnima" },
+      { label: "Date", value: "Friday, 28 August 2026" },
+      { label: "Tithi", value: "Purnima, Shukla Paksha, Shravana" },
+      { label: "Tithi Window", value: "Begins 9:08 AM, 27 Aug — Ends 9:48 AM, 28 Aug" },
+      { label: "Evening Celebration", value: "6:00 PM – 9:00 PM" },
+      { label: "Coincides With", value: "Culmination of Jhulan Yatra" },
+    ],
+    howCelebrated: [
+      {
+        title: "Fasting Till Noon",
+        body: "Devotees observe a fast, partial or full as per capacity, until midday, breaking it after the day's worship.",
+      },
+      {
+        title: "Abhishekam",
+        body: "The deities are ceremonially bathed in honor of Lord Balarama's appearance.",
+      },
+      {
+        title: "Kirtan & Sankirtan",
+        body: "Congregational chanting and kirtan mark the evening celebration, glorifying Balarama's strength and service to Krishna.",
+      },
+      {
+        title: "Offering White Flowers & Dairy",
+        body: "White flowers and milk-based sweets, especially dear to Balarama, are offered to the deities.",
+      },
+      {
+        title: "Prayers for Strength",
+        body: "Devotees pray to Him for the bala — the spiritual strength — needed to remain steady and fixed in devotional life.",
+      },
+    ],
+    vratVidhi: [
+      "The fast is typically kept until noon, or as per one's capacity.",
+      "Grains and beans are usually avoided; fruits, milk, and nuts are commonly taken.",
+      "The fast is broken after the day's worship concludes, ahead of the evening celebration.",
+      "The emphasis is on remembering Balarama's strength, service, and protection, more than on strict austerity.",
+    ],
+    faqs: [
+      {
+        question: "Who is Lord Balarama?",
+        answer:
+          "He is Sri Krishna's elder brother and first expansion, worshipped as the original spiritual master and the source of the entire guru-disciple succession in Vaishnava tradition.",
+      },
+      {
+        question: "Why does this fall on the same day Jhulan Yatra ends?",
+        answer:
+          "Both are tied to the same tithi — Shravana Purnima, the full-moon day. Jhulan Yatra's five days conclude on this Purnima, which is also Balarama's appearance day.",
+      },
+      {
+        question: "Do I need to fast?",
+        answer:
+          "Fasting until noon is a common and encouraged tradition, but it isn't mandatory to visit or take part in the celebrations.",
+      },
+      {
+        question: "What time should I come?",
+        answer:
+          "The main celebration runs from 6:00 PM to 9:00 PM on 28 August. Please call or WhatsApp us closer to the day to confirm timing.",
+      },
+      {
+        question: "Can I sponsor a seva if I can't attend in person?",
+        answer:
+          "Yes — reach out to us on WhatsApp or in person at the temple and we'll be glad to offer a seva on your behalf.",
+      },
     ],
   },
   {
@@ -191,11 +305,75 @@ export const festivals: Festival[] = [
     heading: "Celebrating the Divine Arrival of Our Eternal Guide",
     tagline: "Srila Prabhupada Appearance Day — honouring the Founder Acharya of ISKCON with kirtan, offerings, and gratitude.",
     bannerImage: images.prabhupadaAppearanceBanner,
+    showInHomeHero: true,
+    heroImages: images.prabhupadaAppearanceCarousel,
     date: "2026-09-05T10:00:00",
     timeLabel: "10:00 AM – 1:00 PM",
-    notes: [
-      "His Divine Grace A.C. Bhaktivedanta Swami Srila Prabhupada founded ISKCON in 1966, carrying the teachings of the Bhagavad Gita to the entire world.",
-      "Devotees mark this day with kirtan, offerings, and remembrance of his life and teachings, expressing gratitude for his mission of spreading Krishna consciousness.",
+    verse: "नमो ॐ विष्णुपादाय कृष्णप्रेष्ठाय भूतले। श्रीमते भक्तिवेदान्तस्वामिन् इति नामिने॥",
+    verseRef: "Pranam mantra offered to Srila Prabhupada",
+    significance:
+      "His Divine Grace A.C. Bhaktivedanta Swami Prabhupada, Founder-Acharya of ISKCON, appeared in this world on 1 September 1896 in Calcutta. By the Vedic calendar his birth falls on Krishna Paksha Navami of Bhadrapada — the tithi of Nandotsava, the day after Janmashtami, when Nanda Maharaja celebrated the birth of his son Krishna. At age 69, carrying little more than a few rupees, a set of Srimad Bhagavatam volumes, and faith in his own spiritual master's order, he sailed alone to America in 1965 and founded ISKCON the following year. In the twelve years that remained to him, he circled the globe fourteen times, wrote more than eighty books, and established a worldwide movement of temples carrying the teachings of Krishna consciousness that continues to grow today. Disciples mark his appearance day as Vyasa-puja — an offering of gratitude and glorification to the spiritual master as the representative of Srila Vyasadeva, compiler of the Vedic scriptures. This year's observance, on 5 September 2026, marks his 130th appearance anniversary.",
+    muhurat: [
+      { label: "Festival", value: "Srila Prabhupada's Appearance Day (Vyasa-puja)" },
+      { label: "Date", value: "Saturday, 5 September 2026" },
+      { label: "Anniversary", value: "130th Appearance Day" },
+      { label: "Tithi", value: "Navami, Krishna Paksha, Bhadrapada" },
+      { label: "Falls On", value: "The day after Janmashtami's Nandotsav" },
+      { label: "Celebration Time", value: "10:00 AM – 1:00 PM" },
+    ],
+    howCelebrated: [
+      {
+        title: "Fasting Till Noon",
+        body: "Devotees observe a fast until the late-morning worship and offering conclude.",
+      },
+      {
+        title: "Kirtan & Glorification",
+        body: "The temple resounds with kirtan and talks on Srila Prabhupada's life, teachings, and mission.",
+      },
+      {
+        title: "Vyasa-puja Offering",
+        body: "A formal ceremony offers worship, flowers, and homages to the spiritual master, in the tradition of honoring one's guru as Vyasadeva's representative.",
+      },
+      {
+        title: "Written Homages",
+        body: "Devotees around the world submit written homages, compiled into that year's Vyasa-puja offering.",
+      },
+      {
+        title: "Prasadam Feast",
+        body: "The celebration concludes with devotees honoring sanctified prasadam together in gratitude.",
+      },
+    ],
+    vratVidhi: [
+      "Devotees typically fast until the late-morning offering and worship conclude.",
+      "The day centers on remembrance and gratitude for Srila Prabhupada's life and mission, more than on strict austerity.",
+      "Those unable to keep a full fast are welcome to observe a simpler version, or none at all — participation matters more than austerity.",
+    ],
+    faqs: [
+      {
+        question: "Why is it called Vyasa-puja?",
+        answer:
+          "Vyasa-puja is the traditional offering of worship to one's spiritual master, honored as the living representative of Srila Vyasadeva, the compiler of the Vedic scriptures. It's observed on the appearance day of a guru in the disciplic succession.",
+      },
+      {
+        question: "Who was Srila Prabhupada?",
+        answer:
+          "His Divine Grace A.C. Bhaktivedanta Swami Prabhupada founded ISKCON in New York in 1966, at age 69, after sailing from Calcutta the year before. He spent the rest of his life establishing temples and translating Vedic scripture worldwide.",
+      },
+      {
+        question: "Do I need to fast on this day?",
+        answer:
+          "Fasting until the late-morning worship is a common tradition, but it isn't mandatory to visit or take part in the celebrations.",
+      },
+      {
+        question: "What time should I come for the celebration?",
+        answer:
+          "The main program runs from 10:00 AM to 1:00 PM on 5 September. Please call or WhatsApp us closer to the day to confirm timing.",
+      },
+      {
+        question: "Can I submit a homage or sponsor a seva?",
+        answer:
+          "Yes — reach out to us on WhatsApp or in person at the temple, and we'll be glad to include your homage or arrange a seva on your behalf.",
+      },
     ],
   },
   {
@@ -338,6 +516,6 @@ export function getFestival(slug: string) {
 }
 
 /** Slugs to surface in listings/nav for now — other festivals stay reachable by direct link. */
-const VISIBLE_SLUGS = ["janmashtami", "radhashtami"];
+const VISIBLE_SLUGS = ["jhulan-yatra", "balrama-purnima", "janmashtami", "srila-prabhupada-appearance-day", "radhashtami"];
 
 export const visibleFestivals = festivals.filter((f) => VISIBLE_SLUGS.includes(f.slug));

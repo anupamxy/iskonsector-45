@@ -7,6 +7,7 @@ import SevaCard from "../components/ui/SevaCard";
 import DonateButton from "../components/ui/DonateButton";
 import { deitySeva } from "../data/donations";
 import { siteInfo } from "../data/site";
+import { images } from "../data/images";
 
 const causes = [
   {
@@ -50,6 +51,7 @@ export default function Donate() {
         eyebrow="Seva & Giving"
         title="Support ISKCON Gurugram, Sector 45"
         subtitle="Every contribution — large or small — helps feed the hungry, share the Bhagavad Gita, and keep festivals and temple life thriving."
+        images={[{ src: images.pageHero.donate, position: "center 15%", fit: "contain" }]}
       />
 
       <section className="section-pad">

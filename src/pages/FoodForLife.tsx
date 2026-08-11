@@ -33,6 +33,7 @@ export default function FoodForLife() {
         eyebrow="Anna Daan Seva"
         title="Food For Life"
         subtitle={foodForLife.tagline}
+        images={[{ src: images.pageHero.foodForLife, position: "center 25%" }]}
       />
 
       <div className="container-page">

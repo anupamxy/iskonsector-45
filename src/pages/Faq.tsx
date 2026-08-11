@@ -1,6 +1,7 @@
 import PageHero from "../components/ui/PageHero";
 import Accordion from "../components/ui/Accordion";
 import { faqs } from "../data/faq";
+import { images } from "../data/images";
 
 export default function Faq() {
   return (
@@ -10,6 +11,7 @@ export default function Faq() {
         eyebrow="Have a Question?"
         title="Frequently Asked Questions"
         subtitle="Everything you need to know before visiting or supporting ISKCON Gurugram, Sector 45."
+        images={[{ src: images.pageHero.faq }]}
       />
 
       <section className="section-pad">

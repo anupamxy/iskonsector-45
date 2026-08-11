@@ -2,6 +2,7 @@ import PageHero from "../components/ui/PageHero";
 import SectionHeading from "../components/ui/SectionHeading";
 import SevaCard from "../components/ui/SevaCard";
 import { gitaDaan } from "../data/donations";
+import { images } from "../data/images";
 
 export default function GitaDaan() {
   return (
@@ -15,6 +16,7 @@ export default function GitaDaan() {
         eyebrow={gitaDaan.verseRef}
         title={gitaDaan.heading}
         subtitle={gitaDaan.intro}
+        images={[{ src: images.pageHero.gitaDaan, position: "center 12%" }]}
       />
 
       <section className="section-pad">

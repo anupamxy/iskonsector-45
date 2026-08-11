@@ -1,3 +1,5 @@
+import { siteInfo } from "./site";
+
 export interface FaqItem {
   question: string;
   answer: string;
@@ -6,8 +8,7 @@ export interface FaqItem {
 export const faqs: FaqItem[] = [
   {
     question: "What are the temple's darshan timings?",
-    answer:
-      "Daily darshan and aarti timings can vary with the season and festival calendar. Please call or WhatsApp us at +91 93117 67088 for today's schedule before you visit.",
+    answer: `The temple is open for darshan daily from ${siteInfo.darshanTimings}. Aarti timings can shift slightly with the season and festival calendar, so please call or WhatsApp us at ${siteInfo.phones.primary} to confirm today's schedule before you visit.`,
   },
   {
     question: "Is there an entry fee to visit the temple?",

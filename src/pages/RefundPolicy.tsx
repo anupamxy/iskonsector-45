@@ -1,6 +1,7 @@
 import PageHero from "../components/ui/PageHero";
 import LegalContent from "../components/ui/LegalContent";
 import { siteInfo } from "../data/site";
+import { images } from "../data/images";
 
 export default function RefundPolicy() {
   return (
@@ -9,6 +10,7 @@ export default function RefundPolicy() {
         breadcrumb={[{ label: "Home", to: "/" }, { label: "Refund Policy" }]}
         eyebrow="Legal"
         title="Refund Policy"
+        images={[{ src: images.pageHero.legal, position: "center 20%" }]}
       />
       <section className="section-pad">
         <div className="container-page">

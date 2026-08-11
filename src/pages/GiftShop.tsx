@@ -5,6 +5,7 @@ import Card from "../components/ui/Card";
 import Button from "../components/ui/Button";
 import { giftShopCategories } from "../data/programs";
 import { siteInfo } from "../data/site";
+import { images } from "../data/images";
 
 export default function GiftShop() {
   return (
@@ -14,6 +15,7 @@ export default function GiftShop() {
         eyebrow="Matchless Gifts"
         title="Gift Shop"
         subtitle="Spiritual literature, art, and lifestyle items designed to uplift the mind. Our catalog is being brought online — message us on WhatsApp to enquire about any item today."
+        images={[{ src: images.pageHero.giftShop, position: "center 30%" }]}
       />
 
       <section className="section-pad">

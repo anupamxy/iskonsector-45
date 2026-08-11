@@ -5,6 +5,7 @@ import Card from "../components/ui/Card";
 import Button from "../components/ui/Button";
 import { dyph } from "../data/programs";
 import { siteInfo } from "../data/site";
+import { images } from "../data/images";
 
 const info = [
   { icon: Calendar, label: "Format", value: "6 weeks, Sundays, at the temple" },
@@ -28,6 +29,7 @@ export default function Dyph() {
         eyebrow={dyph.fullName}
         title="Discover Your Permanent Happiness"
         subtitle={dyph.intro}
+        images={[{ src: images.pageHero.dyph, position: "center 40%" }]}
       />
 
       <section className="section-pad">

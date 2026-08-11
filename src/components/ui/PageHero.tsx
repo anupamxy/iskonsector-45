@@ -16,13 +16,16 @@ interface PageHeroProps {
   videoId?: string;
   /** Photos — when set (and no videoId), auto-advances as a crossfading hero background.
    * `position` is a CSS object-position value (e.g. "50% 20%") to keep the subject in frame
-   * when the wide hero band crops a portrait/square source photo. Defaults to centered. */
-  images?: { src: string; position?: string }[];
+   * when the wide hero band crops a portrait/square source photo. Defaults to centered.
+   * `fit: "contain"` shows the full photo uncropped (behind a blurred backdrop of itself) —
+   * use it for portrait/low-res sources that would otherwise get blown up and cropped down
+   * to a sliver by the wide, short hero band. Defaults to "cover". */
+  images?: { src: string; position?: string; fit?: "cover" | "contain" }[];
   /** Extra content rendered below the subtitle, inside the hero (e.g. date/time pills). */
   children?: ReactNode;
 }
 
-function ImageCarousel({ images }: { images: { src: string; position?: string }[] }) {
+function ImageCarousel({ images }: { images: { src: string; position?: string; fit?: "cover" | "contain" }[] }) {
   const [active, setActive] = useState(0);
 
   useEffect(() => {
@@ -33,17 +36,43 @@ function ImageCarousel({ images }: { images: { src: string; position?: string }[
 
   return (
     <>
-      {images.map((image, i) => (
-        <img
-          key={image.src}
-          src={image.src}
-          alt=""
-          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${
-            i === active ? "opacity-100" : "opacity-0"
-          }`}
-          style={{ objectPosition: image.position ?? "center" }}
-        />
-      ))}
+      {images.map((image, i) => {
+        const wrapClass = `absolute inset-0 transition-opacity duration-1000 ${
+          i === active ? "opacity-100" : "opacity-0"
+        }`;
+
+        if (image.fit === "contain") {
+          // Portrait/low-res sources: never crop the subject — show it whole, on top of
+          // a softly blurred cover-crop of the same photo so there's no empty letterboxing.
+          return (
+            <div key={image.src} className={wrapClass}>
+              <img
+                src={image.src}
+                alt=""
+                aria-hidden
+                className="absolute inset-0 h-full w-full scale-110 object-cover blur-2xl brightness-[0.55] saturate-125"
+                style={{ objectPosition: image.position ?? "center" }}
+              />
+              <img
+                src={image.src}
+                alt=""
+                className="absolute inset-0 h-full w-full object-contain"
+                style={{ objectPosition: image.position ?? "center" }}
+              />
+            </div>
+          );
+        }
+
+        return (
+          <img
+            key={image.src}
+            src={image.src}
+            alt=""
+            className={`h-full w-full object-cover ${wrapClass}`}
+            style={{ objectPosition: image.position ?? "center" }}
+          />
+        );
+      })}
     </>
   );
 }
@@ -112,8 +141,8 @@ export default function PageHero({ eyebrow, title, subtitle, breadcrumb, videoId
         </>
       ) : (
         <>
-          <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-primary/20 blur-3xl" />
-          <div className="pointer-events-none absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-secondary/20 blur-3xl" />
+          <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 animate-float-slow rounded-full bg-primary/20 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-24 -left-24 h-72 w-72 animate-float-slower rounded-full bg-secondary/20 blur-3xl" />
         </>
       )}
       <div className="container-page relative">

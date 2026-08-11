@@ -40,6 +40,7 @@ export default function GovindasOnWheel() {
         eyebrow="Prasadam Delivery"
         title="Govinda's On Wheel"
         subtitle={govindasOnWheel.intro}
+        images={[{ src: images.pageHero.govindasOnWheel, position: "center 40%" }]}
       />
 
       <section className="section-pad">
