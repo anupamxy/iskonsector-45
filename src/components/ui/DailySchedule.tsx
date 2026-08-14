@@ -1,9 +1,9 @@
+import { useEffect, useState } from "react";
 import { Sunrise, Sunset, Ban, Sparkles } from "lucide-react";
 
 interface ScheduleItem {
   title: string;
   time: string;
-  highlight?: boolean;
 }
 
 const morningSchedule: ScheduleItem[] = [
@@ -15,12 +15,60 @@ const morningSchedule: ScheduleItem[] = [
 
 const eveningSchedule: ScheduleItem[] = [
   { title: "Rajbhog Arati", time: "12:30 PM" },
-  { title: "Sandhya Arati", time: "6:30 PM", highlight: true },
+  { title: "Sandhya Arati", time: "6:30 PM" },
   { title: "Shayan Aarti", time: "8:30 PM" },
   { title: "Shayana Arati / Darshan Closes", time: "9:00 PM" },
 ];
 
-function ScheduleColumn({ label, icon: Icon, items }: { label: string; icon: typeof Sunrise; items: ScheduleItem[] }) {
+const dailyTimeline = [...morningSchedule, ...eveningSchedule];
+
+function toMinutesSinceMidnight(time: string): number {
+  const [, hourStr, minuteStr, meridiem] = time.match(/(\d+):(\d+)\s*(AM|PM)/i)!;
+  let hour = Number(hourStr) % 12;
+  if (meridiem.toUpperCase() === "PM") hour += 12;
+  return hour * 60 + Number(minuteStr);
+}
+
+function getActiveTitle(nowMinutes: number): string {
+  let active = dailyTimeline[dailyTimeline.length - 1];
+  for (const item of dailyTimeline) {
+    if (toMinutesSinceMidnight(item.time) <= nowMinutes) {
+      active = item;
+    }
+  }
+  return active.title;
+}
+
+function useActiveScheduleTitle() {
+  const [activeTitle, setActiveTitle] = useState(() => {
+    const now = new Date();
+    return getActiveTitle(now.getHours() * 60 + now.getMinutes());
+  });
+
+  useEffect(() => {
+    const update = () => {
+      const now = new Date();
+      setActiveTitle(getActiveTitle(now.getHours() * 60 + now.getMinutes()));
+    };
+    update();
+    const id = setInterval(update, 60_000);
+    return () => clearInterval(id);
+  }, []);
+
+  return activeTitle;
+}
+
+function ScheduleColumn({
+  label,
+  icon: Icon,
+  items,
+  activeTitle,
+}: {
+  label: string;
+  icon: typeof Sunrise;
+  items: ScheduleItem[];
+  activeTitle: string;
+}) {
   return (
     <div>
       <div className="mb-4 flex items-center gap-2 text-gold">
@@ -32,7 +80,7 @@ function ScheduleColumn({ label, icon: Icon, items }: { label: string; icon: typ
           <li
             key={item.title}
             className={`flex items-center justify-between rounded-2xl px-5 py-4 ${
-              item.highlight ? "border border-gold/40 bg-gold/15" : "bg-white/5"
+              item.title === activeTitle ? "border border-gold/40 bg-gold/15" : "bg-white/5"
             }`}
           >
             <span className="font-medium text-white">{item.title}</span>
@@ -45,6 +93,8 @@ function ScheduleColumn({ label, icon: Icon, items }: { label: string; icon: typ
 }
 
 export default function DailySchedule() {
+  const activeTitle = useActiveScheduleTitle();
+
   return (
     <section className="section-pad bg-gradient-to-br from-ink to-ink-deep text-white">
       <div className="container-page">
@@ -56,8 +106,8 @@ export default function DailySchedule() {
           </p>
         </div>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-          <ScheduleColumn label="Morning" icon={Sunrise} items={morningSchedule} />
-          <ScheduleColumn label="Afternoon & Evening" icon={Sunset} items={eveningSchedule} />
+          <ScheduleColumn label="Morning" icon={Sunrise} items={morningSchedule} activeTitle={activeTitle} />
+          <ScheduleColumn label="Afternoon & Evening" icon={Sunset} items={eveningSchedule} activeTitle={activeTitle} />
         </div>
         <div className="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-white/80">
           <span className="flex items-center gap-2">
