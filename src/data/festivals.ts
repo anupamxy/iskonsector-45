@@ -519,3 +519,11 @@ export function getFestival(slug: string) {
 const VISIBLE_SLUGS = ["jhulan-yatra", "balrama-purnima", "janmashtami", "srila-prabhupada-appearance-day", "radhashtami"];
 
 export const visibleFestivals = festivals.filter((f) => VISIBLE_SLUGS.includes(f.slug));
+
+/** Festivals with a confirmed, still-upcoming date, earliest first — used to drive the
+ * homepage hero slides, the utility bar's festival highlight, and its countdown. */
+export function getUpcomingHomeFestivals(): Festival[] {
+  return festivals
+    .filter((f) => f.showInHomeHero && f.date && new Date(f.date).getTime() > Date.now())
+    .sort((a, b) => new Date(a.date!).getTime() - new Date(b.date!).getTime());
+}

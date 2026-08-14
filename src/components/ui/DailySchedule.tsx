@@ -30,6 +30,12 @@ function toMinutesSinceMidnight(time: string): number {
 }
 
 function getActiveTitle(nowMinutes: number): string {
+  // Before the day's first event, highlight it as "up next" rather than wrapping
+  // around to yesterday's last event, which reads as stale/incorrect overnight.
+  if (nowMinutes < toMinutesSinceMidnight(dailyTimeline[0].time)) {
+    return dailyTimeline[0].title;
+  }
+
   let active = dailyTimeline[dailyTimeline.length - 1];
   for (const item of dailyTimeline) {
     if (toMinutesSinceMidnight(item.time) <= nowMinutes) {

@@ -5,6 +5,12 @@ export const siteInfo = {
   templeName: "Sri Sri Radha Gopinath Mandir",
   welcomeMessage: "Sri Sri Radha Gopinath Temple Welcomes You",
   darshanTimings: "4:30 AM – 9:00 PM",
+  /** Actual open windows, including the midday break — drives the live "Open Now" /
+   * "Closed Now" status. Keep in sync with DailySchedule's morning/evening timings. */
+  darshanWindows: [
+    { open: "4:30 AM", close: "1:00 PM" },
+    { open: "4:15 PM", close: "9:00 PM" },
+  ],
   tagline:
     "A serene temple dedicated to Lord Krishna and spiritual awakening — join us for kirtans, abhishekam, and blessings.",
   description:

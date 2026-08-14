@@ -105,7 +105,7 @@ export default function PageHero({ eyebrow, title, subtitle, breadcrumb, videoId
       {images?.length ? (
         <>
           <ImageCarousel images={images} />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-deep via-ink-deep/70 to-ink-deep/40" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-deep/85 via-ink-deep/35 to-transparent" />
         </>
       ) : videoId ? (
         <>
@@ -129,7 +129,7 @@ export default function PageHero({ eyebrow, title, subtitle, breadcrumb, videoId
               minHeight: "100cqh",
             }}
           />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-deep via-ink-deep/70 to-ink-deep/40" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-deep/85 via-ink-deep/35 to-transparent" />
           <a
             href={`https://www.youtube.com/watch?v=${videoId}`}
             target="_blank"

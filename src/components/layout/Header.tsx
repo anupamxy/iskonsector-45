@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { Phone, Mail, ChevronDown, Menu, X } from "lucide-react";
+import { Phone, ChevronDown, Menu, X } from "lucide-react";
 import clsx from "clsx";
 import { siteInfo, primaryNav } from "../../data/site";
 import Button from "../ui/Button";
-import { FacebookIcon, InstagramIcon, YoutubeIcon } from "../ui/SocialIcons";
+import UtilityBar from "./UtilityBar";
 import { images } from "../../data/images";
 
 function Logo() {
@@ -42,37 +42,7 @@ export default function Header() {
   return (
     <>
       {/* Utility bar */}
-      <div className="hidden bg-ink-deep text-white/80 md:block">
-        <div className="container-page flex items-center justify-between py-2 text-xs">
-          <div className="flex items-center gap-5">
-            <a href={`tel:${siteInfo.phones.primaryTel}`} className="flex items-center gap-1.5 hover:text-white">
-              <Phone size={13} /> {siteInfo.phones.primary}
-            </a>
-            <a href={`mailto:${siteInfo.email}`} className="flex items-center gap-1.5 hover:text-white">
-              <Mail size={13} /> {siteInfo.email}
-            </a>
-          </div>
-          <div className="hidden items-center gap-5 lg:flex">
-            <Link to="/festivals" className="rounded-full bg-primary/20 px-3 py-1 font-medium text-primary-light hover:bg-primary/30">
-              🎉 Festivals & Seva
-            </Link>
-            <Link to="/faq" className="hover:text-white">
-              Darshan Info
-            </Link>
-          </div>
-          <div className="flex items-center gap-4">
-            <a href={siteInfo.social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="hover:text-primary-light">
-              <FacebookIcon size={14} />
-            </a>
-            <a href={siteInfo.social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hover:text-primary-light">
-              <InstagramIcon size={14} />
-            </a>
-            <a href={siteInfo.social.youtube} target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="hover:text-primary-light">
-              <YoutubeIcon size={14} />
-            </a>
-          </div>
-        </div>
-      </div>
+      <UtilityBar />
 
       {/* Main header */}
       <header

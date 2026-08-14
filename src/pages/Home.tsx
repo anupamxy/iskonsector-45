@@ -21,9 +21,7 @@ import Button from "../components/ui/Button";
 import Card from "../components/ui/Card";
 import SectionHeading from "../components/ui/SectionHeading";
 import SevaCard from "../components/ui/SevaCard";
-import HeroCarousel from "../components/ui/HeroCarousel";
-import FestivalCountdownCarousel from "../components/ui/FestivalCountdownCarousel";
-import WelcomeBanner from "../components/ui/WelcomeBanner";
+import HeroBanner from "../components/ui/HeroBanner";
 import DailySchedule from "../components/ui/DailySchedule";
 import JoinFamilyForm from "../components/ui/JoinFamilyForm";
 import StatCounter from "../components/ui/StatCounter";
@@ -35,7 +33,7 @@ import { YoutubeIcon } from "../components/ui/SocialIcons";
 import { siteInfo } from "../data/site";
 import { founder, leadership, pillars } from "../data/about";
 import { deitySeva } from "../data/donations";
-import { festivals, visibleFestivals } from "../data/festivals";
+import { getUpcomingHomeFestivals, visibleFestivals } from "../data/festivals";
 import { images } from "../data/images";
 
 const impactStats = [
@@ -53,9 +51,7 @@ const exploreLinks = [
   { icon: Video, label: "Lecture Videos", to: "/lecture-videos" },
 ];
 
-const upcomingFestivals = festivals
-  .filter((f) => f.showInHomeHero && f.date && new Date(f.date).getTime() > Date.now())
-  .sort((a, b) => new Date(a.date!).getTime() - new Date(b.date!).getTime());
+const upcomingFestivals = getUpcomingHomeFestivals();
 
 const festivalBadges: Record<string, string> = {
   "jhulan-yatra": "The Swing Festival",
@@ -117,35 +113,8 @@ const programs = [
 export default function Home() {
   return (
     <div>
-      <WelcomeBanner />
-
       {/* Hero */}
-      {upcomingFestivals.length > 0 ? (
-        <FestivalCountdownCarousel festivals={upcomingFestivals} videoSrc={images.home.heroVideo} />
-      ) : (
-        <section className="relative overflow-hidden bg-gradient-to-br from-ink to-ink-deep text-white">
-          <div className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-primary/20 blur-3xl" />
-          <div className="pointer-events-none absolute -bottom-32 -left-20 h-96 w-96 rounded-full bg-secondary/25 blur-3xl" />
-          <div className="container-page relative grid grid-cols-1 items-center gap-12 py-16 sm:py-24 lg:grid-cols-2">
-            <div>
-              <p className="text-eyebrow mb-4 text-primary-light">Sri Sri Radha Gopinath Mandir</p>
-              <h1 className="text-[clamp(2.3rem,5vw,4rem)] text-white">
-                Welcome to ISKCON Gurugram, Sector 45
-              </h1>
-              <p className="mt-5 max-w-lg text-white/70">{siteInfo.tagline}</p>
-              <div className="mt-8 flex flex-wrap gap-4">
-                <Button to="/contact" size="lg">
-                  Plan Your Visit
-                </Button>
-                <Button to="/donate" variant="ghost" size="lg">
-                  Offer Seva
-                </Button>
-              </div>
-            </div>
-            <HeroCarousel images={images.home.hero} alt="ISKCON Gurugram, Sector 45" />
-          </div>
-        </section>
-      )}
+      <HeroBanner media={[images.home.heroVideo]} festivals={upcomingFestivals} />
 
       {/* Quick strip */}
       <section className="bg-secondary">

@@ -43,28 +43,31 @@ export const images = {
   lifeMembershipIcon: "/images/icons/life-membership-icon.png",
   radhashtamiBanner: "/images/radhashtami/banner.jpg",
   radhashtamiCarousel: [
-    { src: "/images/radhashtami/carousel-1.jpg", position: "50% 20%", fit: "contain" as const },
-    { src: "/images/radhashtami/carousel-2.jpg", position: "50% 25%", fit: "contain" as const },
+    { src: "/images/radhashtami/carousel-1.jpg", position: "50% 20%" },
+    { src: "/images/radhashtami/carousel-2.jpg", position: "50% 25%" },
     { src: "/images/radhashtami/carousel-3.jpg", position: "50% 50%" },
-    { src: "/images/radhashtami/carousel-4.jpg", position: "50% 18%", fit: "contain" as const },
+    { src: "/images/radhashtami/carousel-4.jpg", position: "50% 15%" },
   ],
   jhulanYatraBanner: "/images/jhulan-yatra/banner.jpg",
   // Public-domain devotional paintings (The Met Open Access, CC0) — evoking the monsoon
   // garden setting of the swing pastime until real event photography is available.
   jhulanYatraCarousel: [
-    { src: "/images/jhulan-yatra/hero-1.jpg", position: "50% 68%", fit: "contain" as const },
-    { src: "/images/jhulan-yatra/hero-2.jpg", position: "45% 38%", fit: "contain" as const },
+    { src: "/images/jhulan-yatra/hero-1.jpg", position: "50% 68%" },
+    { src: "/images/jhulan-yatra/hero-2.jpg", position: "45% 38%" },
   ],
   balramaPurnimaBanner: "/images/balrama-purnima/banner.jpg",
   // Public-domain Krishna-and-Balarama paintings (The Met Open Access, CC0).
   balramaPurnimaCarousel: [
-    { src: "/images/balrama-purnima/hero-1.jpg", position: "35% 55%", fit: "contain" as const },
+    { src: "/images/balrama-purnima/hero-1.jpg", position: "35% 55%" },
     { src: "/images/balrama-purnima/hero-2.jpg", position: "30% 32%" },
     { src: "/images/balrama-purnima/hero-3.jpg", position: "70% 55%" },
   ],
   prabhupadaAppearanceBanner: "/images/prabhupada-appearance/banner.jpg",
   // Clean photo crops taken from the festival banner's own artwork — the same
-  // photos, just cropped clear of its baked-in title/date text.
+  // photos, just cropped clear of its baked-in title/date text. Both are narrow
+  // portrait crops (270x470, 320x460): too tall and narrow for a full-width hero
+  // band to cover-crop without slicing through the face, so they keep `fit:
+  // "contain"` (shown whole, on a blurred backdrop) instead of full-bleed cropping.
   prabhupadaAppearanceCarousel: [
     { src: "/images/prabhupada-appearance/hero-1.jpg", position: "center 30%", fit: "contain" as const },
     { src: "/images/prabhupada-appearance/hero-2.jpg", position: "center 25%", fit: "contain" as const },
@@ -83,9 +86,10 @@ export const images = {
     sadhuSeva: "/images/janmashtami/sadhu-seva.jpg",
     deitiesDress: "/images/janmashtami/deities-dress.jpg",
     mahaAbhishekam: "/images/janmashtami/maha-abhishekam.jpg",
+    // carousel-2 omitted here: its subjects sit too close to the frame edge to
+    // survive a full-width crop without one of them getting cut off.
     carousel: [
       { src: "/images/janmashtami/carousel-1.jpg", position: "50% 30%" },
-      { src: "/images/janmashtami/carousel-2.jpg", position: "50% 18%", fit: "contain" as const },
       { src: "/images/janmashtami/carousel-3.jpg", position: "50% 55%" },
       { src: "/images/janmashtami/carousel-4.jpg", position: "50% 45%" },
     ],
