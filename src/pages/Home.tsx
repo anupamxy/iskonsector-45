@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom";
 import {
   Clock,
-  HeartHandshake,
-  BookOpen,
   MapPin,
   GraduationCap,
   UtensilsCrossed,
@@ -33,7 +31,7 @@ import { YoutubeIcon } from "../components/ui/SocialIcons";
 import { siteInfo } from "../data/site";
 import { founder, leadership, pillars } from "../data/about";
 import { deitySeva } from "../data/donations";
-import { getUpcomingHomeFestivals, visibleFestivals } from "../data/festivals";
+import { getUpcomingHomeFestivals } from "../data/festivals";
 import { images } from "../data/images";
 
 const impactStats = [
@@ -52,6 +50,10 @@ const exploreLinks = [
 ];
 
 const upcomingFestivals = getUpcomingHomeFestivals();
+/** Only the 4 nearest upcoming festivals — as each one's date passes, the next one
+ * in line takes its place automatically since `upcomingFestivals` is already filtered
+ * to future dates and sorted soonest-first. */
+const festivalsToShow = upcomingFestivals.slice(0, 4);
 
 const festivalBadges: Record<string, string> = {
   "jhulan-yatra": "The Swing Festival",
@@ -73,13 +75,6 @@ const sevaImages: Record<string, string> = {
 const allGalleryPhotos = [...images.galleryTemple, ...images.galleryJanmashtami, ...images.galleryCommunity];
 const marqueeRow1 = allGalleryPhotos.filter((_, i) => i % 2 === 0);
 const marqueeRow2 = allGalleryPhotos.filter((_, i) => i % 2 === 1);
-
-const quickLinks = [
-  { icon: Clock, label: "Darshan Timings", to: "/faq" },
-  { icon: HeartHandshake, label: "Offer Seva", to: "/donate" },
-  { icon: BookOpen, label: "Gita Daan", to: "/gita-daan" },
-  { icon: MapPin, label: "Visit Us", to: "/contact" },
-];
 
 const pillarIcons = [GraduationCap, UtensilsCrossed, HandHeart, PartyPopper];
 
@@ -116,23 +111,7 @@ export default function Home() {
       {/* Hero */}
       <HeroBanner media={[images.home.heroVideo]} festivals={upcomingFestivals} />
 
-      {/* Quick strip */}
-      <section className="bg-secondary">
-        <div className="container-page grid grid-cols-2 gap-4 py-8 sm:grid-cols-4">
-          {quickLinks.map(({ icon: Icon, label, to }) => (
-            <Link
-              key={label}
-              to={to}
-              className="flex flex-col items-center gap-2 rounded-2xl py-3 text-center text-white transition-colors hover:bg-white/10"
-            >
-              <Icon size={24} />
-              <span className="text-sm font-medium">{label}</span>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      <DailySchedule />
+      
 
       {/* About teaser */}
       <section className="section-pad">
@@ -233,6 +212,7 @@ export default function Home() {
         </div>
       </section>
 
+      
       {/* Festivals */}
       <section className="section-pad relative overflow-hidden bg-cream-alt">
         <div className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 animate-float-slow rounded-full bg-primary/10 blur-3xl" />
@@ -242,7 +222,7 @@ export default function Home() {
             <SectionHeading eyebrow="Vaishnava Calendar" title="All Festivals We Celebrate" />
           </Reveal>
           <div className="flex flex-wrap justify-center gap-6">
-            {visibleFestivals.map((festival, i) => (
+            {festivalsToShow.map((festival, i) => (
               <Reveal
                 key={festival.slug}
                 delay={i * 90}
@@ -285,6 +265,23 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <DailySchedule />
+
+      {/* Quick strip */}
+      {/* <section className="bg-secondary">
+        <div className="container-page grid grid-cols-2 gap-4 py-8 sm:grid-cols-4">
+          {quickLinks.map(({ icon: Icon, label, to }) => (
+            <Link
+              key={label}
+              to={to}
+              className="flex flex-col items-center gap-2 rounded-2xl py-3 text-center text-white transition-colors hover:bg-white/10"
+            >
+              <Icon size={24} />
+              <span className="text-sm font-medium">{label}</span>
+            </Link>
+          ))}
+        </div>
+      </section> */}
 
       {/* Leadership */}
       <section className="section-pad">
@@ -409,7 +406,7 @@ export default function Home() {
               Get daily darshan updates, festival alerts, and seva reminders on WhatsApp.
             </p>
           </div>
-          <Button href={siteInfo.whatsapp.link} target="_blank" rel="noopener noreferrer" variant="ghost" size="lg" className="shrink-0">
+          <Button href={siteInfo.whatsapp.groupLink} target="_blank" rel="noopener noreferrer" variant="ghost" size="lg" className="shrink-0">
             <MessageCircle size={18} /> Join on WhatsApp
           </Button>
         </div>

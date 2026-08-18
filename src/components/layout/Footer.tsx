@@ -12,9 +12,20 @@ function FooterCol({ title, links }: { title: string; links: { label: string; to
       <ul className="flex flex-col gap-2.5">
         {links.map((link) => (
           <li key={link.to}>
-            <Link to={link.to} className="text-sm text-white/75 transition-colors hover:text-primary-light">
-              {link.label}
-            </Link>
+            {link.to.startsWith("http") ? (
+              <a
+                href={link.to}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-white/75 transition-colors hover:text-primary-light"
+              >
+                {link.label}
+              </a>
+            ) : (
+              <Link to={link.to} className="text-sm text-white/75 transition-colors hover:text-primary-light">
+                {link.label}
+              </Link>
+            )}
           </li>
         ))}
       </ul>

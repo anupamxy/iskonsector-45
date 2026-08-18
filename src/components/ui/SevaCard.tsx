@@ -7,9 +7,10 @@ interface SevaCardProps {
   description?: string;
   seva: string;
   image?: string;
+  razorpayLink?: string;
 }
 
-export default function SevaCard({ label, amount, description, seva, image }: SevaCardProps) {
+export default function SevaCard({ label, amount, description, seva, image, razorpayLink }: SevaCardProps) {
   return (
     <Card className="overflow-hidden p-0">
       {image && (
@@ -26,6 +27,7 @@ export default function SevaCard({ label, amount, description, seva, image }: Se
           label="Donate"
           seva={`${seva} — ${label}`}
           amount={amount}
+          razorpayLink={razorpayLink}
           size="md"
           className="mt-4 w-full"
         />

@@ -66,6 +66,7 @@ export default function FoodForLife() {
                 amount={pkg.amount}
                 seva="Food For Life"
                 image={mealImages[pkg.label]}
+                razorpayLink={pkg.link}
               />
             ))}
           </div>

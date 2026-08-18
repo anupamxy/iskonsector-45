@@ -75,7 +75,7 @@ function HeroCopy({ slide }: { slide: Slide }) {
           <Button to={`/festivals/${festival.slug}`} size="md">
             View Details
           </Button>
-          <Button to="/donate" variant="ghost" size="md">
+          <Button href={siteInfo.donateLink} target="_blank" rel="noopener noreferrer" variant="ghost" size="md">
             Offer Seva
           </Button>
         </div>
@@ -102,7 +102,7 @@ function HeroCopy({ slide }: { slide: Slide }) {
         <Button to="/contact" size="md">
           Plan Your Visit
         </Button>
-        <Button to="/donate" variant="ghost" size="md">
+        <Button href={siteInfo.donateLink} target="_blank" rel="noopener noreferrer" variant="ghost" size="md">
           Offer Seva
         </Button>
       </div>

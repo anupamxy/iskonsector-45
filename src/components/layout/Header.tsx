@@ -95,7 +95,7 @@ export default function Header() {
           </nav>
 
           <div className="flex items-center gap-3">
-            <Button to="/donate" className="hidden sm:inline-flex">
+            <Button href={siteInfo.donateLink} target="_blank" rel="noopener noreferrer" className="hidden sm:inline-flex">
               Donate Now
             </Button>
             <button
@@ -185,7 +185,13 @@ export default function Header() {
           </div>
 
           <div className="border-t border-hairline p-5">
-            <Button to="/donate" className="w-full" onClick={() => setMobileOpen(false)}>
+            <Button
+              href={siteInfo.donateLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full"
+              onClick={() => setMobileOpen(false)}
+            >
               Donate Now
             </Button>
             <a

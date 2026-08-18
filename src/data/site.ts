@@ -36,16 +36,18 @@ export const siteInfo = {
     note: "Seva & donations desk",
   },
   whatsapp: {
-    number: "+91 93117 67088",
-    tel: "919311767088",
-    link: "https://wa.me/919311767088",
+    number: "+91 78887 85681",
+    tel: "917888785681",
+    link: "https://wa.me/917888785681",
+    groupLink: "https://chat.whatsapp.com/D5hnoFh9srMAuzJwtHMTzz",
   },
+  donateLink: "https://rzp.io/rzp/6KR43FFN",
   email: "iskcongurugram.sec45@gmail.com",
   mapsUrl: "https://maps.app.goo.gl/9aW5jhTP4fCjeLJQ8",
   mapsEmbedQuery: "ISKCON Sector 45 Gurugram",
   social: {
-    facebook: "https://www.facebook.com/iskconsector45gurgaon",
-    instagram: "https://www.instagram.com/iskcon_sector45_gurugram/?hl=en",
+    facebook: "https://www.facebook.com/share/1Ch1jsKxdX/?mibextid=wwXIfr",
+    instagram: "https://www.instagram.com/iskcongurugram45",
     youtube: "https://www.youtube.com/channel/UCT0Bz5LmtYHp0LjtNyYBcjQ",
   },
   bank: {
@@ -115,7 +117,7 @@ export const footerNav = {
     { label: "FAQ", to: "/faq" },
   ],
   involved: [
-    { label: "Donate", to: "/donate" },
+    { label: "Donate", to: siteInfo.donateLink },
     { label: "Life Patron", to: "/life-patron" },
     { label: "Gita Daan", to: "/gita-daan" },
     { label: "DYPH", to: "/dyph" },

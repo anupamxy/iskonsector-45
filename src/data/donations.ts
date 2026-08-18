@@ -3,6 +3,7 @@ export interface SevaTier {
   amount: number;
   description?: string;
   image?: string;
+  link?: string;
 }
 
 export const deitySeva: SevaTier[] = [
@@ -20,10 +21,10 @@ export const foodForLife = {
   verseTranslation:
     "The devotees of the Lord are released from all kinds of sins because they eat food which is offered first for sacrifice.",
   mealPackages: [
-    { label: "50 meals", amount: 2550 },
-    { label: "100 meals", amount: 5100 },
-    { label: "500 meals", amount: 25500 },
-    { label: "1000 meals", amount: 51000 },
+    { label: "50 meals", amount: 2550, link: "https://pages.razorpay.com/pl_OfdMGvDUu4hQLo/view?amount=50" },
+    { label: "100 meals", amount: 5100, link: "https://pages.razorpay.com/pl_OfdMGvDUu4hQLo/view?amount=100" },
+    { label: "500 meals", amount: 25500, link: "https://pages.razorpay.com/pl_OfdMGvDUu4hQLo/view?amount=500" },
+    { label: "1000 meals", amount: 51000, link: "https://pages.razorpay.com/pl_OfdMGvDUu4hQLo/view?amount=1000" },
   ] satisfies SevaTier[],
   customMinimum: 3100,
   feastTypes: [

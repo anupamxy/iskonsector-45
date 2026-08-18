@@ -4,6 +4,7 @@ import Card from "../components/ui/Card";
 import Button from "../components/ui/Button";
 import { founder, leadership, iskconHistory, philosophy, pillars } from "../data/about";
 import { images } from "../data/images";
+import { siteInfo } from "../data/site";
 import { GraduationCap, UtensilsCrossed, HandHeart, PartyPopper } from "lucide-react";
 
 const pillarIcons = [GraduationCap, UtensilsCrossed, HandHeart, PartyPopper];
@@ -80,7 +81,7 @@ export default function About() {
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
             <Button to="/contact" size="lg">Plan Your Visit</Button>
-            <Button to="/donate" variant="ghost" size="lg">Offer Seva</Button>
+            <Button href={siteInfo.donateLink} target="_blank" rel="noopener noreferrer" variant="ghost" size="lg">Offer Seva</Button>
           </div>
         </div>
       </section>

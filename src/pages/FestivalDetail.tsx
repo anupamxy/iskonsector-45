@@ -69,7 +69,7 @@ export default function FestivalDetail() {
         <CountdownRow target={festival.date} className="mt-6" />
 
         <div className="mt-6 flex flex-wrap gap-3">
-          <Button to="/donate" size="lg">
+          <Button href={siteInfo.donateLink} target="_blank" rel="noopener noreferrer" size="lg">
             Offer Seva
           </Button>
           <Button href={siteInfo.whatsapp.link} target="_blank" rel="noopener noreferrer" variant="ghost" size="lg">
@@ -131,6 +131,51 @@ export default function FestivalDetail() {
           </div>
         </section>
       )}
+        {festival.sevaTiers && (
+        <section className="section-pad">
+          <div className="container-page">
+            <Reveal>
+              <SectionHeading eyebrow="Sponsor a Seva" title="Offerings & Sevas" />
+            </Reveal>
+            <div className="grid gap-6" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))" }}>
+              {festival.sevaTiers.map((tier, i) => (
+                <Reveal key={tier.label} delay={i * 60}>
+                  <SevaCard
+                    label={tier.label}
+                    amount={tier.amount}
+                    seva={festival.name}
+                    image={tier.image}
+                    razorpayLink={tier.link}
+                  />
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {festival.extraTiers?.map((group) => (
+        <section key={group.heading} className="section-pad bg-cream-alt">
+          <div className="container-page">
+            <Reveal>
+              <SectionHeading eyebrow="Additional Sevas" title={group.heading} />
+            </Reveal>
+            <div className="grid gap-6" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))" }}>
+              {group.tiers.map((tier, i) => (
+                <Reveal key={tier.label} delay={i * 60}>
+                  <SevaCard
+                    label={tier.label}
+                    amount={tier.amount}
+                    seva={`${festival.name} — ${group.heading}`}
+                    image={tier.image}
+                    razorpayLink={tier.link}
+                  />
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      ))}
 
       {festival.muhurat && (
         <section className="section-pad">
@@ -219,44 +264,7 @@ export default function FestivalDetail() {
         </section>
       )}
 
-      {festival.sevaTiers && (
-        <section className="section-pad">
-          <div className="container-page">
-            <Reveal>
-              <SectionHeading eyebrow="Sponsor a Seva" title="Offerings & Sevas" />
-            </Reveal>
-            <div className="grid gap-6" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))" }}>
-              {festival.sevaTiers.map((tier, i) => (
-                <Reveal key={tier.label} delay={i * 60}>
-                  <SevaCard label={tier.label} amount={tier.amount} seva={festival.name} image={tier.image} />
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {festival.extraTiers?.map((group) => (
-        <section key={group.heading} className="section-pad bg-cream-alt">
-          <div className="container-page">
-            <Reveal>
-              <SectionHeading eyebrow="Additional Sevas" title={group.heading} />
-            </Reveal>
-            <div className="grid gap-6" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))" }}>
-              {group.tiers.map((tier, i) => (
-                <Reveal key={tier.label} delay={i * 60}>
-                  <SevaCard
-                    label={tier.label}
-                    amount={tier.amount}
-                    seva={`${festival.name} — ${group.heading}`}
-                    image={tier.image}
-                  />
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        </section>
-      ))}
+    
 
       {festival.notes && (
         <section className="section-pad">
