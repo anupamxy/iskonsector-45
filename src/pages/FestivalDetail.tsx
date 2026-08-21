@@ -1,5 +1,16 @@
 import { useParams, Navigate, Link } from "react-router-dom";
-import { Sparkles, Calendar, Clock, CheckCircle2, Eye, Flame, Music, UtensilsCrossed, MessageCircle } from "lucide-react";
+import {
+  Sparkles,
+  Calendar,
+  Clock,
+  CheckCircle2,
+  Eye,
+  Flame,
+  Music,
+  UtensilsCrossed,
+  MessageCircle,
+  ChevronRight,
+} from "lucide-react";
 import PageHero from "../components/ui/PageHero";
 import SectionHeading from "../components/ui/SectionHeading";
 import SevaCard from "../components/ui/SevaCard";
@@ -37,46 +48,107 @@ export default function FestivalDetail() {
       : new Date(festival.date).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })
     : null;
 
+  const breadcrumb = [
+    { label: "Home", to: "/" },
+    { label: "Festivals", to: "/festivals" },
+    { label: festival.name },
+  ];
+
   return (
     <div>
-      <PageHero
-        breadcrumb={[
-          { label: "Home", to: "/" },
-          { label: "Festivals", to: "/festivals" },
-          { label: festival.name },
-        ]}
-        eyebrow="Festival Celebration"
-        title={festival.heading}
-        subtitle={festival.tagline}
-        videoId={festival.videoId}
-        images={festival.heroImages}
-      >
-        {(dateLabel || festival.timeLabel) && (
-          <div className="mt-6 flex flex-wrap gap-3">
-            {dateLabel && (
-              <span className="flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-sm font-medium text-white backdrop-blur">
-                <Calendar size={16} /> {dateLabel}
-              </span>
-            )}
-            {festival.timeLabel && (
-              <span className="flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-sm font-medium text-white backdrop-blur">
-                <Clock size={16} /> {festival.timeLabel}
-              </span>
-            )}
+      {festival.posterImage ? (
+        <>
+          <div className="container-page pt-8">
+            <img
+              src={festival.posterImage}
+              alt={festival.heading}
+              className="block w-full rounded-[var(--radius-card)] shadow-[var(--shadow-card)]"
+            />
           </div>
-        )}
+          <section className="section-pad pb-10">
+            <div className="container-page">
+              <nav className="mb-6 flex items-center gap-1.5 text-xs text-muted">
+                {breadcrumb.map((crumb, i) => (
+                  <span key={crumb.label} className="flex items-center gap-1.5">
+                    {i > 0 && <ChevronRight size={12} />}
+                    {crumb.to ? (
+                      <Link to={crumb.to} className="hover:text-secondary">
+                        {crumb.label}
+                      </Link>
+                    ) : (
+                      <span className="text-ink">{crumb.label}</span>
+                    )}
+                  </span>
+                ))}
+              </nav>
+              <p className="text-eyebrow mb-3 text-secondary">Festival Celebration</p>
+              <h1 className="max-w-2xl text-[clamp(2.1rem,4.4vw,3.2rem)] text-ink">{festival.heading}</h1>
+              {festival.tagline && <p className="mt-4 max-w-xl text-muted">{festival.tagline}</p>}
 
-        <CountdownRow target={festival.date} className="mt-6" />
+              {(dateLabel || festival.timeLabel) && (
+                <div className="mt-6 flex flex-wrap gap-3">
+                  {dateLabel && (
+                    <span className="flex items-center gap-2 rounded-full bg-secondary/10 px-4 py-2 text-sm font-medium text-secondary">
+                      <Calendar size={16} /> {dateLabel}
+                    </span>
+                  )}
+                  {festival.timeLabel && (
+                    <span className="flex items-center gap-2 rounded-full bg-secondary/10 px-4 py-2 text-sm font-medium text-secondary">
+                      <Clock size={16} /> {festival.timeLabel}
+                    </span>
+                  )}
+                </div>
+              )}
 
-        <div className="mt-6 flex flex-wrap gap-3">
-          <Button href={siteInfo.donateLink} target="_blank" rel="noopener noreferrer" size="lg">
-            Offer Seva
-          </Button>
-          <Button href={siteInfo.whatsapp.link} target="_blank" rel="noopener noreferrer" variant="ghost" size="lg">
-            <MessageCircle size={16} /> Ask a Question
-          </Button>
-        </div>
-      </PageHero>
+              <CountdownRow target={festival.date} className="mt-6" />
+
+              <div className="mt-6 flex flex-wrap gap-3">
+                <Button href={siteInfo.donateLink} target="_blank" rel="noopener noreferrer" size="lg">
+                  Offer Seva
+                </Button>
+                <Button href={siteInfo.whatsapp.link} target="_blank" rel="noopener noreferrer" variant="outline" size="lg">
+                  <MessageCircle size={16} /> Ask a Question
+                </Button>
+              </div>
+            </div>
+          </section>
+        </>
+      ) : (
+        <PageHero
+          breadcrumb={breadcrumb}
+          eyebrow="Festival Celebration"
+          title={festival.heading}
+          subtitle={festival.tagline}
+          videoId={festival.videoId}
+          images={festival.heroImages}
+        >
+          {(dateLabel || festival.timeLabel) && (
+            <div className="mt-6 flex flex-wrap gap-3">
+              {dateLabel && (
+                <span className="flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-sm font-medium text-white backdrop-blur">
+                  <Calendar size={16} /> {dateLabel}
+                </span>
+              )}
+              {festival.timeLabel && (
+                <span className="flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-sm font-medium text-white backdrop-blur">
+                  <Clock size={16} /> {festival.timeLabel}
+                </span>
+              )}
+            </div>
+          )}
+
+          <CountdownRow target={festival.date} className="mt-6" />
+
+          <div className="mt-6 flex flex-wrap gap-3">
+            <Button href={siteInfo.donateLink} target="_blank" rel="noopener noreferrer" size="lg">
+              Offer Seva
+            </Button>
+            <Button href={siteInfo.whatsapp.link} target="_blank" rel="noopener noreferrer" variant="ghost" size="lg">
+              <MessageCircle size={16} /> Ask a Question
+            </Button>
+          </div>
+        </PageHero>
+      )}
 
       <section className="section-pad">
         <div className="container-page">

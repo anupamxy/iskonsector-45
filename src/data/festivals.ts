@@ -14,6 +14,10 @@ export interface Festival {
   bannerImage?: string;
   /** CSS background-position for the homepage hero crop, e.g. "center 20%". Defaults to "center". */
   bannerPosition?: string;
+  /** A pre-designed poster/graphic (own baked-in text) — when set, the festival detail page
+   * shows it clean at the top with no overlay, and moves the title/date/CTA content to a
+   * plain section below it instead of overlaying it on the hero. */
+  posterImage?: string;
   /** Show this festival in the homepage hero carousel. Reserved for wide-format banners
    * (consistent aspect ratio) — square/portrait banners look inconsistent stacked there. */
   showInHomeHero?: boolean;
@@ -193,6 +197,7 @@ export const festivals: Festival[] = [
       "Celebrate the divine appearance of Lord Krishna with kirtans, abhishekam, and blessings.",
     bannerImage: images.janmashtami.banner,
     bannerPosition: "center top",
+    posterImage: images.janmashtami.poster,
     showInHomeHero: true,
     heroImages: images.janmashtami.carousel,
     date: "2026-09-04T00:00:00",

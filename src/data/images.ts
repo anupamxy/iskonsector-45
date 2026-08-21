@@ -74,6 +74,7 @@ export const images = {
   ],
   janmashtami: {
     banner: "/images/janmashtami/banner.jpg",
+    poster: "/images/janmashtami/poster.jpg",
     bronzeKalash: "/images/janmashtami/bronze-kalash.jpg",
     goldKalash: "/images/janmashtami/gold-kalash.jpg",
     silverKalash: "/images/janmashtami/silver-kalash.jpg",
