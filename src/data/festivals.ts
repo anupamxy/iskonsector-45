@@ -286,14 +286,14 @@ export const festivals: Festival[] = [
     ],
     extraTiers: [
       {
-        heading: "Online Abhishek Services",
+        heading: "Offer Your Love",
         tiers: [
-          { label: "Flower Seva", amount: 11000, image: images.janmashtami.abhishekam, link: "https://rzp.io/l/pVYC12BtTf" },
-          { label: "Garland Seva", amount: 11000, image: images.janmashtami.garlandSeva, link: "https://rzp.io/l/hGMTVCiWc" },
-          { label: "Fruits Basket", amount: 2100, image: images.janmashtami.fruitsBasket, link: "https://pages.razorpay.com/pl_HgnHr7Eynf0eqn/view" },
-          { label: "Cake (25 kg)", amount: 25000, image: images.govindas.cateringBirthday, link: "https://pages.razorpay.com/pl_Hgnai8ksOFVS4Z/view" },
-          { label: "Makhan Misri Seva", amount: 31000, image: images.janmashtami.makhanMisri, link: "https://pages.razorpay.com/pl_HgyDtwfSqLzdIm/view" },
-          { label: "Deities Dress", amount: 51000, image: images.janmashtami.deitiesDress, link: "https://pages.razorpay.com/pl_HgnPfEr3dzGCv4/view" },
+          { label: "Flower Seva", amount: 1100, image: images.janmashtami.flowerSeva, link: "https://rzp.io/l/pVYC12BtTf" },
+          { label: "Garland Seva", amount: 5000, image: images.janmashtami.garlandSeva, link: "https://rzp.io/l/hGMTVCiWc" },
+          { label: "Fruits Basket", amount: 3100, image: images.janmashtami.fruitsBasket, link: "https://pages.razorpay.com/pl_HgnHr7Eynf0eqn/view" },
+          { label: "Cake (25 kg)", amount: 31000, image: images.janmashtami.cakeSeva, link: "https://pages.razorpay.com/pl_Hgnai8ksOFVS4Z/view" },
+          { label: "Makhan Misri Seva", amount: 51000, image: images.janmashtami.makhanMisri, link: "https://pages.razorpay.com/pl_HgyDtwfSqLzdIm/view" },
+          { label: "Deities Dress", amount: 300000, image: images.janmashtami.deitiesDress, link: "https://pages.razorpay.com/pl_HgnPfEr3dzGCv4/view" },
           { label: "Maha Abhishekam", amount: 111000, image: images.janmashtami.mahaAbhishekam, link: "https://pages.razorpay.com/pl_HoeIuXSpAEUolb/view" },
         ],
       },
