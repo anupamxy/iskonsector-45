@@ -9,7 +9,8 @@ import {
   Music,
   UtensilsCrossed,
   MessageCircle,
-  ChevronRight,
+  MapPin,
+  Ticket,
 } from "lucide-react";
 import PageHero from "../components/ui/PageHero";
 import SectionHeading from "../components/ui/SectionHeading";
@@ -48,6 +49,12 @@ export default function FestivalDetail() {
       : new Date(festival.date).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })
     : null;
 
+  const scheduleHighlights = festival.schedule
+    ?.filter((s) => /abhishek|maha aarti/i.test(s.activity))
+    .map((s) => `${s.activity} ${s.time}`)
+    .join(" · ");
+  const timeSummary = festival.timeLabel ?? (scheduleHighlights || undefined);
+
   const breadcrumb = [
     { label: "Home", to: "/" },
     { label: "Festivals", to: "/festivals" },
@@ -58,60 +65,64 @@ export default function FestivalDetail() {
     <div>
       {festival.posterImage ? (
         <>
-          <div className="container-page pt-8">
-            <img
-              src={festival.posterImage}
-              alt={festival.heading}
-              className="block w-full rounded-[var(--radius-card)] shadow-[var(--shadow-card)]"
-            />
-          </div>
-          <section className="section-pad pb-10">
-            <div className="container-page">
-              <nav className="mb-6 flex items-center gap-1.5 text-xs text-muted">
-                {breadcrumb.map((crumb, i) => (
-                  <span key={crumb.label} className="flex items-center gap-1.5">
-                    {i > 0 && <ChevronRight size={12} />}
-                    {crumb.to ? (
-                      <Link to={crumb.to} className="hover:text-secondary">
-                        {crumb.label}
-                      </Link>
-                    ) : (
-                      <span className="text-ink">{crumb.label}</span>
-                    )}
-                  </span>
-                ))}
-              </nav>
-              <p className="text-eyebrow mb-3 text-secondary">Festival Celebration</p>
-              <h1 className="max-w-2xl text-[clamp(2.1rem,4.4vw,3.2rem)] text-ink">{festival.heading}</h1>
-              {festival.tagline && <p className="mt-4 max-w-xl text-muted">{festival.tagline}</p>}
+          <img src={festival.posterImage} alt={festival.heading} className="block w-full object-cover" />
 
-              {(dateLabel || festival.timeLabel) && (
-                <div className="mt-6 flex flex-wrap gap-3">
-                  {dateLabel && (
-                    <span className="flex items-center gap-2 rounded-full bg-secondary/10 px-4 py-2 text-sm font-medium text-secondary">
-                      <Calendar size={16} /> {dateLabel}
-                    </span>
-                  )}
-                  {festival.timeLabel && (
-                    <span className="flex items-center gap-2 rounded-full bg-secondary/10 px-4 py-2 text-sm font-medium text-secondary">
-                      <Clock size={16} /> {festival.timeLabel}
-                    </span>
-                  )}
-                </div>
-              )}
+          <div className="bg-gradient-to-br from-ink to-ink-deep text-white">
+            <div className="container-page flex flex-col gap-6 py-6 lg:flex-row lg:items-center lg:justify-between">
+              <div>
+                <p className="text-eyebrow text-primary-light">Celebrate {festival.name} at ISKCON Gurugram</p>
+                {festival.tagline && <p className="mt-1 max-w-md text-sm text-white/70">{festival.tagline}</p>}
+              </div>
 
-              <CountdownRow target={festival.date} className="mt-6" />
+              <CountdownRow target={festival.date} className="lg:px-4" />
 
-              <div className="mt-6 flex flex-wrap gap-3">
-                <Button href={siteInfo.donateLink} target="_blank" rel="noopener noreferrer" size="lg">
-                  Offer Seva
+              <div className="flex flex-wrap gap-3">
+                <Button href={siteInfo.donateLink} target="_blank" rel="noopener noreferrer">
+                  Offer a Seva
                 </Button>
-                <Button href={siteInfo.whatsapp.link} target="_blank" rel="noopener noreferrer" variant="outline" size="lg">
-                  <MessageCircle size={16} /> Ask a Question
+                <Button href="#celebration" variant="ghost">
+                  Explore the Celebration
                 </Button>
               </div>
             </div>
-          </section>
+
+            <div className="border-t border-white/10 bg-black/10">
+              <div className="container-page grid grid-cols-2 gap-5 py-5 text-sm sm:grid-cols-4">
+                {dateLabel && (
+                  <div className="flex items-start gap-2.5">
+                    <Calendar size={16} className="mt-0.5 shrink-0 text-primary-light" />
+                    <div>
+                      <p className="text-xs text-white/50">Date</p>
+                      <p className="text-white">{dateLabel}</p>
+                    </div>
+                  </div>
+                )}
+                {timeSummary && (
+                  <div className="flex items-start gap-2.5">
+                    <Clock size={16} className="mt-0.5 shrink-0 text-primary-light" />
+                    <div>
+                      <p className="text-xs text-white/50">Time</p>
+                      <p className="text-white">{timeSummary}</p>
+                    </div>
+                  </div>
+                )}
+                <div className="flex items-start gap-2.5">
+                  <MapPin size={16} className="mt-0.5 shrink-0 text-primary-light" />
+                  <div>
+                    <p className="text-xs text-white/50">Venue</p>
+                    <p className="text-white">{siteInfo.name}</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-2.5">
+                  <Ticket size={16} className="mt-0.5 shrink-0 text-primary-light" />
+                  <div>
+                    <p className="text-xs text-white/50">Entry</p>
+                    <p className="text-white">Free — all are warmly welcome</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </>
       ) : (
         <PageHero
@@ -150,7 +161,7 @@ export default function FestivalDetail() {
         </PageHero>
       )}
 
-      <section className="section-pad">
+      <section id="celebration" className="section-pad">
         <div className="container-page">
           <div className="grid grid-cols-2 gap-5 sm:grid-cols-4">
             {whatToExpect.map(({ icon: Icon, title, body }, i) => (
