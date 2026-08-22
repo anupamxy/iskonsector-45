@@ -197,7 +197,7 @@ export const festivals: Festival[] = [
       "Celebrate the divine appearance of Lord Krishna with kirtans, abhishekam, and blessings.",
     bannerImage: images.janmashtami.banner,
     bannerPosition: "center top",
-    posterImage: images.janmashtami.poster,
+    posterImage: images.janmashtami.banner,
     showInHomeHero: true,
     heroImages: images.janmashtami.carousel,
     date: "2026-09-04T00:00:00",
