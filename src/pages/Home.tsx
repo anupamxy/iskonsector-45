@@ -6,7 +6,6 @@ import {
   UtensilsCrossed,
   HandHeart,
   PartyPopper,
-  Bike,
   Award,
   Compass,
   ArrowRight,
