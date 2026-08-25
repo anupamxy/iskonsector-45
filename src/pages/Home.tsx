@@ -85,12 +85,12 @@ const programs = [
     body: "Sponsor sanctified meals and feasts for the community.",
     to: "/food-for-life",
   },
-  {
-    icon: Bike,
-    title: "Govinda's On Wheel",
-    body: "Pure vegetarian prasadam, delivered to your door.",
-    to: "/govindas-on-wheel",
-  },
+  // {
+  //   icon: Bike,
+  //   title: "Govinda's On Wheel",
+  //   body: "Pure vegetarian prasadam, delivered to your door.",
+  //   to: "/govindas-on-wheel",
+  // },
   {
     icon: Award,
     title: "Life Patron",

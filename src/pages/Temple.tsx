@@ -21,12 +21,12 @@ const programs: Program[] = [
     to: "/food-for-life",
     image: images.foodForLife.annaDaanBanner,
   },
-  {
-    icon: Bike,
-    title: "Govinda's On Wheel",
-    body: "Order pure vegetarian prasadam for daily meals or special occasions, delivered near the temple.",
-    to: "/govindas-on-wheel",
-  },
+  // {
+  //   icon: Bike,
+  //   title: "Govinda's On Wheel",
+  //   body: "Order pure vegetarian prasadam for daily meals or special occasions, delivered near the temple.",
+  //   to: "/govindas-on-wheel",
+  // },
   {
     icon: Award,
     title: "Life Patron",
