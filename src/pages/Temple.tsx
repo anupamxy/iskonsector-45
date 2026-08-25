@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { UtensilsCrossed, Bike, Award, Compass, BookOpen, ArrowRight, type LucideIcon } from "lucide-react";
+import { UtensilsCrossed, Award, Compass, BookOpen, ArrowRight, type LucideIcon } from "lucide-react";
 import PageHero from "../components/ui/PageHero";
 import SectionHeading from "../components/ui/SectionHeading";
 import Card from "../components/ui/Card";
