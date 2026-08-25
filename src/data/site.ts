@@ -83,7 +83,7 @@ export const primaryNav: NavItem[] = [
     to: "/temple",
     children: [
       { label: "Food For Life", to: "/food-for-life" },
-      { label: "Govinda's On Wheel", to: "/govindas-on-wheel" },
+      // { label: "Govinda's On Wheel", to: "/govindas-on-wheel" },
       { label: "Life Patron", to: "/life-patron" },
       { label: "DYPH", to: "/dyph" },
       { label: "Gita Daan", to: "/gita-daan" },
