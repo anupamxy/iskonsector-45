@@ -16,22 +16,22 @@ export default function UtilityBar() {
   const nextFestival = getUpcomingHomeFestivals()[0];
 
   return (
-    <div className="hidden bg-ink-deep text-white/80 md:block">
-      <div className="container-page flex items-center justify-between gap-4 py-2 text-xs">
-        <div className="flex items-center gap-4">
+    <div className="bg-ink-deep text-white/80">
+      <div className="container-page flex flex-wrap items-center justify-between gap-x-4 gap-y-1.5 py-2 text-xs">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5">
           {status && (
             <>
               <span className="flex items-center gap-2 font-medium text-white">
                 <span
                   className={clsx(
-                    "h-2 w-2 rounded-full",
+                    "h-2 w-2 shrink-0 rounded-full",
                     status.isOpen ? "bg-success shadow-[0_0_0_4px_rgba(74,222,128,0.18)]" : "bg-danger shadow-[0_0_0_4px_rgba(248,113,113,0.18)]",
                   )}
                 />
                 {status.label}
               </span>
-              <span className="opacity-30">|</span>
-              <span>{status.next}</span>
+              <span className="hidden opacity-30 sm:inline">|</span>
+              <span className="hidden sm:inline">{status.next}</span>
               <span className="hidden opacity-30 lg:inline">|</span>
             </>
           )}
@@ -47,7 +47,7 @@ export default function UtilityBar() {
         <div className="flex items-center gap-4">
           <Link
             to="/festivals"
-            className="whitespace-nowrap rounded-full bg-primary/20 px-3 py-1 font-medium text-primary-light hover:bg-primary/30"
+            className="hidden whitespace-nowrap rounded-full bg-primary/20 px-3 py-1 font-medium text-primary-light hover:bg-primary/30 sm:inline-flex"
           >
             🎉 {nextFestival ? nextFestival.name : "Festivals & Seva"}
           </Link>
