@@ -30,7 +30,7 @@ import { YoutubeIcon } from "../components/ui/SocialIcons";
 import { siteInfo } from "../data/site";
 import { founder, leadership, pillars } from "../data/about";
 import { deitySeva } from "../data/donations";
-import { getUpcomingHomeFestivals } from "../data/festivals";
+import { getUpcomingHomeFestivals, visibleFestivals } from "../data/festivals";
 import { images } from "../data/images";
 
 const impactStats = [
@@ -49,10 +49,9 @@ const exploreLinks = [
 ];
 
 const upcomingFestivals = getUpcomingHomeFestivals();
-/** Only the 4 nearest upcoming festivals — as each one's date passes, the next one
- * in line takes its place automatically since `upcomingFestivals` is already filtered
- * to future dates and sorted soonest-first. */
-const festivalsToShow = upcomingFestivals.slice(0, 4);
+/** All festivals currently surfaced in listings, not just upcoming ones — so the
+ * "All Festivals We Celebrate" section always shows the full calendar. */
+const festivalsToShow = visibleFestivals;
 
 const festivalBadges: Record<string, string> = {
   "jhulan-yatra": "The Swing Festival",
