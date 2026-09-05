@@ -1,4 +1,4 @@
-import { Calendar, Users, UtensilsCrossed, MessageCircle, Mail } from "lucide-react";
+import { Calendar, Users, UtensilsCrossed, MessageCircle, Mail, Quote } from "lucide-react";
 import PageHero from "../components/ui/PageHero";
 import SectionHeading from "../components/ui/SectionHeading";
 import Card from "../components/ui/Card";
@@ -56,6 +56,22 @@ export default function Dyph() {
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <h4 className="mt-2 text-lg text-ink">{session.title}</h4>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section-pad">
+        <div className="container-page">
+          <SectionHeading eyebrow="Read Our" title="Testimonials" />
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+            {dyph.testimonials.map((testimonial) => (
+              <Card key={testimonial.name} className="p-6">
+                <Quote size={22} className="text-primary/30" />
+                <p className="mt-3 flex-1 text-sm leading-relaxed text-muted">"{testimonial.quote}"</p>
+                <p className="mt-4 text-sm font-semibold text-ink">{testimonial.name}</p>
+                <p className="text-xs text-muted">{testimonial.role}</p>
               </Card>
             ))}
           </div>

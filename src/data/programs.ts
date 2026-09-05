@@ -13,6 +13,32 @@ export const dyph = {
     { title: "Yoga for the Modern Age" },
     { title: "The Art of Self Management" },
   ],
+  testimonials: [
+    {
+      quote:
+        "The practical application of the Gita's wisdom in the DYPH course gave me clarity on my life's purpose and reduced my anxiety. It's a must for anyone seeking true fulfillment.",
+      name: "Parth Mittal",
+      role: "B.Tech - IIT Delhi | Product Manager",
+    },
+    {
+      quote:
+        "DYPH's practical strategies helped align my personal and professional life, improving both my productivity and relationships. A must-try for real transformation.",
+      name: "Divyani Mehta",
+      role: "Senior Actuarial Analyst | FII, AIAI",
+    },
+    {
+      quote:
+        "DYPH cleared my long-held confusion and gave me a new way of thinking. I feel much more relaxed and closer to God now, with many persistent doubts resolved.",
+      name: "Hardik Jaiswal",
+      role: "Management Consultant @Accenture Strategy | IIM Mumbai",
+    },
+    {
+      quote:
+        "The DYPH course provided a great foundation for my spiritual journey. I gained a faith backed by scriptures, a methodical practice, and guidance that has helped me tame my anger and attachment issues.",
+      name: "Neha Noopur",
+      role: "Regional Head @ SureWaves MediaTech",
+    },
+  ],
 };
 
 export interface MenuItem {
