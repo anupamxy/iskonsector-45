@@ -101,6 +101,7 @@ export const images = {
     donateImage: "/images/rath-yatra/donate-image.jpg",
   },
   lifePatronBanner: "/images/life-patron/banner.jpg",
+  dyphRegisterQr: "/images/dyph/register-qr.jpg",
   govindas: {
     specialThali: "/images/govindas/banner.png",
     dosa: "/images/govindas/dosa.png",

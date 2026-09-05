@@ -1,10 +1,11 @@
 export const dyph = {
   fullName: "Discover Your Permanent Happiness",
   intro:
-    "A 6-week certificate course held on Sundays at the temple, open to anyone above the age of 20, irrespective of background or experience.",
+    "A 6-week youth certificate course held on Sundays at the temple, open to anyone above the age of 20, irrespective of background or experience.",
   eligibility: "Anyone aged 20 and above is welcome to join, regardless of background or experience.",
   format: "6 weekly sessions, held on Sundays, offline at the temple.",
   inclusion: "Prasadam / a full meal is served after every session.",
+  registerLink: "https://tinyurl.com/2xqmgmuv",
   sessions: [
     { title: "Science of Happiness" },
     { title: "Healthy Relationships" },

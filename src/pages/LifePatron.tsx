@@ -22,14 +22,6 @@ export default function LifePatron() {
         images={[{ src: images.pageHero.lifePatron, position: "center 30%" }]}
       />
 
-      <div className="container-page">
-        <img
-          src={images.lifePatronBanner}
-          alt="Life Patron Membership"
-          className="mt-8 aspect-[21/9] w-full rounded-[var(--radius-card)] object-cover shadow-[var(--shadow-card)]"
-        />
-      </div>
-
       <section className="section-pad">
         <div className="container-page grid grid-cols-1 gap-10 lg:grid-cols-[1fr_1.1fr]">
           <Card className="items-center justify-center border border-gold/30 p-8 text-center">
