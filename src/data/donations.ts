@@ -41,7 +41,7 @@ export const lifePatron = {
   heading: "Become a Life Member",
   intro:
     "Life Patron membership is for householders who wish to support Krishna consciousness while continuing their family and professional lives, rather than becoming full-time temple residents.",
-  cost: 35555,
+  cost: 55555,
   costNote:
     "A one-time donation towards the corpus of the trust, tax-exempt under Section 80-G of the Income Tax Act, 1961.",
   paymentMethods: [
