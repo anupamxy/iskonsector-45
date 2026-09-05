@@ -1,4 +1,20 @@
-import { Calendar, Users, UtensilsCrossed, MessageCircle, Mail, Quote, QrCode, ExternalLink, Sparkles } from "lucide-react";
+import {
+  Calendar,
+  Users,
+  UtensilsCrossed,
+  MessageCircle,
+  Mail,
+  Quote,
+  QrCode,
+  ExternalLink,
+  Sparkles,
+  Smile,
+  HeartHandshake,
+  Scale,
+  HelpCircle,
+  Flower2,
+  Target,
+} from "lucide-react";
 import PageHero from "../components/ui/PageHero";
 import SectionHeading from "../components/ui/SectionHeading";
 import Card from "../components/ui/Card";
@@ -14,6 +30,17 @@ const info = [
   { icon: UtensilsCrossed, label: "Included", value: "Prasadam after every session" },
 ];
 
+const sessionStyles = [
+  { icon: Smile, tone: "bg-primary/10 text-primary" },
+  { icon: HeartHandshake, tone: "bg-secondary/10 text-secondary" },
+  { icon: Scale, tone: "bg-gold/15 text-gold" },
+  { icon: HelpCircle, tone: "bg-primary/10 text-primary" },
+  { icon: Flower2, tone: "bg-secondary/10 text-secondary" },
+  { icon: Target, tone: "bg-gold/15 text-gold" },
+];
+
+const marqueeWords = ["PURPOSE", "CLARITY", "COMMUNITY", "BALANCE", "GROWTH", "PEACE OF MIND"];
+
 const enrollMessage = encodeURIComponent(
   "Hare Krishna, I would like to enroll in the DYPH (Discover Your Permanent Happiness) course.",
 );
@@ -27,11 +54,36 @@ export default function Dyph() {
           { label: "Temple & Seva", to: "/temple" },
           { label: "DYPH" },
         ]}
-        eyebrow="A Youth Course — DYPH"
+        eyebrow="A Course Built for Youth — Age 20+"
         title="Discover Your Permanent Happiness"
         subtitle={dyph.intro}
         images={[{ src: images.pageHero.dyph, position: "center 40%" }]}
-      />
+      >
+        <div className="mt-6 flex flex-wrap gap-2.5">
+          {["Students", "Young Professionals", "Zero Experience Needed"].map((tag) => (
+            <span
+              key={tag}
+              className="rounded-full border border-white/25 bg-white/10 px-3.5 py-1.5 text-xs font-semibold text-white backdrop-blur"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      </PageHero>
+
+      <div className="group overflow-hidden border-y border-hairline bg-gradient-to-r from-primary to-primary-light py-3">
+        <div
+          className="flex w-max gap-10 motion-safe:animate-marquee group-hover:[animation-play-state:paused]"
+          style={{ animationDuration: "26s" }}
+        >
+          {[...marqueeWords, ...marqueeWords].map((word, i) => (
+            <span key={`${word}-${i}`} className="flex items-center gap-10 text-sm font-semibold tracking-[0.2em] text-white">
+              {word}
+              <Sparkles size={14} className="text-white/70" />
+            </span>
+          ))}
+        </div>
+      </div>
 
       <section className="section-pad">
         <div className="container-page grid grid-cols-1 gap-6 sm:grid-cols-3">
@@ -52,19 +104,29 @@ export default function Dyph() {
       <section className="section-pad bg-cream-alt">
         <div className="container-page">
           <Reveal>
-            <SectionHeading eyebrow="6-Week Curriculum" title="What You'll Explore" />
+            <SectionHeading
+              eyebrow="6 Weeks That Change Things"
+              title="What You'll Explore"
+              subtitle="Real questions young people actually wrestle with — answered with practical, timeless wisdom."
+            />
           </Reveal>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {dyph.sessions.map((session, i) => (
-              <Reveal key={session.title} delay={i * 80} className="h-full">
-                <Card className="group h-full p-6">
-                  <span className="font-display text-3xl text-primary/40 transition-colors duration-300 group-hover:text-primary/70">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <h4 className="mt-2 text-lg text-ink">{session.title}</h4>
-                </Card>
-              </Reveal>
-            ))}
+            {dyph.sessions.map((session, i) => {
+              const { icon: Icon, tone } = sessionStyles[i % sessionStyles.length];
+              return (
+                <Reveal key={session.title} delay={i * 80} className="h-full">
+                  <Card className="group h-full p-6">
+                    <span
+                      className={`flex h-11 w-11 items-center justify-center rounded-full transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-110 ${tone}`}
+                    >
+                      <Icon size={20} />
+                    </span>
+                    <h4 className="mt-3 text-lg text-ink">{session.title}</h4>
+                    {session.body && <p className="mt-1.5 text-sm text-muted">{session.body}</p>}
+                  </Card>
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -72,7 +134,7 @@ export default function Dyph() {
       <section className="section-pad">
         <div className="container-page">
           <Reveal>
-            <SectionHeading eyebrow="Read Our" title="Testimonials" />
+            <SectionHeading eyebrow="Real Stories, Real Change" title="Read Our Testimonials" />
           </Reveal>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             {dyph.testimonials.map((testimonial, i) => (
@@ -105,7 +167,7 @@ export default function Dyph() {
 
         <div className="container-page relative">
           <Reveal>
-            <p className="text-eyebrow text-primary-light">Ready to Join, Youth?</p>
+            <p className="text-eyebrow text-primary-light">Your Transformation Starts Here</p>
             <h2 className="mt-2 text-[clamp(1.9rem,3.4vw,2.6rem)] text-white">Register for the Next Batch</h2>
             <p className="mx-auto mt-3 max-w-md text-white/70">
               Scan the QR code or tap the button below to reserve your seat — seats fill up quickly every batch.

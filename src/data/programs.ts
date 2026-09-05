@@ -7,12 +7,12 @@ export const dyph = {
   inclusion: "Prasadam / a full meal is served after every session.",
   registerLink: "https://tinyurl.com/2xqmgmuv",
   sessions: [
-    { title: "Science of Happiness" },
-    { title: "Healthy Relationships" },
-    { title: "Work Life Balance" },
-    { title: "Why Bad Things Happen to Good People" },
-    { title: "Yoga for the Modern Age" },
-    { title: "The Art of Self Management" },
+    { title: "Science of Happiness", body: "What actually makes you happy, backed by timeless wisdom." },
+    { title: "Healthy Relationships", body: "Build real trust and connection with the people who matter." },
+    { title: "Work Life Balance", body: "Chase your career without losing yourself in the process." },
+    { title: "Why Bad Things Happen to Good People", body: "Make sense of setbacks instead of being broken by them." },
+    { title: "Yoga for the Modern Age", body: "Practical tools for a calmer mind in a noisy world." },
+    { title: "The Art of Self Management", body: "Take charge of your habits, emotions, and time." },
   ],
   testimonials: [
     {
