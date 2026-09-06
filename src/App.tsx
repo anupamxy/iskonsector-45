@@ -1,3 +1,4 @@
+import { Suspense, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 import Layout from "./components/layout/Layout";
 
@@ -22,6 +23,11 @@ import CookiePolicy from "./pages/CookiePolicy";
 import RefundPolicy from "./pages/RefundPolicy";
 import NotFound from "./pages/NotFound";
 
+// Lazy-loaded: pulls in the Firebase SDK, so it's only fetched when someone
+// actually visits the gallery instead of adding weight to every page.
+const Gallery = lazy(() => import("./pages/Gallery"));
+const AdminGallery = lazy(() => import("./pages/AdminGallery"));
+
 export default function App() {
   return (
     <Routes>
@@ -38,6 +44,8 @@ export default function App() {
         <Route path="/festivals/:slug" element={<FestivalDetail />} />
         <Route path="/gift-shop" element={<GiftShop />} />
         <Route path="/lecture-videos" element={<LectureVideos />} />
+        <Route path="/gallery" element={<Suspense fallback={null}><Gallery /></Suspense>} />
+        <Route path="/admin/gallery" element={<Suspense fallback={null}><AdminGallery /></Suspense>} />
         <Route path="/donate" element={<Donate />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/faq" element={<Faq />} />

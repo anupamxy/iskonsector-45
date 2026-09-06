@@ -100,6 +100,7 @@ export const primaryNav: NavItem[] = [
   {
     label: "Explore",
     children: [
+      { label: "Gallery", to: "/gallery" },
       { label: "Gift Shop", to: "/gift-shop" },
       { label: "Lecture Videos", to: "/lecture-videos" },
       { label: "FAQ", to: "/faq" },
