@@ -24,8 +24,7 @@ import RefundPolicy from "./pages/RefundPolicy";
 import NotFound from "./pages/NotFound";
 
 // Lazy-loaded: pulls in the Firebase SDK, so it's only fetched when someone
-// actually visits the gallery instead of adding weight to every page.
-const Gallery = lazy(() => import("./pages/Gallery"));
+// actually visits these pages instead of adding weight to every page.
 const DailyDarshan = lazy(() => import("./pages/DailyDarshan"));
 const AdminGallery = lazy(() => import("./pages/AdminGallery"));
 
@@ -45,7 +44,6 @@ export default function App() {
         <Route path="/festivals/:slug" element={<FestivalDetail />} />
         <Route path="/gift-shop" element={<GiftShop />} />
         <Route path="/lecture-videos" element={<LectureVideos />} />
-        <Route path="/gallery" element={<Suspense fallback={null}><Gallery /></Suspense>} />
         <Route path="/daily-darshan" element={<Suspense fallback={null}><DailyDarshan /></Suspense>} />
         <Route path="/admin/gallery" element={<Suspense fallback={null}><AdminGallery /></Suspense>} />
         <Route path="/donate" element={<Donate />} />

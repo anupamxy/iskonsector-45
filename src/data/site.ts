@@ -78,6 +78,7 @@ export interface NavItem {
 export const primaryNav: NavItem[] = [
   { label: "Home", to: "/" },
   { label: "About", to: "/about" },
+  { label: "Daily Darshan", to: "/daily-darshan" },
   {
     label: "Temple & Seva",
     to: "/temple",
@@ -100,8 +101,6 @@ export const primaryNav: NavItem[] = [
   {
     label: "Explore",
     children: [
-      { label: "Daily Darshan", to: "/daily-darshan" },
-      { label: "Gallery", to: "/gallery" },
       { label: "Gift Shop", to: "/gift-shop" },
       { label: "Lecture Videos", to: "/lecture-videos" },
       { label: "FAQ", to: "/faq" },
