@@ -4,6 +4,7 @@ import {
   ref,
   listAll,
   getDownloadURL,
+  getMetadata,
   uploadBytesResumable,
   deleteObject,
 } from "firebase/storage";
@@ -15,10 +16,27 @@ import { createThumbnail } from "../lib/imageThumbnail";
 import { isWithinRetention, GALLERY_RETENTION_DAYS } from "../lib/galleryRetention";
 import { images } from "../data/images";
 
+const TAG_SUGGESTIONS = [
+  "Daily Darshan",
+  "Janmashtami",
+  "Radhashtami",
+  "Ram Navami",
+  "Jhulan Yatra",
+  "Balrama Purnima",
+  "Kirtan",
+  "Prasadam Seva",
+];
+
+function todayISO() {
+  return new Date().toISOString().slice(0, 10);
+}
+
 interface Photo {
   name: string;
   url: string;
   thumbUrl: string;
+  darshanDate?: string;
+  tag?: string;
 }
 
 function LoginForm() {
@@ -74,16 +92,24 @@ function UploadPanel({ user }: { user: User }) {
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState<string | null>(null);
+  const [date, setDate] = useState(todayISO());
+  const [tag, setTag] = useState("Daily Darshan");
 
   async function refreshPhotos() {
     const result = await listAll(ref(storage, "gallery"));
-    const recent = result.items.filter((item) => isWithinRetention(item.name));
-    const sorted = recent.sort((a, b) => b.name.localeCompare(a.name));
+    const withMeta = await Promise.all(
+      result.items.map(async (item) => {
+        const meta = await getMetadata(item).catch(() => null);
+        return { item, darshanDate: meta?.customMetadata?.darshanDate, tag: meta?.customMetadata?.tag };
+      }),
+    );
+    const recent = withMeta.filter(({ item, darshanDate }) => isWithinRetention(item.name, darshanDate));
+    const sorted = recent.sort((a, b) => b.item.name.localeCompare(a.item.name));
     const withUrls = await Promise.all(
-      sorted.map(async (item) => {
+      sorted.map(async ({ item, darshanDate, tag }) => {
         const url = await getDownloadURL(item);
         const thumbUrl = await getDownloadURL(ref(storage, `gallery/thumbs/${item.name}`)).catch(() => url);
-        return { name: item.name, url, thumbUrl };
+        return { name: item.name, url, thumbUrl, darshanDate, tag };
       }),
     );
     setPhotos(withUrls);
@@ -94,9 +120,15 @@ function UploadPanel({ user }: { user: User }) {
    * separate scheduled backend job. */
   async function cleanupExpiredPhotos() {
     const result = await listAll(ref(storage, "gallery"));
-    const expired = result.items.filter((item) => !isWithinRetention(item.name));
+    const withMeta = await Promise.all(
+      result.items.map(async (item) => {
+        const meta = await getMetadata(item).catch(() => null);
+        return { item, darshanDate: meta?.customMetadata?.darshanDate };
+      }),
+    );
+    const expired = withMeta.filter(({ item, darshanDate }) => !isWithinRetention(item.name, darshanDate));
     await Promise.all(
-      expired.map((item) =>
+      expired.map(({ item }) =>
         Promise.all([
           deleteObject(item).catch(() => {}),
           deleteObject(ref(storage, `gallery/thumbs/${item.name}`)).catch(() => {}),
@@ -120,6 +152,7 @@ function UploadPanel({ user }: { user: User }) {
     setProgress(0);
 
     const files = Array.from(fileList);
+    const customMetadata = { darshanDate: date, tag: tag.trim() || "Daily Darshan" };
     let completed = 0;
 
     files.forEach(async (file) => {
@@ -129,7 +162,7 @@ function UploadPanel({ user }: { user: User }) {
         const thumbBlob = await createThumbnail(file);
         await Promise.all([
           new Promise<void>((resolve, reject) => {
-            const task = uploadBytesResumable(ref(storage, `gallery/${name}`), file);
+            const task = uploadBytesResumable(ref(storage, `gallery/${name}`), file, { customMetadata });
             task.on(
               "state_changed",
               (snapshot) => setProgress(Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100)),
@@ -137,7 +170,7 @@ function UploadPanel({ user }: { user: User }) {
               () => resolve(),
             );
           }),
-          uploadBytesResumable(ref(storage, `gallery/thumbs/${name}`), thumbBlob),
+          uploadBytesResumable(ref(storage, `gallery/thumbs/${name}`), thumbBlob, { customMetadata }),
         ]);
       } catch {
         setError("One or more uploads failed. Please try again.");
@@ -180,10 +213,41 @@ function UploadPanel({ user }: { user: User }) {
         </Button>
       </div>
 
+      <div className="mb-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <label className="flex flex-col gap-1.5 text-sm font-medium text-ink">
+          Darshan date
+          <input
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            className="rounded-xl border border-hairline px-4 py-2.5 text-sm outline-none focus:border-secondary"
+          />
+        </label>
+        <label className="flex flex-col gap-1.5 text-sm font-medium text-ink">
+          Tag (festival or occasion)
+          <input
+            type="text"
+            list="tag-suggestions"
+            value={tag}
+            onChange={(e) => setTag(e.target.value)}
+            placeholder="e.g. Daily Darshan, Janmashtami…"
+            className="rounded-xl border border-hairline px-4 py-2.5 text-sm outline-none focus:border-secondary"
+          />
+          <datalist id="tag-suggestions">
+            {TAG_SUGGESTIONS.map((suggestion) => (
+              <option key={suggestion} value={suggestion} />
+            ))}
+          </datalist>
+        </label>
+      </div>
+
       <label className="flex cursor-pointer flex-col items-center gap-3 rounded-[var(--radius-card)] border-2 border-dashed border-hairline p-10 text-center hover:border-secondary">
         <UploadCloud size={28} className="text-secondary" />
         <span className="text-sm font-medium text-ink">
           {uploading ? `Uploading… ${progress}%` : "Click to choose photos, or drag them here"}
+        </span>
+        <span className="text-xs text-muted">
+          Will be tagged "{tag.trim() || "Daily Darshan"}" · {date}
         </span>
         <input
           type="file"
@@ -208,6 +272,10 @@ function UploadPanel({ user }: { user: User }) {
           {photos.map((photo) => (
             <div key={photo.name} className="group relative aspect-square overflow-hidden rounded-xl bg-cream-alt">
               <img src={photo.thumbUrl} alt="" className="h-full w-full object-cover" />
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink-deep/85 to-transparent px-2 pb-1.5 pt-4 text-[0.65rem] text-white">
+                {photo.tag && <p className="truncate font-semibold">{photo.tag}</p>}
+                {photo.darshanDate && <p className="opacity-80">{photo.darshanDate}</p>}
+              </div>
               <button
                 type="button"
                 onClick={() => handleDelete(photo)}

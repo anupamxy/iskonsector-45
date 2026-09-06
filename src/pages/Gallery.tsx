@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { X, ChevronLeft, ChevronRight, ImageOff, Loader2 } from "lucide-react";
-import { listAll, getDownloadURL, ref } from "firebase/storage";
+import { listAll, getDownloadURL, getMetadata, ref } from "firebase/storage";
 import PageHero from "../components/ui/PageHero";
 import SectionHeading from "../components/ui/SectionHeading";
 import Reveal from "../components/ui/Reveal";
@@ -12,12 +12,17 @@ import { images } from "../data/images";
 interface Photo {
   url: string;
   thumbUrl: string;
+  darshanDate?: string;
+  tag?: string;
 }
+
+const ALL_TAGS = "All";
 
 export default function Gallery() {
   const [photos, setPhotos] = useState<Photo[] | null>(null);
   const [error, setError] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [selectedTag, setSelectedTag] = useState(ALL_TAGS);
 
   useEffect(() => {
     let cancelled = false;
@@ -25,13 +30,19 @@ export default function Gallery() {
     async function loadPhotos() {
       try {
         const result = await listAll(ref(storage, "gallery"));
-        const recent = result.items.filter((item) => isWithinRetention(item.name));
-        const sorted = recent.sort((a, b) => b.name.localeCompare(a.name));
+        const withMeta = await Promise.all(
+          result.items.map(async (item) => {
+            const meta = await getMetadata(item).catch(() => null);
+            return { item, darshanDate: meta?.customMetadata?.darshanDate, tag: meta?.customMetadata?.tag };
+          }),
+        );
+        const recent = withMeta.filter(({ item, darshanDate }) => isWithinRetention(item.name, darshanDate));
+        const sorted = recent.sort((a, b) => b.item.name.localeCompare(a.item.name));
         const withUrls = await Promise.all(
-          sorted.map(async (item) => {
+          sorted.map(async ({ item, darshanDate, tag }) => {
             const url = await getDownloadURL(item);
             const thumbUrl = await getDownloadURL(ref(storage, `gallery/thumbs/${item.name}`)).catch(() => url);
-            return { url, thumbUrl };
+            return { url, thumbUrl, darshanDate, tag };
           }),
         );
         if (!cancelled) setPhotos(withUrls);
@@ -45,6 +56,17 @@ export default function Gallery() {
       cancelled = true;
     };
   }, []);
+
+  const tags = useMemo(() => {
+    if (!photos) return [];
+    const seen = new Set(photos.map((p) => p.tag).filter((t): t is string => Boolean(t)));
+    return [ALL_TAGS, ...seen];
+  }, [photos]);
+
+  const visiblePhotos = useMemo(() => {
+    if (!photos) return [];
+    return selectedTag === ALL_TAGS ? photos : photos.filter((p) => p.tag === selectedTag);
+  }, [photos, selectedTag]);
 
   return (
     <div>
@@ -86,29 +108,59 @@ export default function Gallery() {
           )}
 
           {photos && photos.length > 0 && (
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-              {photos.map((photo, i) => (
-                <Reveal key={photo.url} delay={Math.min(i, 8) * 60}>
-                  <button
-                    type="button"
-                    onClick={() => setActiveIndex(i)}
-                    className="group block aspect-square w-full overflow-hidden rounded-[var(--radius-card)] bg-cream-alt shadow-[var(--shadow-card)]"
-                  >
-                    <img
-                      src={photo.thumbUrl}
-                      alt=""
-                      loading="lazy"
-                      className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
-                    />
-                  </button>
-                </Reveal>
-              ))}
-            </div>
+            <>
+              {tags.length > 2 && (
+                <div className="mb-6 flex flex-wrap justify-center gap-2">
+                  {tags.map((t) => (
+                    <button
+                      key={t}
+                      type="button"
+                      onClick={() => {
+                        setSelectedTag(t);
+                        setActiveIndex(null);
+                      }}
+                      className={`rounded-full px-4 py-1.5 text-xs font-semibold transition-colors ${
+                        selectedTag === t
+                          ? "bg-primary text-white"
+                          : "bg-cream-alt text-muted hover:bg-secondary/10 hover:text-secondary"
+                      }`}
+                    >
+                      {t}
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+                {visiblePhotos.map((photo, i) => (
+                  <Reveal key={photo.url} delay={Math.min(i, 8) * 60}>
+                    <button
+                      type="button"
+                      onClick={() => setActiveIndex(i)}
+                      className="group relative block aspect-square w-full overflow-hidden rounded-[var(--radius-card)] bg-cream-alt shadow-[var(--shadow-card)]"
+                    >
+                      <img
+                        src={photo.thumbUrl}
+                        alt=""
+                        loading="lazy"
+                        className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
+                      />
+                      {(photo.tag || photo.darshanDate) && (
+                        <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink-deep/80 to-transparent px-2.5 pb-1.5 pt-5 text-left text-[0.65rem] text-white">
+                          {photo.tag && <p className="truncate font-semibold">{photo.tag}</p>}
+                          {photo.darshanDate && <p className="opacity-80">{photo.darshanDate}</p>}
+                        </div>
+                      )}
+                    </button>
+                  </Reveal>
+                ))}
+              </div>
+            </>
           )}
         </div>
       </section>
 
-      {photos && activeIndex !== null &&
+      {visiblePhotos.length > 0 && activeIndex !== null &&
         createPortal(
           <div
             className="fixed inset-0 z-[200] flex items-center justify-center bg-ink-deep/90 p-4 backdrop-blur-sm"
@@ -138,7 +190,7 @@ export default function Gallery() {
                 <ChevronLeft size={20} />
               </button>
             )}
-            {activeIndex < photos.length - 1 && (
+            {activeIndex < visiblePhotos.length - 1 && (
               <button
                 type="button"
                 onClick={(e) => {
@@ -152,12 +204,19 @@ export default function Gallery() {
               </button>
             )}
 
-            <img
-              src={photos[activeIndex].url}
-              alt=""
-              className="max-h-[85vh] max-w-full rounded-[var(--radius-card)] object-contain shadow-[0_30px_80px_-20px_rgba(0,0,0,0.65)]"
-              onClick={(e) => e.stopPropagation()}
-            />
+            <div className="flex max-h-[85vh] max-w-full flex-col items-center gap-3">
+              <img
+                src={visiblePhotos[activeIndex].url}
+                alt=""
+                className="max-h-[75vh] max-w-full rounded-[var(--radius-card)] object-contain shadow-[0_30px_80px_-20px_rgba(0,0,0,0.65)]"
+                onClick={(e) => e.stopPropagation()}
+              />
+              {(visiblePhotos[activeIndex].tag || visiblePhotos[activeIndex].darshanDate) && (
+                <p className="text-sm text-white/80">
+                  {[visiblePhotos[activeIndex].tag, visiblePhotos[activeIndex].darshanDate].filter(Boolean).join(" · ")}
+                </p>
+              )}
+            </div>
           </div>,
           document.body,
         )}
