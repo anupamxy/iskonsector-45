@@ -8,8 +8,13 @@ import Reveal from "../components/ui/Reveal";
 import { storage } from "../lib/firebase";
 import { images } from "../data/images";
 
+interface Photo {
+  url: string;
+  thumbUrl: string;
+}
+
 export default function Gallery() {
-  const [photos, setPhotos] = useState<string[] | null>(null);
+  const [photos, setPhotos] = useState<Photo[] | null>(null);
   const [error, setError] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
@@ -18,11 +23,16 @@ export default function Gallery() {
 
     async function loadPhotos() {
       try {
-        const folderRef = ref(storage, "gallery");
-        const result = await listAll(folderRef);
+        const result = await listAll(ref(storage, "gallery"));
         const sorted = [...result.items].sort((a, b) => b.name.localeCompare(a.name));
-        const urls = await Promise.all(sorted.map((item) => getDownloadURL(item)));
-        if (!cancelled) setPhotos(urls);
+        const withUrls = await Promise.all(
+          sorted.map(async (item) => {
+            const url = await getDownloadURL(item);
+            const thumbUrl = await getDownloadURL(ref(storage, `gallery/thumbs/${item.name}`)).catch(() => url);
+            return { url, thumbUrl };
+          }),
+        );
+        if (!cancelled) setPhotos(withUrls);
       } catch {
         if (!cancelled) setError(true);
       }
@@ -71,15 +81,15 @@ export default function Gallery() {
 
           {photos && photos.length > 0 && (
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-              {photos.map((url, i) => (
-                <Reveal key={url} delay={Math.min(i, 8) * 60}>
+              {photos.map((photo, i) => (
+                <Reveal key={photo.url} delay={Math.min(i, 8) * 60}>
                   <button
                     type="button"
                     onClick={() => setActiveIndex(i)}
                     className="group block aspect-square w-full overflow-hidden rounded-[var(--radius-card)] bg-cream-alt shadow-[var(--shadow-card)]"
                   >
                     <img
-                      src={url}
+                      src={photo.thumbUrl}
                       alt=""
                       loading="lazy"
                       className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
@@ -137,7 +147,7 @@ export default function Gallery() {
             )}
 
             <img
-              src={photos[activeIndex]}
+              src={photos[activeIndex].url}
               alt=""
               className="max-h-[85vh] max-w-full rounded-[var(--radius-card)] object-contain shadow-[0_30px_80px_-20px_rgba(0,0,0,0.65)]"
               onClick={(e) => e.stopPropagation()}

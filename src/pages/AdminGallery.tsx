@@ -11,11 +11,13 @@ import { LogOut, Trash2, UploadCloud, Loader2 } from "lucide-react";
 import PageHero from "../components/ui/PageHero";
 import Button from "../components/ui/Button";
 import { auth, storage } from "../lib/firebase";
+import { createThumbnail } from "../lib/imageThumbnail";
 import { images } from "../data/images";
 
 interface Photo {
   name: string;
   url: string;
+  thumbUrl: string;
 }
 
 function LoginForm() {
@@ -73,11 +75,14 @@ function UploadPanel({ user }: { user: User }) {
   const [error, setError] = useState<string | null>(null);
 
   async function refreshPhotos() {
-    const folderRef = ref(storage, "gallery");
-    const result = await listAll(folderRef);
+    const result = await listAll(ref(storage, "gallery"));
     const sorted = [...result.items].sort((a, b) => b.name.localeCompare(a.name));
     const withUrls = await Promise.all(
-      sorted.map(async (item) => ({ name: item.name, url: await getDownloadURL(item) })),
+      sorted.map(async (item) => {
+        const url = await getDownloadURL(item);
+        const thumbUrl = await getDownloadURL(ref(storage, `gallery/thumbs/${item.name}`)).catch(() => url);
+        return { name: item.name, url, thumbUrl };
+      }),
     );
     setPhotos(withUrls);
   }
@@ -90,40 +95,48 @@ function UploadPanel({ user }: { user: User }) {
     if (!fileList || fileList.length === 0) return;
     setError(null);
     setUploading(true);
+    setProgress(0);
 
     const files = Array.from(fileList);
     let completed = 0;
 
-    files.forEach((file) => {
-      const path = `gallery/${Date.now()}-${file.name}`;
-      const task = uploadBytesResumable(ref(storage, path), file);
+    files.forEach(async (file) => {
+      const name = `${Date.now()}-${file.name}`;
 
-      task.on(
-        "state_changed",
-        (snapshot) => {
-          setProgress(Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100));
-        },
-        () => {
-          setError("One or more uploads failed. Please try again.");
-          completed += 1;
-          if (completed === files.length) setUploading(false);
-        },
-        () => {
-          completed += 1;
-          if (completed === files.length) {
-            setUploading(false);
-            setProgress(0);
-            refreshPhotos();
-          }
-        },
-      );
+      try {
+        const thumbBlob = await createThumbnail(file);
+        await Promise.all([
+          new Promise<void>((resolve, reject) => {
+            const task = uploadBytesResumable(ref(storage, `gallery/${name}`), file);
+            task.on(
+              "state_changed",
+              (snapshot) => setProgress(Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100)),
+              reject,
+              () => resolve(),
+            );
+          }),
+          uploadBytesResumable(ref(storage, `gallery/thumbs/${name}`), thumbBlob),
+        ]);
+      } catch {
+        setError("One or more uploads failed. Please try again.");
+      } finally {
+        completed += 1;
+        if (completed === files.length) {
+          setUploading(false);
+          setProgress(0);
+          refreshPhotos();
+        }
+      }
     });
   }
 
   async function handleDelete(photo: Photo) {
     if (!confirm(`Delete "${photo.name}"? This can't be undone.`)) return;
     try {
-      await deleteObject(ref(storage, `gallery/${photo.name}`));
+      await Promise.all([
+        deleteObject(ref(storage, `gallery/${photo.name}`)),
+        deleteObject(ref(storage, `gallery/thumbs/${photo.name}`)).catch(() => {}),
+      ]);
       setPhotos((prev) => prev?.filter((p) => p.name !== photo.name) ?? null);
     } catch {
       setError("Couldn't delete that photo.");
@@ -169,7 +182,7 @@ function UploadPanel({ user }: { user: User }) {
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
           {photos.map((photo) => (
             <div key={photo.name} className="group relative aspect-square overflow-hidden rounded-xl bg-cream-alt">
-              <img src={photo.url} alt="" className="h-full w-full object-cover" />
+              <img src={photo.thumbUrl} alt="" className="h-full w-full object-cover" />
               <button
                 type="button"
                 onClick={() => handleDelete(photo)}
