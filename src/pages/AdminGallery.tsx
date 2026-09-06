@@ -13,7 +13,7 @@ import PageHero from "../components/ui/PageHero";
 import Button from "../components/ui/Button";
 import { auth, storage } from "../lib/firebase";
 import { createThumbnail } from "../lib/imageThumbnail";
-import { isWithinRetention, GALLERY_RETENTION_DAYS } from "../lib/galleryRetention";
+import { isWithinRetention, GALLERY_RETENTION_DAYS, todayISO } from "../lib/galleryRetention";
 import { images } from "../data/images";
 
 const TAG_SUGGESTIONS = [
@@ -26,10 +26,6 @@ const TAG_SUGGESTIONS = [
   "Kirtan",
   "Prasadam Seva",
 ];
-
-function todayISO() {
-  return new Date().toISOString().slice(0, 10);
-}
 
 interface Photo {
   name: string;

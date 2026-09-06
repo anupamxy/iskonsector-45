@@ -1,5 +1,9 @@
 export const GALLERY_RETENTION_DAYS = 7;
 
+export function todayISO(): string {
+  return new Date().toISOString().slice(0, 10);
+}
+
 /** Filenames are uploaded as `${Date.now()}-${originalName}` — this pulls that
  * leading timestamp back out. Used as a fallback for photos uploaded before
  * darshan-date metadata existed. */

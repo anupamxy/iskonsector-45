@@ -26,6 +26,7 @@ import NotFound from "./pages/NotFound";
 // Lazy-loaded: pulls in the Firebase SDK, so it's only fetched when someone
 // actually visits the gallery instead of adding weight to every page.
 const Gallery = lazy(() => import("./pages/Gallery"));
+const DailyDarshan = lazy(() => import("./pages/DailyDarshan"));
 const AdminGallery = lazy(() => import("./pages/AdminGallery"));
 
 export default function App() {
@@ -45,6 +46,7 @@ export default function App() {
         <Route path="/gift-shop" element={<GiftShop />} />
         <Route path="/lecture-videos" element={<LectureVideos />} />
         <Route path="/gallery" element={<Suspense fallback={null}><Gallery /></Suspense>} />
+        <Route path="/daily-darshan" element={<Suspense fallback={null}><DailyDarshan /></Suspense>} />
         <Route path="/admin/gallery" element={<Suspense fallback={null}><AdminGallery /></Suspense>} />
         <Route path="/donate" element={<Donate />} />
         <Route path="/contact" element={<Contact />} />
