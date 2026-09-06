@@ -5,10 +5,11 @@ import {
   listAll,
   getDownloadURL,
   getMetadata,
+  updateMetadata,
   uploadBytesResumable,
   deleteObject,
 } from "firebase/storage";
-import { LogOut, Trash2, UploadCloud, Loader2 } from "lucide-react";
+import { LogOut, Trash2, UploadCloud, Loader2, Tags } from "lucide-react";
 import PageHero from "../components/ui/PageHero";
 import Button from "../components/ui/Button";
 import { auth, storage } from "../lib/firebase";
@@ -181,6 +182,33 @@ function UploadPanel({ user }: { user: User }) {
     });
   }
 
+  const [migrating, setMigrating] = useState(false);
+
+  /** One-time helper: retags every existing photo (uploaded before the
+   * Daily Darshan page existed) as "Daily Darshan" dated today, so they
+   * show up there immediately instead of being stranded with old/no tags. */
+  async function migrateAllToDailyDarshanToday() {
+    if (!confirm('Retag ALL existing photos as "Daily Darshan" for today? This cannot be undone.')) return;
+    setMigrating(true);
+    setError(null);
+    try {
+      const result = await listAll(ref(storage, "gallery"));
+      const today = todayISO();
+      await Promise.all(
+        result.items.map(async (item) => {
+          const metadata = { customMetadata: { darshanDate: today, tag: "Daily Darshan" } };
+          await updateMetadata(item, metadata).catch(() => {});
+          await updateMetadata(ref(storage, `gallery/thumbs/${item.name}`), metadata).catch(() => {});
+        }),
+      );
+      await refreshPhotos();
+    } catch {
+      setError("Couldn't retag all photos — please try again.");
+    } finally {
+      setMigrating(false);
+    }
+  }
+
   async function handleDelete(photo: Photo) {
     if (!confirm(`Delete "${photo.name}"? This can't be undone.`)) return;
     try {
@@ -204,9 +232,14 @@ function UploadPanel({ user }: { user: User }) {
             Photos older than {GALLERY_RETENTION_DAYS} days are deleted automatically.
           </p>
         </div>
-        <Button variant="outline" onClick={() => signOut(auth)}>
-          <LogOut size={16} /> Sign Out
-        </Button>
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={migrateAllToDailyDarshanToday} disabled={migrating}>
+            <Tags size={16} /> {migrating ? "Retagging…" : "Retag All as Daily Darshan (Today)"}
+          </Button>
+          <Button variant="outline" onClick={() => signOut(auth)}>
+            <LogOut size={16} /> Sign Out
+          </Button>
+        </div>
       </div>
 
       <div className="mb-5 grid grid-cols-1 gap-4 sm:grid-cols-2">

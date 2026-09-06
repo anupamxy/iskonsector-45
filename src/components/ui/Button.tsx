@@ -38,6 +38,7 @@ type ButtonProps = CommonProps & {
   type?: "button" | "submit";
   target?: string;
   rel?: string;
+  disabled?: boolean;
 };
 
 export default function Button({
@@ -51,8 +52,15 @@ export default function Button({
   type = "button",
   target,
   rel,
+  disabled,
 }: ButtonProps) {
-  const classes = clsx(base, variantClasses[variant], sizeClasses[size], className);
+  const classes = clsx(
+    base,
+    variantClasses[variant],
+    sizeClasses[size],
+    disabled && "pointer-events-none opacity-50",
+    className,
+  );
 
   if (to) {
     return (
@@ -71,7 +79,7 @@ export default function Button({
   }
 
   return (
-    <button type={type} onClick={onClick} className={classes}>
+    <button type={type} onClick={onClick} disabled={disabled} className={classes}>
       {children}
     </button>
   );
