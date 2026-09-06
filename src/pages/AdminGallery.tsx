@@ -12,6 +12,7 @@ import PageHero from "../components/ui/PageHero";
 import Button from "../components/ui/Button";
 import { auth, storage } from "../lib/firebase";
 import { createThumbnail } from "../lib/imageThumbnail";
+import { isWithinRetention, GALLERY_RETENTION_DAYS } from "../lib/galleryRetention";
 import { images } from "../data/images";
 
 interface Photo {
@@ -76,7 +77,8 @@ function UploadPanel({ user }: { user: User }) {
 
   async function refreshPhotos() {
     const result = await listAll(ref(storage, "gallery"));
-    const sorted = [...result.items].sort((a, b) => b.name.localeCompare(a.name));
+    const recent = result.items.filter((item) => isWithinRetention(item.name));
+    const sorted = recent.sort((a, b) => b.name.localeCompare(a.name));
     const withUrls = await Promise.all(
       sorted.map(async (item) => {
         const url = await getDownloadURL(item);
@@ -87,8 +89,28 @@ function UploadPanel({ user }: { user: User }) {
     setPhotos(withUrls);
   }
 
+  /** Deletes any photo (+ its thumbnail) uploaded before the retention window,
+   * so the gallery stays a rolling window automatically without needing a
+   * separate scheduled backend job. */
+  async function cleanupExpiredPhotos() {
+    const result = await listAll(ref(storage, "gallery"));
+    const expired = result.items.filter((item) => !isWithinRetention(item.name));
+    await Promise.all(
+      expired.map((item) =>
+        Promise.all([
+          deleteObject(item).catch(() => {}),
+          deleteObject(ref(storage, `gallery/thumbs/${item.name}`)).catch(() => {}),
+        ]),
+      ),
+    );
+  }
+
   useEffect(() => {
-    refreshPhotos().catch(() => setError("Couldn't load existing photos."));
+    cleanupExpiredPhotos()
+      .catch(() => {})
+      .finally(() => {
+        refreshPhotos().catch(() => setError("Couldn't load existing photos."));
+      });
   }, []);
 
   function handleFiles(fileList: FileList | null) {
@@ -149,6 +171,9 @@ function UploadPanel({ user }: { user: User }) {
         <div>
           <h2 className="text-xl text-ink">Gallery Admin</h2>
           <p className="text-sm text-muted">Signed in as {user.email}</p>
+          <p className="mt-1 text-xs text-muted">
+            Photos older than {GALLERY_RETENTION_DAYS} days are deleted automatically.
+          </p>
         </div>
         <Button variant="outline" onClick={() => signOut(auth)}>
           <LogOut size={16} /> Sign Out

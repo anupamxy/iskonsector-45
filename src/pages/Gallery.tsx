@@ -6,6 +6,7 @@ import PageHero from "../components/ui/PageHero";
 import SectionHeading from "../components/ui/SectionHeading";
 import Reveal from "../components/ui/Reveal";
 import { storage } from "../lib/firebase";
+import { isWithinRetention, GALLERY_RETENTION_DAYS } from "../lib/galleryRetention";
 import { images } from "../data/images";
 
 interface Photo {
@@ -24,7 +25,8 @@ export default function Gallery() {
     async function loadPhotos() {
       try {
         const result = await listAll(ref(storage, "gallery"));
-        const sorted = [...result.items].sort((a, b) => b.name.localeCompare(a.name));
+        const recent = result.items.filter((item) => isWithinRetention(item.name));
+        const sorted = recent.sort((a, b) => b.name.localeCompare(a.name));
         const withUrls = await Promise.all(
           sorted.map(async (item) => {
             const url = await getDownloadURL(item);
@@ -50,13 +52,17 @@ export default function Gallery() {
         breadcrumb={[{ label: "Home", to: "/" }, { label: "Gallery" }]}
         eyebrow="Moments of Devotion"
         title="Temple Gallery"
-        subtitle="Fresh photos from daily darshan, festivals, and seva at ISKCON Gurugram, Sector 45 — updated regularly."
+        subtitle="Fresh photos from daily darshan, festivals, and seva at ISKCON Gurugram, Sector 45 — updated daily."
         images={[{ src: images.pageHero.contact, position: "center 30%" }]}
       />
 
       <section className="section-pad">
         <div className="container-page">
-          <SectionHeading eyebrow="Recent Photos" title="From the Temple" />
+          <SectionHeading
+            eyebrow="Recent Photos"
+            title="From the Temple"
+            subtitle={`Showing darshan photos from the last ${GALLERY_RETENTION_DAYS} days.`}
+          />
 
           {!photos && !error && (
             <div className="flex flex-col items-center gap-3 py-16 text-muted">
