@@ -7,6 +7,7 @@ import SectionHeading from "../components/ui/SectionHeading";
 import Reveal from "../components/ui/Reveal";
 import { storage } from "../lib/firebase";
 import { isWithinRetention, todayISO } from "../lib/galleryRetention";
+import { readCache, writeCache, DAILY_DARSHAN_CACHE_KEY } from "../lib/photoCache";
 import { images } from "../data/images";
 
 const DAILY_DARSHAN_TAG = "Daily Darshan";
@@ -34,6 +35,12 @@ export default function DailyDarshan() {
     let cancelled = false;
 
     async function load() {
+      const cached = readCache<Photo[]>(DAILY_DARSHAN_CACHE_KEY);
+      if (cached) {
+        setPhotos(cached);
+        return;
+      }
+
       try {
         const result = await listAll(ref(storage, "gallery"));
         const withMeta = await Promise.all(
@@ -53,7 +60,10 @@ export default function DailyDarshan() {
             return { url, thumbUrl, darshanDate: darshanDate ?? "" };
           }),
         );
-        if (!cancelled) setPhotos(withUrls);
+        if (!cancelled) {
+          setPhotos(withUrls);
+          writeCache(DAILY_DARSHAN_CACHE_KEY, withUrls);
+        }
       } catch {
         if (!cancelled) setError(true);
       }

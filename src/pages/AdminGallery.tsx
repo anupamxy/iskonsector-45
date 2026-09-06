@@ -15,6 +15,7 @@ import Button from "../components/ui/Button";
 import { auth, storage } from "../lib/firebase";
 import { createThumbnail } from "../lib/imageThumbnail";
 import { isWithinRetention, GALLERY_RETENTION_DAYS, todayISO } from "../lib/galleryRetention";
+import { clearCache, DAILY_DARSHAN_CACHE_KEY } from "../lib/photoCache";
 import { images } from "../data/images";
 
 const TAG_SUGGESTIONS = [
@@ -124,6 +125,7 @@ function UploadPanel({ user }: { user: User }) {
       }),
     );
     const expired = withMeta.filter(({ item, darshanDate }) => !isWithinRetention(item.name, darshanDate));
+    if (expired.length === 0) return;
     await Promise.all(
       expired.map(({ item }) =>
         Promise.all([
@@ -132,6 +134,7 @@ function UploadPanel({ user }: { user: User }) {
         ]),
       ),
     );
+    clearCache(DAILY_DARSHAN_CACHE_KEY);
   }
 
   useEffect(() => {
@@ -149,7 +152,12 @@ function UploadPanel({ user }: { user: User }) {
     setProgress(0);
 
     const files = Array.from(fileList);
-    const customMetadata = { darshanDate: date, tag: tag.trim() || "Daily Darshan" };
+    // 7-day cache matches the retention window, so browsers never re-download
+    // a photo that's still valid, instead of re-fetching it on every visit.
+    const metadata = {
+      cacheControl: `public, max-age=${GALLERY_RETENTION_DAYS * 24 * 60 * 60}`,
+      customMetadata: { darshanDate: date, tag: tag.trim() || "Daily Darshan" },
+    };
     let completed = 0;
 
     files.forEach(async (file) => {
@@ -159,7 +167,7 @@ function UploadPanel({ user }: { user: User }) {
         const thumbBlob = await createThumbnail(file);
         await Promise.all([
           new Promise<void>((resolve, reject) => {
-            const task = uploadBytesResumable(ref(storage, `gallery/${name}`), file, { customMetadata });
+            const task = uploadBytesResumable(ref(storage, `gallery/${name}`), file, metadata);
             task.on(
               "state_changed",
               (snapshot) => setProgress(Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100)),
@@ -167,7 +175,7 @@ function UploadPanel({ user }: { user: User }) {
               () => resolve(),
             );
           }),
-          uploadBytesResumable(ref(storage, `gallery/thumbs/${name}`), thumbBlob, { customMetadata }),
+          uploadBytesResumable(ref(storage, `gallery/thumbs/${name}`), thumbBlob, metadata),
         ]);
       } catch {
         setError("One or more uploads failed. Please try again.");
@@ -176,6 +184,7 @@ function UploadPanel({ user }: { user: User }) {
         if (completed === files.length) {
           setUploading(false);
           setProgress(0);
+          clearCache(DAILY_DARSHAN_CACHE_KEY);
           refreshPhotos();
         }
       }
@@ -194,13 +203,17 @@ function UploadPanel({ user }: { user: User }) {
     try {
       const result = await listAll(ref(storage, "gallery"));
       const today = todayISO();
+      const metadata = {
+        cacheControl: `public, max-age=${GALLERY_RETENTION_DAYS * 24 * 60 * 60}`,
+        customMetadata: { darshanDate: today, tag: "Daily Darshan" },
+      };
       await Promise.all(
         result.items.map(async (item) => {
-          const metadata = { customMetadata: { darshanDate: today, tag: "Daily Darshan" } };
           await updateMetadata(item, metadata).catch(() => {});
           await updateMetadata(ref(storage, `gallery/thumbs/${item.name}`), metadata).catch(() => {});
         }),
       );
+      clearCache(DAILY_DARSHAN_CACHE_KEY);
       await refreshPhotos();
     } catch {
       setError("Couldn't retag all photos — please try again.");
@@ -216,6 +229,7 @@ function UploadPanel({ user }: { user: User }) {
         deleteObject(ref(storage, `gallery/${photo.name}`)),
         deleteObject(ref(storage, `gallery/thumbs/${photo.name}`)).catch(() => {}),
       ]);
+      clearCache(DAILY_DARSHAN_CACHE_KEY);
       setPhotos((prev) => prev?.filter((p) => p.name !== photo.name) ?? null);
     } catch {
       setError("Couldn't delete that photo.");
