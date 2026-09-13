@@ -17,7 +17,7 @@ const eveningSchedule: ScheduleItem[] = [
   { title: "Rajbhog Arati", time: "12:30 PM" },
   { title: "Sandhya Arati", time: "6:30 PM" },
   { title: "Shayan Aarti", time: "8:30 PM" },
-  { title: "Shayana Arati / Darshan Closes", time: "9:00 PM" },
+  { title: "Darshan Closes", time: "9:00 PM" },
 ];
 
 const dailyTimeline = [...morningSchedule, ...eveningSchedule];
