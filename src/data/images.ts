@@ -102,6 +102,12 @@ export const images = {
   },
   lifePatronBanner: "/images/life-patron/banner.jpg",
   dyphRegisterQr: "/images/dyph/register-qr.jpg",
+  dyphClassesCarousel: [
+    { src: "/images/dyph/carousel-1.jpeg", position: "50% 35%" },
+    { src: "/images/dyph/carousel-2.jpeg", position: "50% 30%" },
+    { src: "/images/dyph/carousel-3.jpeg", position: "50% 40%" },
+    { src: "/images/dyph/carousel-4.jpeg", position: "50% 35%" },
+  ],
   govindas: {
     specialThali: "/images/govindas/banner.png",
     dosa: "/images/govindas/dosa.png",
@@ -130,7 +136,6 @@ export const images = {
     about: "/images/leadership/prabhupada-teaching.jpg",
     contact: "/images/gallery/community-06.jpg",
     donate: "/images/decorative/krishna-deity.jpg",
-    dyph: "/images/gallery/community-07.jpg",
     faq: "/images/gallery/temple-09.jpg",
     festivals: "/images/gallery/temple-03.jpg",
     foodForLife: "/images/gallery/community-04.jpg",

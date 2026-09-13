@@ -57,7 +57,7 @@ export default function Dyph() {
         eyebrow="A Course Built for Youth — Age 20+"
         title="Discover Your Permanent Happiness"
         subtitle={dyph.intro}
-        images={[{ src: images.pageHero.dyph, position: "center 40%" }]}
+        images={images.dyphClassesCarousel}
       >
         <div className="mt-6 flex flex-wrap gap-2.5">
           {["Students", "Young Professionals", "Zero Experience Needed"].map((tag) => (
