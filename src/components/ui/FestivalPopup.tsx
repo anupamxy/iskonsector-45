@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 import { X, Sparkles, PartyPopper } from "lucide-react";
 import CountdownRow from "./CountdownRow";
-import { getUpcomingHomeFestivals } from "../../data/festivals";
+import { getUpcomingHomeFestivals, isFestivalToday } from "../../data/festivals";
 
 const STORAGE_KEY = "festival-popup-dismissed-slug";
 const SHOW_DELAY_MS = 1400;
@@ -45,6 +45,8 @@ export default function FestivalPopup() {
 
   if (!open || !festival) return null;
 
+  const today = isFestivalToday(festival);
+
   return createPortal(
     <div
       className={`fixed inset-0 z-[200] flex items-center justify-center bg-ink-deep/70 p-4 backdrop-blur-sm transition-opacity duration-300 ${
@@ -52,7 +54,7 @@ export default function FestivalPopup() {
       }`}
       role="dialog"
       aria-modal="true"
-      aria-label={`${festival.name} — upcoming festival`}
+      aria-label={`${festival.name} — ${today ? "today" : "upcoming festival"}`}
       onClick={close}
     >
       <div
@@ -104,7 +106,7 @@ export default function FestivalPopup() {
             </span>
           </div>
 
-          <p className="text-eyebrow text-primary-light">Upcoming Festival</p>
+          <p className="text-eyebrow text-primary-light">{today ? "Celebrating Today" : "Upcoming Festival"}</p>
           <h3 className="mt-2 font-display text-2xl text-white">{festival.name}</h3>
           {festival.tagline && <p className="mt-2 text-sm leading-relaxed text-white/70">{festival.tagline}</p>}
 

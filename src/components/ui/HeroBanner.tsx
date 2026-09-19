@@ -5,7 +5,7 @@ import clsx from "clsx";
 import Button from "./Button";
 import CountdownRow from "./CountdownRow";
 import { siteInfo } from "../../data/site";
-import type { Festival } from "../../data/festivals";
+import { isFestivalToday, type Festival } from "../../data/festivals";
 
 interface HeroBannerProps {
   media: string[];
@@ -58,11 +58,12 @@ function SlideMedia({ slide, isActive, onSelect }: SlideMediaProps) {
 function HeroCopy({ slide }: { slide: Slide }) {
   if (slide.kind === "festival") {
     const { festival } = slide;
+    const today = isFestivalToday(festival);
     return (
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p className="mb-2 inline-flex items-center gap-1.5 rounded-full bg-primary/20 px-3 py-1 text-xs font-semibold text-primary-light">
-            🪔 Upcoming Festival
+            {today ? "🪔 Celebrating Today" : "🪔 Upcoming Festival"}
           </p>
           <p className="flex items-center gap-1.5 text-eyebrow text-primary-light">
             <MapPin size={12} /> {siteInfo.name}

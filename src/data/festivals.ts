@@ -527,10 +527,28 @@ const VISIBLE_SLUGS = ["jhulan-yatra", "balrama-purnima", "janmashtami", "srila-
 
 export const visibleFestivals = festivals.filter((f) => VISIBLE_SLUGS.includes(f.slug));
 
-/** Festivals with a confirmed, still-upcoming date, earliest first — used to drive the
- * homepage hero slides, the utility bar's festival highlight, and its countdown. */
+/** A festival stays visible through the end of its calendar day (or `endDate`'s day, for
+ * multi-day festivals) — not just until its `date` timestamp, which is often just the
+ * morning's opening ritual time and would otherwise make the festival vanish mid-celebration. */
+function festivalEndOfDay(f: Festival): number {
+  const end = new Date(f.endDate ?? f.date!);
+  end.setHours(23, 59, 59, 999);
+  return end.getTime();
+}
+
+/** Festivals with a confirmed date that hasn't fully elapsed yet, earliest first — used to
+ * drive the homepage hero slides, the utility bar's festival highlight, and its countdown. */
 export function getUpcomingHomeFestivals(): Festival[] {
   return festivals
-    .filter((f) => f.showInHomeHero && f.date && new Date(f.date).getTime() > Date.now())
+    .filter((f) => f.showInHomeHero && f.date && festivalEndOfDay(f) > Date.now())
     .sort((a, b) => new Date(a.date!).getTime() - new Date(b.date!).getTime());
+}
+
+/** True once a festival's `date` has passed but we're still within its calendar day (or
+ * `endDate`'s day, for multi-day festivals) — used to swap "Upcoming" copy for "Today". */
+export function isFestivalToday(festival: Festival): boolean {
+  if (!festival.date) return false;
+  const now = Date.now();
+  const start = new Date(festival.date).getTime();
+  return now >= start && now <= festivalEndOfDay(festival);
 }
