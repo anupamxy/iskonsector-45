@@ -43,9 +43,20 @@ export default function FestivalDetail() {
 
   const dateLabel = festival.date
     ? festival.endDate
-      ? `${new Date(festival.date).toLocaleDateString("en-IN", { day: "numeric" })} – ${new Date(
-          festival.endDate,
-        ).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}`
+      ? (() => {
+          const start = new Date(festival.date!);
+          const end = new Date(festival.endDate!);
+          // Same month & year: abbreviate the start to just its day ("23 – 28 August 2026").
+          // Otherwise spell out the start's month too, so a range like Kartik's
+          // Oct 25 – Nov 24 doesn't collapse into a nonsensical "25 – 24 November".
+          const sameMonth = start.getMonth() === end.getMonth() && start.getFullYear() === end.getFullYear();
+          const startLabel = start.toLocaleDateString(
+            "en-IN",
+            sameMonth ? { day: "numeric" } : { day: "numeric", month: "long" },
+          );
+          const endLabel = end.toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" });
+          return `${startLabel} – ${endLabel}`;
+        })()
       : new Date(festival.date).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })
     : null;
 
@@ -300,7 +311,7 @@ export default function FestivalDetail() {
             <Reveal>
               <SectionHeading eyebrow="Traditions" title="How the Day Is Observed" />
             </Reveal>
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-2 gap-6 lg:grid-cols-3">
               {festival.howCelebrated.map((item, i) => (
                 <Reveal key={item.title} delay={i * 80} className="h-full">
                   <Card className="h-full p-6">

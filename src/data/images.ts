@@ -95,6 +95,23 @@ export const images = {
       { src: "/images/janmashtami/carousel-4.jpg", position: "50% 45%" },
     ],
   },
+  diwaliBanner: "/images/diwali/hero-1.jpg",
+  // Public-domain / CC-BY-SA photos (Wikimedia Commons) — real event photography can
+  // replace these once available.
+  diwaliCarousel: [
+    { src: "/images/diwali/hero-1.jpg", position: "62% 55%" },
+    { src: "/images/diwali/hero-2.jpg", position: "50% 65%" },
+  ],
+  govardhanPujaBanner: "/images/govardhan-puja/hero-1.jpg",
+  govardhanPujaCarousel: [
+    { src: "/images/govardhan-puja/hero-1.jpg", position: "50% 15%" },
+    { src: "/images/govardhan-puja/hero-2.jpg", position: "55% 42%" },
+  ],
+  kartikMonthBanner: "/images/kartik-month/hero-1.jpg",
+  kartikMonthCarousel: [
+    { src: "/images/kartik-month/hero-1.jpg", position: "48% 58%" },
+    { src: "/images/kartik-month/hero-2.jpg", position: "50% 85%" },
+  ],
   ramNavamiBanner: "/images/ramnavami/banner.jpg",
   rathYatra: {
     banner: "/images/rath-yatra/banner.png",
@@ -145,6 +162,7 @@ export const images = {
     govindasOnWheel: "/images/gallery/temple-07.jpg",
     lifePatron: "/images/gallery/community-05.jpg",
     lectureVideos: "/images/leadership/guru.jpg",
+    pujaServices: "/images/decorative/krishna-deity.jpg",
     temple: "/images/gallery/temple-08.jpg",
     legal: "/images/leadership/guru-prasad-swami.jpg",
   },

@@ -1,5 +1,5 @@
-import { useEffect, useState, type FormEvent } from "react";
-import { onAuthStateChanged, signInWithEmailAndPassword, signOut, type User } from "firebase/auth";
+import { useEffect, useState } from "react";
+import { onAuthStateChanged, signOut, type User } from "firebase/auth";
 import {
   ref,
   listAll,
@@ -12,10 +12,18 @@ import {
 import { LogOut, Trash2, UploadCloud, Loader2, Tags } from "lucide-react";
 import PageHero from "../components/ui/PageHero";
 import Button from "../components/ui/Button";
+import AdminLoginForm from "../components/ui/AdminLoginForm";
 import { auth, storage } from "../lib/firebase";
 import { createThumbnail } from "../lib/imageThumbnail";
 import { isWithinRetention, GALLERY_RETENTION_DAYS, todayISO } from "../lib/galleryRetention";
-import { clearCache, DAILY_DARSHAN_CACHE_KEY } from "../lib/photoCache";
+import { clearCache, DAILY_DARSHAN_CACHE_KEY, FESTIVAL_DARSHAN_CACHE_KEY } from "../lib/photoCache";
+
+/** Uploads/deletes/retags can affect either gallery page, so both caches are
+ * invalidated together rather than tracking which tag a change belongs to. */
+function clearGalleryCaches(): void {
+  clearCache(DAILY_DARSHAN_CACHE_KEY);
+  clearCache(FESTIVAL_DARSHAN_CACHE_KEY);
+}
 import { images } from "../data/images";
 
 const TAG_SUGGESTIONS = [
@@ -25,6 +33,9 @@ const TAG_SUGGESTIONS = [
   "Ram Navami",
   "Jhulan Yatra",
   "Balrama Purnima",
+  "Diwali",
+  "Govardhan Puja",
+  "Kartik Damodar Month",
   "Kirtan",
   "Prasadam Seva",
 ];
@@ -35,54 +46,6 @@ interface Photo {
   thumbUrl: string;
   darshanDate?: string;
   tag?: string;
-}
-
-function LoginForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
-
-  async function handleSubmit(e: FormEvent) {
-    e.preventDefault();
-    setError(null);
-    setLoading(true);
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-    } catch {
-      setError("Couldn't sign in — check your email and password.");
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  return (
-    <div className="container-page section-pad">
-      <form onSubmit={handleSubmit} className="mx-auto flex max-w-sm flex-col gap-4">
-        <h2 className="text-center text-xl text-ink">Admin Sign In</h2>
-        <input
-          type="email"
-          required
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="rounded-xl border border-hairline px-4 py-2.5 text-sm outline-none focus:border-secondary"
-        />
-        <input
-          type="password"
-          required
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="rounded-xl border border-hairline px-4 py-2.5 text-sm outline-none focus:border-secondary"
-        />
-        {error && <p className="text-sm text-danger">{error}</p>}
-        <Button type="submit" className="w-full">
-          {loading ? "Signing in…" : "Sign In"}
-        </Button>
-      </form>
-    </div>
-  );
 }
 
 function UploadPanel({ user }: { user: User }) {
@@ -101,7 +64,7 @@ function UploadPanel({ user }: { user: User }) {
         return { item, darshanDate: meta?.customMetadata?.darshanDate, tag: meta?.customMetadata?.tag };
       }),
     );
-    const recent = withMeta.filter(({ item, darshanDate }) => isWithinRetention(item.name, darshanDate));
+    const recent = withMeta.filter(({ item, darshanDate, tag }) => isWithinRetention(item.name, darshanDate, tag));
     const sorted = recent.sort((a, b) => b.item.name.localeCompare(a.item.name));
     const withUrls = await Promise.all(
       sorted.map(async ({ item, darshanDate, tag }) => {
@@ -121,10 +84,10 @@ function UploadPanel({ user }: { user: User }) {
     const withMeta = await Promise.all(
       result.items.map(async (item) => {
         const meta = await getMetadata(item).catch(() => null);
-        return { item, darshanDate: meta?.customMetadata?.darshanDate };
+        return { item, darshanDate: meta?.customMetadata?.darshanDate, tag: meta?.customMetadata?.tag };
       }),
     );
-    const expired = withMeta.filter(({ item, darshanDate }) => !isWithinRetention(item.name, darshanDate));
+    const expired = withMeta.filter(({ item, darshanDate, tag }) => !isWithinRetention(item.name, darshanDate, tag));
     if (expired.length === 0) return;
     await Promise.all(
       expired.map(({ item }) =>
@@ -134,7 +97,7 @@ function UploadPanel({ user }: { user: User }) {
         ]),
       ),
     );
-    clearCache(DAILY_DARSHAN_CACHE_KEY);
+    clearGalleryCaches();
   }
 
   useEffect(() => {
@@ -184,7 +147,7 @@ function UploadPanel({ user }: { user: User }) {
         if (completed === files.length) {
           setUploading(false);
           setProgress(0);
-          clearCache(DAILY_DARSHAN_CACHE_KEY);
+          clearGalleryCaches();
           refreshPhotos();
         }
       }
@@ -213,7 +176,7 @@ function UploadPanel({ user }: { user: User }) {
           await updateMetadata(ref(storage, `gallery/thumbs/${item.name}`), metadata).catch(() => {});
         }),
       );
-      clearCache(DAILY_DARSHAN_CACHE_KEY);
+      clearGalleryCaches();
       await refreshPhotos();
     } catch {
       setError("Couldn't retag all photos — please try again.");
@@ -229,7 +192,7 @@ function UploadPanel({ user }: { user: User }) {
         deleteObject(ref(storage, `gallery/${photo.name}`)),
         deleteObject(ref(storage, `gallery/thumbs/${photo.name}`)).catch(() => {}),
       ]);
-      clearCache(DAILY_DARSHAN_CACHE_KEY);
+      clearGalleryCaches();
       setPhotos((prev) => prev?.filter((p) => p.name !== photo.name) ?? null);
     } catch {
       setError("Couldn't delete that photo.");
@@ -350,7 +313,7 @@ export default function AdminGallery() {
         images={[{ src: images.pageHero.contact, position: "center 30%" }]}
       />
 
-      {user === undefined ? null : user ? <UploadPanel user={user} /> : <LoginForm />}
+      {user === undefined ? null : user ? <UploadPanel user={user} /> : <AdminLoginForm />}
     </div>
   );
 }

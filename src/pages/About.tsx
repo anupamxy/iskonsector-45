@@ -34,7 +34,7 @@ export default function About() {
       <section className="section-pad bg-cream-alt">
         <div className="container-page">
           <SectionHeading eyebrow="Our Philosophy" title={philosophy.heading} subtitle={philosophy.body} />
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-6 lg:grid-cols-4">
             {pillars.map((pillar, i) => {
               const Icon = pillarIcons[i];
               return (
@@ -54,7 +54,7 @@ export default function About() {
       <section className="section-pad">
         <div className="container-page">
           <SectionHeading eyebrow="Our Leader" title="Founder & Leadership" />
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+          <div className="grid grid-cols-2 gap-6 sm:grid-cols-3">
             <Card className="items-center p-6 text-center">
               <img src={founder.image} alt={founder.name} className="aspect-[5/3] w-full max-w-[260px] mx-auto rounded-lg object-cover" />
               <h4 className="mt-4 text-lg text-ink">{founder.name}</h4>

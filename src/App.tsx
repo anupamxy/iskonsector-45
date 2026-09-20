@@ -10,6 +10,7 @@ import GovindasOnWheel from "./pages/GovindasOnWheel";
 import LifePatron from "./pages/LifePatron";
 import Dyph from "./pages/Dyph";
 import GitaDaan from "./pages/GitaDaan";
+import PujaServices from "./pages/PujaServices";
 import Festivals from "./pages/Festivals";
 import FestivalDetail from "./pages/FestivalDetail";
 import GiftShop from "./pages/GiftShop";
@@ -26,7 +27,9 @@ import NotFound from "./pages/NotFound";
 // Lazy-loaded: pulls in the Firebase SDK, so it's only fetched when someone
 // actually visits these pages instead of adding weight to every page.
 const DailyDarshan = lazy(() => import("./pages/DailyDarshan"));
+const FestivalDarshans = lazy(() => import("./pages/FestivalDarshans"));
 const AdminGallery = lazy(() => import("./pages/AdminGallery"));
+const AdminPujaBookings = lazy(() => import("./pages/AdminPujaBookings"));
 
 export default function App() {
   return (
@@ -40,12 +43,15 @@ export default function App() {
         <Route path="/life-patron" element={<LifePatron />} />
         <Route path="/dyph" element={<Dyph />} />
         <Route path="/gita-daan" element={<GitaDaan />} />
+        <Route path="/puja-services" element={<PujaServices />} />
         <Route path="/festivals" element={<Festivals />} />
         <Route path="/festivals/:slug" element={<FestivalDetail />} />
         <Route path="/gift-shop" element={<GiftShop />} />
         <Route path="/lecture-videos" element={<LectureVideos />} />
         <Route path="/daily-darshan" element={<Suspense fallback={null}><DailyDarshan /></Suspense>} />
+        <Route path="/festival-darshan" element={<Suspense fallback={null}><FestivalDarshans /></Suspense>} />
         <Route path="/admin/gallery" element={<Suspense fallback={null}><AdminGallery /></Suspense>} />
+        <Route path="/admin/puja-bookings" element={<Suspense fallback={null}><AdminPujaBookings /></Suspense>} />
         <Route path="/donate" element={<Donate />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/faq" element={<Faq />} />

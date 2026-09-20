@@ -57,7 +57,7 @@ export default function Donate() {
       <section className="section-pad">
         <div className="container-page">
           <SectionHeading eyebrow="Deity Seva" title="Offer Seva to Sri Sri Radha Gopinath" />
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-6 lg:grid-cols-4">
             {deitySeva.map((tier) => (
               <SevaCard key={tier.label} label={tier.label} amount={tier.amount} seva="Archa Vigraha Seva" />
             ))}
@@ -68,7 +68,7 @@ export default function Donate() {
       <section className="section-pad bg-cream-alt">
         <div className="container-page">
           <SectionHeading eyebrow="Choose a Cause" title="Other Ways to Give" />
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-6 lg:grid-cols-4">
             {causes.map(({ icon: Icon, title, body, to }) => (
               <Link
                 key={title}
@@ -92,7 +92,7 @@ export default function Donate() {
       <section className="section-pad">
         <div className="container-page">
           <SectionHeading eyebrow="Why Give With Us" title="Your Trust Matters" />
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-6 lg:grid-cols-4">
             {trust.map(({ icon: Icon, title, body }) => (
               <Card key={title} className="items-center p-6 text-center">
                 <span className="flex h-12 w-12 items-center justify-center rounded-full bg-secondary/10 text-secondary">

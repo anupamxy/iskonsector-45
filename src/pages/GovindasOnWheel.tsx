@@ -44,7 +44,7 @@ export default function GovindasOnWheel() {
       />
 
       <section className="section-pad">
-        <div className="container-page grid grid-cols-1 gap-6 sm:grid-cols-2">
+        <div className="container-page grid grid-cols-2 gap-6">
           <Card row className="items-center gap-4 p-6">
             <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
               <Clock size={22} />
@@ -69,7 +69,7 @@ export default function GovindasOnWheel() {
       <section className="section-pad bg-cream-alt">
         <div className="container-page">
           <SectionHeading eyebrow="Our Menu" title="Pure Vegetarian Delights" />
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+          <div className="grid grid-cols-2 gap-6 lg:grid-cols-3">
             {menuEntries.map(([category, items]) => (
               <Card key={category} className="p-6">
                 <h4 className="mb-4 text-lg text-ink">{category}</h4>

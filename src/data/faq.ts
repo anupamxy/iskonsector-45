@@ -43,7 +43,7 @@ export const faqs: FaqItem[] = [
   {
     question: "How can I book a puja or seva?",
     answer:
-      "You can book seva and puja services through our Temple & Seva pages, or contact us directly by phone, WhatsApp, or email and our team will assist you.",
+      "You can book a puja online through our Puja Services page — choose garland, tulsi, sweet, fruit, or deepdan offerings and submit your details. You can also contact us directly by phone, WhatsApp, or email and our team will assist you.",
   },
   {
     question: "Can I get an 80-G tax exemption receipt for my donation?",

@@ -474,6 +474,222 @@ export const festivals: Festival[] = [
     ],
   },
   {
+    slug: "kartik-damodar-month",
+    name: "Kartik Damodar Month",
+    heading: "Kartik — The Month Most Dear to Radha and Krishna",
+    tagline: "A month-long opportunity for lamp offerings, Damodarashtakam, and deepened devotion to Sri Sri Radha Gopinath.",
+    bannerImage: images.kartikMonthBanner,
+    showInHomeHero: true,
+    heroImages: images.kartikMonthCarousel,
+    date: "2026-10-25T00:00:00",
+    endDate: "2026-11-24T23:59:00",
+    timeLabel: "Daily Damodarashtakam & Lamp Offering — 7:00 PM",
+    verse:
+      "नमामीश्वरं सच्चिदानन्दरूपं लसत्कुण्डलं गोकुले भ्राजमानम्। यशोदाभियोलूखलाद्धावमानं परामृष्टमत्यन्ततो द्रुत्य गोप्या॥",
+    verseRef: "Damodarashtakam, Verse 1",
+    significance:
+      "Kartik, also called Damodar month or Urja-vrata, is regarded in the Vaishnava calendar as the month most dear to Srimati Radharani and Sri Krishna — a full month in which even a little devotional service is said to bear boundless fruit. It commemorates the Damodar-lila: young Krishna, caught red-handed stealing butter, was bound around the belly with a rope by His mother Yashoda — an act of loving discipline that could never actually bind the unlimited Supreme Lord, except through the ropes of pure love. Throughout Kartik, devotees offer a ghee lamp to Sri Sri Radha Gopinath each evening while reciting the eight verses of Damodarashtakam, composed by Sage Satyavrata Muni as spoken by Sage Shaunaka, glorifying this pastime and praying for unflinching devotion. The month also intensifies worship of Tulsi Devi, dearest to Krishna, and closes on Kartik Purnima — the anniversary of the Rasa-lila and a night of especially radiant lamp offerings.",
+    muhurat: [
+      { label: "Observance", value: "Kartik (Damodar / Urja) Vrata" },
+      { label: "Dates", value: "Sunday, 25 October – Tuesday, 24 November 2026" },
+      { label: "Concludes On", value: "Kartik Purnima, 24 November 2026" },
+      { label: "Daily Offering", value: "Damodarashtakam & Ghee Lamp, 7:00 PM" },
+    ],
+    howCelebrated: [
+      {
+        title: "Daily Deep-Daan (Lamp Offering)",
+        body: "A ghee or oil lamp is lovingly offered to Sri Sri Radha Gopinath every evening throughout the month.",
+      },
+      {
+        title: "Damodarashtakam Recitation",
+        body: "The eight verses glorifying Krishna's binding by Mother Yashoda are sung nightly alongside the lamp offering.",
+      },
+      {
+        title: "Tulsi Puja",
+        body: "Worship and circumambulation of Tulsi Devi is especially encouraged, as this month is dear to her as well.",
+      },
+      {
+        title: "Increased Japa & Bhagavatam Study",
+        body: "Many devotees increase their daily chanting of the Hare Krishna maha-mantra and read from the Tenth Canto of Srimad Bhagavatam.",
+      },
+      {
+        title: "Kartik Purnima Finale",
+        body: "The month closes with a special full-moon celebration and lamp offerings on Kartik Purnima, also observed as Dev Deepavali.",
+      },
+    ],
+    vratVidhi: [
+      "Many devotees observe the Kartik Vrata by avoiding urad dal (black gram) and a few other specific foods through the month.",
+      "Devotees endeavor to increase their chanting rounds and attend the evening lamp offering whenever possible.",
+      "The emphasis of this vrata is heightened remembrance and loving service to Radha-Krishna, more than physical austerity alone.",
+    ],
+    faqs: [
+      {
+        question: "What is Damodar-lila?",
+        answer:
+          "It's the pastime of young Krishna being bound around the waist with a rope by His mother Yashoda after His butter-stealing mischief — an act possible only through her pure maternal love, since no material rope could ever bind the unlimited Lord.",
+      },
+      {
+        question: "Do I need to fast for the whole month?",
+        answer:
+          "A full Kartik Vrata with dietary restrictions is a personal commitment some devotees take on, but it isn't required to take part in the month's daily lamp offering and celebrations at the temple.",
+      },
+      {
+        question: "Can I sponsor the evening lamp offering?",
+        answer:
+          "Yes — you can sponsor the Damodarashtakam and lamp offering for any evening of the month, online or by visiting the temple, and we'll offer it on your behalf.",
+      },
+      {
+        question: "What is Kartik Purnima?",
+        answer:
+          "It's the full-moon day that closes the month, marking the anniversary of Krishna's Rasa-lila dance with the gopis and celebrated with an especially festive lamp offering, also known as Dev Deepavali.",
+      },
+    ],
+    sevaTiers: [
+      { label: "Daily Deep-Daan Seva", amount: 501 },
+      { label: "Damodarashtakam Week Seva", amount: 2100 },
+      { label: "Tulsi Seva", amount: 1100 },
+      { label: "Kartik Purnima Maha Aarti Seva", amount: 5100 },
+    ],
+  },
+  {
+    slug: "diwali",
+    name: "Diwali",
+    heading: "Diwali — The Festival of Lights",
+    tagline: "Celebrating Lord Ramachandra's return to Ayodhya, and the eternal victory of light over darkness.",
+    bannerImage: images.diwaliBanner,
+    showInHomeHero: true,
+    heroImages: images.diwaliCarousel,
+    date: "2026-11-08T18:29:00",
+    timeLabel: "6:29 PM – 8:29 PM (Lakshmi Puja Muhurat)",
+    verse:
+      "नमस्तेऽस्तु महामाये श्रीपीठे सुरपूजिते। शङ्खचक्रगदाहस्ते महालक्ष्मि नमोऽस्तु ते॥",
+    verseRef: "Traditional pranam mantra to Sri Mahalakshmi",
+    significance:
+      "Diwali, the festival of lights, celebrates Lord Ramachandra's return to Ayodhya with Mother Sita and Lakshmana after fourteen years in exile and His victory over the demon king Ravana — the city's residents are said to have lit rows of oil lamps (deepavali) to welcome Him home, giving the festival its name. It falls on Amavasya, the darkest night of the month of Kartik, when the light of countless diyas symbolizes the victory of dharma over adharma and knowledge over ignorance. The same evening is dedicated to the worship of Goddess Lakshmi — in the Vaishnava tradition always honored together with Lord Narayana, as His eternal consort and the goddess of auspiciousness, rather than worshipped independently. For devotees of Krishna, Diwali is a joyous reminder that wherever the Supreme Lord and His pure devotees are welcomed with love, light naturally follows.",
+    muhurat: [
+      { label: "Festival", value: "Diwali (Deepavali) — Lakshmi Puja" },
+      { label: "Date", value: "Sunday, 8 November 2026" },
+      { label: "Amavasya Tithi", value: "Begins 2:17 PM, 8 Nov — Ends 12:01 PM, 9 Nov" },
+      { label: "Pradosh Kaal / Lakshmi Puja Muhurat", value: "6:29 PM – 8:29 PM" },
+      { label: "Followed By", value: "Govardhan Puja, 10 November 2026" },
+    ],
+    howCelebrated: [
+      {
+        title: "Temple & Deity Illumination",
+        body: "The temple and Sri Sri Radha Gopinath are adorned with rows of oil lamps and lights, recreating Ayodhya's joyous welcome for Lord Rama.",
+      },
+      {
+        title: "Lakshmi-Narayan Puja",
+        body: "Goddess Lakshmi is worshipped together with Lord Narayana, in keeping with the Vaishnava understanding of her as His eternal, inseparable consort.",
+      },
+      {
+        title: "Kirtan & Sparkling Lamps",
+        body: "Devotees favor diyas and sparklers over loud firecrackers, keeping the evening centered on kirtan and quiet, joyful light rather than noise.",
+      },
+      {
+        title: "Sharing Sweets & Prasadam",
+        body: "Homes and the temple exchange sweets and sanctified prasadam, spreading the festival's spirit of generosity and gratitude.",
+      },
+    ],
+    faqs: [
+      {
+        question: "Why do Vaishnavas worship Lakshmi with Narayana, not on her own?",
+        answer:
+          "In the Vaishnava tradition, Lakshmi is Lord Narayana's eternal consort and is worshipped alongside Him, since her auspiciousness and grace are understood to flow from her loving relationship with the Supreme Lord.",
+      },
+      {
+        question: "Does Diwali have a Krishna connection, or is it only about Lord Rama?",
+        answer:
+          "Diwali principally celebrates Lord Ramachandra's return to Ayodhya, but as an incarnation of the same Supreme Personality of Godhead worshipped as Krishna, the festival's spirit of welcoming the Lord with light and joy resonates throughout Vaishnava tradition.",
+      },
+      {
+        question: "Do I need to fast on Diwali?",
+        answer: "No, Diwali isn't a fasting occasion — it's a joyous celebration open to everyone.",
+      },
+      {
+        question: "Can I sponsor the temple's lamp decoration or a Lakshmi-Narayan seva?",
+        answer:
+          "Yes — reach out to us on WhatsApp or in person at the temple, or use the seva options on this page, and we'll offer it on your behalf.",
+      },
+    ],
+    sevaTiers: [
+      { label: "Deepotsav (Lamp) Seva", amount: 1100 },
+      { label: "Lakshmi-Narayan Abhishek", amount: 5100 },
+      { label: "Temple Illumination Seva", amount: 11000 },
+    ],
+  },
+  {
+    slug: "govardhan-puja",
+    name: "Govardhan Puja",
+    heading: "Govardhan Puja — Lifting the Hill of Vrindavan",
+    tagline: "Celebrating Lord Krishna's lifting of Govardhan Hill, and the Annakut offering of a mountain of prasadam.",
+    bannerImage: images.govardhanPujaBanner,
+    bannerPosition: "center 15%",
+    showInHomeHero: true,
+    heroImages: images.govardhanPujaCarousel,
+    date: "2026-11-10T06:40:00",
+    timeLabel: "6:40 AM – 8:50 AM (Pratahkal Puja) & Evening Annakut Darshan",
+    verse: "पत्रं पुष्पं फलं तोयं यो मे भक्त्या प्रयच्छति। तदहं भक्त्युपहृतमश्नामि प्रयतात्मनः॥",
+    verseRef: "Bhagavad Gita 9.26",
+    significance:
+      "Govardhan Puja falls the day after Diwali and celebrates one of Krishna's most beloved pastimes as a cowherd boy in Vrindavan. When the residents of Vraj prepared their annual offering to Indra, the demigod of rain, young Krishna convinced them instead to worship Govardhan Hill — the land, cows, and nature that actually sustained their lives — and to set aside fear-based worship of demigods for direct, loving devotion. An enraged Indra unleashed torrential rains on Vraj, and Krishna lifted the entire Govardhan Hill on the little finger of His left hand, holding it aloft for seven days as an umbrella to shelter every resident and animal, until a humbled Indra came to offer his surrender. Devotees now build a small hill representing Govardhan — traditionally from cow dung, or from an elaborate mountain of food — and offer it a vast variety of preparations known as Annakut, or 'a mountain of grain,' reflecting the very abundance Krishna protected.",
+    muhurat: [
+      { label: "Festival", value: "Govardhan Puja (Annakut)" },
+      { label: "Date", value: "Tuesday, 10 November 2026" },
+      { label: "Pratipada Tithi", value: "Begins 12:31 PM, 9 Nov — Ends 2:00 PM, 10 Nov" },
+      { label: "Pratahkal Puja Muhurat", value: "6:40 AM – 8:50 AM" },
+      { label: "Falls On", value: "The day after Diwali (Lakshmi Puja)" },
+    ],
+    howCelebrated: [
+      {
+        title: "Building the Govardhan Hill",
+        body: "A small hill representing Govardhan is lovingly built and decorated before the deities, recalling the very hill Krishna lifted.",
+      },
+      {
+        title: "Annakut — The Mountain of Food",
+        body: "Dozens of preparations are arranged into a symbolic mountain and offered to Krishna, celebrating the abundance He protected from Indra's wrath.",
+      },
+      {
+        title: "Go-Puja",
+        body: "Cows are bathed, decorated, and worshipped, honoring their special place in Krishna's Vrindavan pastimes.",
+      },
+      {
+        title: "Govardhan Parikrama",
+        body: "Devotees circumambulate the hill or its representation, a common way of showing respect to Govardhan itself.",
+      },
+      {
+        title: "Distributing Prasadam",
+        body: "The Annakut offering is distributed as prasadam to all visitors, extending the day's abundance to the whole community.",
+      },
+    ],
+    faqs: [
+      {
+        question: "What is Annakut?",
+        answer:
+          "Annakut, meaning 'a mountain of grain,' is the practice of offering a large variety of food preparations arranged like a hill — echoing Govardhan Hill itself and the abundance Krishna protected on this day.",
+      },
+      {
+        question: "Why did Krishna lift Govardhan Hill?",
+        answer:
+          "To shelter the residents of Vrindavan from the torrential rains sent by an angered Indra, after Krishna encouraged them to worship the hill and their own land and cows instead of performing the customary sacrifice to Indra.",
+      },
+      {
+        question: "Do I need to fast on Govardhan Puja?",
+        answer: "No — this is a feasting and celebration day, centered on the Annakut offering and prasadam, not fasting.",
+      },
+      {
+        question: "Can I sponsor the Annakut offering or a Go-Puja seva?",
+        answer:
+          "Yes — every seva on this page can be sponsored online or over WhatsApp, and we'll offer it on your behalf as part of the celebration.",
+      },
+    ],
+    sevaTiers: [
+      { label: "Annakut Bhog Seva", amount: 5100 },
+      { label: "Govardhan Puja Thali", amount: 2100 },
+      { label: "Go-Seva (Cow Care)", amount: 1100 },
+    ],
+  },
+  {
     slug: "ram-navami",
     name: "Ram Navami",
     heading: "Ram Navami Celebrations",
@@ -523,7 +739,16 @@ export function getFestival(slug: string) {
 }
 
 /** Slugs to surface in listings/nav for now — other festivals stay reachable by direct link. */
-const VISIBLE_SLUGS = ["jhulan-yatra", "balrama-purnima", "janmashtami", "srila-prabhupada-appearance-day", "radhashtami"];
+const VISIBLE_SLUGS = [
+  "jhulan-yatra",
+  "balrama-purnima",
+  "janmashtami",
+  "srila-prabhupada-appearance-day",
+  "radhashtami",
+  "kartik-damodar-month",
+  "diwali",
+  "govardhan-puja",
+];
 
 export const visibleFestivals = festivals.filter((f) => VISIBLE_SLUGS.includes(f.slug));
 

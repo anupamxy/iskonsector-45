@@ -25,7 +25,7 @@ export default function GitaDaan() {
             eyebrow={`₹${gitaDaan.pricePerCopy} per copy`}
             title="Choose How Many Gitas to Sponsor"
           />
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-2 gap-6 lg:grid-cols-3">
             {gitaDaan.tiers.map((tier) => (
               <SevaCard key={tier.label} label={tier.label} amount={tier.amount} seva="Gita Daan" />
             ))}

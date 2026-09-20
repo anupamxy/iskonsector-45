@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { UtensilsCrossed, Award, Compass, BookOpen, ArrowRight, type LucideIcon } from "lucide-react";
+import { UtensilsCrossed, Award, Compass, BookOpen, Flower2, ArrowRight, type LucideIcon } from "lucide-react";
 import PageHero from "../components/ui/PageHero";
 import SectionHeading from "../components/ui/SectionHeading";
 import Card from "../components/ui/Card";
@@ -14,6 +14,13 @@ interface Program {
 }
 
 const programs: Program[] = [
+  {
+    icon: Flower2,
+    title: "Puja Services",
+    body: "Book a puja with our temple priests for Sri Sri Radha Gopinath, with garland, tulsi, sweet, and fruit offerings.",
+    to: "/puja-services",
+    image: images.pageHero.pujaServices,
+  },
   {
     icon: UtensilsCrossed,
     title: "Food For Life",
@@ -62,7 +69,7 @@ export default function Temple() {
       <section className="section-pad">
         <div className="container-page">
           <SectionHeading eyebrow="Our Programs" title="Choose a Seva to Support" />
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-2 gap-6 lg:grid-cols-3">
             {programs.map(({ icon: Icon, title, body, to, image }) => (
               <Card key={title} className="overflow-hidden">
                 {image && <img src={image} alt={title} className="aspect-video w-full object-cover" />}

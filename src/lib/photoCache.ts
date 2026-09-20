@@ -1,6 +1,7 @@
 const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
 
 export const DAILY_DARSHAN_CACHE_KEY = "daily-darshan-photos:v1";
+export const FESTIVAL_DARSHAN_CACHE_KEY = "festival-darshan-photos:v1";
 
 /** Reads a cached value written by writeCache, or null if missing/expired/unreadable.
  * Used to skip re-listing/re-querying Firebase Storage on repeat page visits. */

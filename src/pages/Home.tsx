@@ -30,7 +30,7 @@ import { YoutubeIcon } from "../components/ui/SocialIcons";
 import { siteInfo } from "../data/site";
 import { founder, leadership, pillars } from "../data/about";
 import { deitySeva } from "../data/donations";
-import { getUpcomingHomeFestivals, visibleFestivals } from "../data/festivals";
+import { visibleFestivals } from "../data/festivals";
 import { images } from "../data/images";
 
 const impactStats = [
@@ -48,9 +48,6 @@ const exploreLinks = [
   { icon: Video, label: "Lecture Videos", to: "/lecture-videos" },
 ];
 
-const upcomingFestivals = getUpcomingHomeFestivals();
-/** All festivals currently surfaced in listings, not just upcoming ones — so the
- * "All Festivals We Celebrate" section always shows the full calendar. */
 const festivalsToShow = visibleFestivals;
 
 const festivalBadges: Record<string, string> = {
@@ -59,6 +56,9 @@ const festivalBadges: Record<string, string> = {
   janmashtami: "Krishna's Appearance Day",
   "srila-prabhupada-appearance-day": "Founder Acharya's Appearance Day",
   radhashtami: "Radharani's Appearance Day",
+  "kartik-damodar-month": "Month Dearest to Radha-Krishna",
+  diwali: "Festival of Lights",
+  "govardhan-puja": "Lifting of Govardhan Hill",
   "ram-navami": "Lord Rama's Appearance Day",
   "rath-yatra": "Chariot Festival",
 };
@@ -107,7 +107,7 @@ export default function Home() {
   return (
     <div>
       {/* Hero */}
-      <HeroBanner media={[images.home.heroVideo]} festivals={upcomingFestivals} />
+      <HeroBanner media={[images.home.heroVideo]} />
 
       
 
@@ -160,7 +160,7 @@ export default function Home() {
             title="Offer Seva to Sri Sri Radha Gopinath"
             subtitle="Sponsor the daily worship of the deities and receive Their special blessings."
           />
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-6 lg:grid-cols-4">
             {deitySeva.map((tier) => (
               <SevaCard
                 key={tier.label}
@@ -182,7 +182,7 @@ export default function Home() {
             title="Ways We Serve the Community"
             subtitle="From daily meals to youth programs, explore how ISKCON Sector 45 lives out its mission."
           />
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-6 lg:grid-cols-4">
             {programs.map(({ icon: Icon, title, body, to }) => (
               <Card key={title} className="p-6">
                 <span className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-secondary/10 text-secondary">
@@ -224,7 +224,7 @@ export default function Home() {
               <Reveal
                 key={festival.slug}
                 delay={i * 90}
-                className="w-full shrink-0 sm:w-[calc(50%-12px)] lg:w-[calc(25%-18px)]"
+                className="w-[calc(50%-12px)] shrink-0 lg:w-[calc(25%-18px)]"
               >
                 <Link
                   to={`/festivals/${festival.slug}`}
@@ -285,7 +285,7 @@ export default function Home() {
       <section className="section-pad">
         <div className="container-page">
           <SectionHeading eyebrow="Our Guiding Lights" title="Founder & Leadership" />
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+          <div className="grid grid-cols-2 gap-6 sm:grid-cols-3">
             <Card className="items-center p-6 text-center">
               <img src={founder.image} alt={founder.name} className="aspect-[5/3] w-full max-w-[260px] mx-auto rounded-lg object-cover" />
               <h4 className="mt-4 text-lg text-ink">{founder.name}</h4>

@@ -78,7 +78,14 @@ export interface NavItem {
 export const primaryNav: NavItem[] = [
   { label: "Home", to: "/" },
   { label: "About", to: "/about" },
-  { label: "Daily Darshan", to: "/daily-darshan" },
+  {
+    label: "Darshan",
+    to: "/daily-darshan",
+    children: [
+      { label: "Daily Darshan", to: "/daily-darshan" },
+      { label: "Festival Darshan", to: "/festival-darshan" },
+    ],
+  },
   {
     label: "Temple & Seva",
     to: "/temple",
@@ -119,6 +126,7 @@ export const footerNav = {
   ],
   involved: [
     { label: "Donate", to: siteInfo.donateLink },
+    { label: "Puja Services", to: "/puja-services" },
     { label: "Life Patron", to: "/life-patron" },
     { label: "Gita Daan", to: "/gita-daan" },
     { label: "DYPH", to: "/dyph" },

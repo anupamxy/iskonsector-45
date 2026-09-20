@@ -1,29 +1,23 @@
 import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
-import { X, ChevronLeft, ChevronRight, Flame, ImageOff, Loader2 } from "lucide-react";
+import { X, ChevronLeft, ChevronRight, PartyPopper, ImageOff, Loader2 } from "lucide-react";
 import { listAll, getDownloadURL, getMetadata, ref } from "firebase/storage";
 import PageHero from "../components/ui/PageHero";
 import SectionHeading from "../components/ui/SectionHeading";
 import Reveal from "../components/ui/Reveal";
 import { storage } from "../lib/firebase";
-import { isWithinRetention, todayISO, DAILY_DARSHAN_TAG } from "../lib/galleryRetention";
-import { readCache, writeCache, DAILY_DARSHAN_CACHE_KEY } from "../lib/photoCache";
+import { isWithinRetention, DAILY_DARSHAN_TAG } from "../lib/galleryRetention";
+import { readCache, writeCache, FESTIVAL_DARSHAN_CACHE_KEY } from "../lib/photoCache";
 import { images } from "../data/images";
 
 interface Photo {
+  name: string;
   url: string;
   thumbUrl: string;
-  darshanDate: string;
+  tag: string;
 }
 
-function formatDayLabel(dateStr: string, today: string): string {
-  const date = new Date(`${dateStr}T00:00:00`);
-  const diffDays = Math.round((new Date(`${today}T00:00:00`).getTime() - date.getTime()) / 86400000);
-  if (diffDays === 1) return "Yesterday";
-  return date.toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "long" });
-}
-
-export default function DailyDarshan() {
+export default function FestivalDarshans() {
   const [photos, setPhotos] = useState<Photo[] | null>(null);
   const [error, setError] = useState(false);
   const [lightboxPhotos, setLightboxPhotos] = useState<Photo[]>([]);
@@ -33,7 +27,7 @@ export default function DailyDarshan() {
     let cancelled = false;
 
     async function load() {
-      const cached = readCache<Photo[]>(DAILY_DARSHAN_CACHE_KEY);
+      const cached = readCache<Photo[]>(FESTIVAL_DARSHAN_CACHE_KEY);
       if (cached) {
         setPhotos(cached);
         return;
@@ -47,20 +41,21 @@ export default function DailyDarshan() {
             return { item, darshanDate: meta?.customMetadata?.darshanDate, tag: meta?.customMetadata?.tag };
           }),
         );
-        const daily = withMeta.filter(
-          ({ item, darshanDate, tag }) => tag === DAILY_DARSHAN_TAG && isWithinRetention(item.name, darshanDate, tag),
+        const festival = withMeta.filter(
+          ({ item, darshanDate, tag }) =>
+            !!tag && tag !== DAILY_DARSHAN_TAG && isWithinRetention(item.name, darshanDate, tag),
         );
-        const sorted = daily.sort((a, b) => b.item.name.localeCompare(a.item.name));
+        const sorted = festival.sort((a, b) => b.item.name.localeCompare(a.item.name));
         const withUrls = await Promise.all(
-          sorted.map(async ({ item, darshanDate }) => {
+          sorted.map(async ({ item, tag }) => {
             const url = await getDownloadURL(item);
             const thumbUrl = await getDownloadURL(ref(storage, `gallery/thumbs/${item.name}`)).catch(() => url);
-            return { url, thumbUrl, darshanDate: darshanDate ?? "" };
+            return { name: item.name, url, thumbUrl, tag: tag ?? "Festival" };
           }),
         );
         if (!cancelled) {
           setPhotos(withUrls);
-          writeCache(DAILY_DARSHAN_CACHE_KEY, withUrls);
+          writeCache(FESTIVAL_DARSHAN_CACHE_KEY, withUrls);
         }
       } catch {
         if (!cancelled) setError(true);
@@ -73,21 +68,16 @@ export default function DailyDarshan() {
     };
   }, []);
 
-  const today = todayISO();
-
   const groups = useMemo(() => {
     if (!photos) return [];
     const map = new Map<string, Photo[]>();
     for (const p of photos) {
-      const key = p.darshanDate || today;
-      if (!map.has(key)) map.set(key, []);
-      map.get(key)!.push(p);
+      if (!map.has(p.tag)) map.set(p.tag, []);
+      map.get(p.tag)!.push(p);
     }
-    return [...map.entries()].sort((a, b) => b[0].localeCompare(a[0]));
-  }, [photos, today]);
-
-  const todayPhotos = groups.find(([date]) => date === today)?.[1] ?? [];
-  const otherGroups = groups.filter(([date]) => date !== today);
+    // Newest festival first, based on each group's most recently uploaded photo.
+    return [...map.entries()].sort((a, b) => b[1][0].name.localeCompare(a[1][0].name));
+  }, [photos]);
 
   function openLightbox(groupPhotos: Photo[], index: number) {
     setLightboxPhotos(groupPhotos);
@@ -97,10 +87,10 @@ export default function DailyDarshan() {
   return (
     <div>
       <PageHero
-        breadcrumb={[{ label: "Home", to: "/" }, { label: "Daily Darshan" }]}
-        eyebrow="Live Every Day"
-        title="Daily Darshan"
-        subtitle="See Sri Sri Radha Gopinath adorned fresh each day — updated right after morning and evening aarti."
+        breadcrumb={[{ label: "Home", to: "/" }, { label: "Darshan", to: "/daily-darshan" }, { label: "Festival Darshan" }]}
+        eyebrow="Celebrations, Preserved"
+        title="Festival Darshan"
+        subtitle="Photos from Janmashtami, Radhashtami, and every other celebration at the temple — grouped by festival."
         images={[{ src: images.krishnaArt, position: "center 20%" }]}
       />
 
@@ -109,92 +99,39 @@ export default function DailyDarshan() {
         <div className="pointer-events-none absolute -left-20 top-40 h-64 w-64 animate-float-slower rounded-full bg-gold/10 blur-3xl" />
 
         <div className="container-page relative">
-          <div className="mb-3 flex items-center justify-center gap-2">
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75" />
-              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-success" />
-            </span>
-            <p className="text-eyebrow text-secondary">
-              {new Date().toLocaleDateString("en-IN", {
-                weekday: "long",
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-              })}
-            </p>
-          </div>
-
-          <SectionHeading eyebrow="Happening Today" title="Today's Darshan" />
-
           {!photos && !error && (
             <div className="flex flex-col items-center gap-3 py-16 text-muted">
               <Loader2 size={28} className="animate-spin text-primary" />
-              <p className="text-sm">Loading today's darshan…</p>
+              <p className="text-sm">Loading festival photos…</p>
             </div>
           )}
 
           {error && (
             <div className="flex flex-col items-center gap-3 py-16 text-center text-muted">
               <ImageOff size={28} />
-              <p className="text-sm">Couldn't load darshan photos right now — please check back shortly.</p>
+              <p className="text-sm">Couldn't load festival photos right now — please check back shortly.</p>
             </div>
           )}
 
-          {photos && todayPhotos.length === 0 && !error && (
+          {photos && groups.length === 0 && !error && (
             <div className="mx-auto flex max-w-md flex-col items-center gap-3 rounded-[var(--radius-card)] border-2 border-dashed border-hairline py-16 text-center text-muted">
-              <Flame size={28} className="animate-glow-pulse text-primary" />
-              <p className="text-sm">Today's darshan photos will be up soon — please check back later today.</p>
+              <PartyPopper size={28} className="animate-glow-pulse text-primary" />
+              <p className="text-sm">Festival photos will appear here after the next celebration.</p>
             </div>
           )}
 
-          {todayPhotos.length > 0 && (
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-              {todayPhotos.map((photo, i) => (
-                <Reveal key={photo.url} delay={Math.min(i, 10) * 70} className="h-full">
-                  <button
-                    type="button"
-                    onClick={() => openLightbox(todayPhotos, i)}
-                    className="group relative block aspect-square w-full overflow-hidden rounded-[var(--radius-card)] bg-cream-alt shadow-[var(--shadow-card)] transition-shadow duration-300 hover:shadow-[var(--shadow-card-hover)]"
-                  >
-                    <img
-                      src={photo.thumbUrl}
-                      alt=""
-                      loading="lazy"
-                      className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
-                    />
-                    <div className="shimmer-sweep pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                  </button>
-                </Reveal>
-              ))}
-            </div>
-          )}
-        </div>
-      </section>
-
-      {otherGroups.length > 0 && (
-        <section className="section-pad bg-cream-alt">
-          <div className="container-page">
-            <Reveal>
-              <SectionHeading eyebrow="Look Back" title="Previous Days" align="left" className="mb-8 max-w-none" />
-            </Reveal>
-            <div className="flex flex-col gap-10">
-              {otherGroups.map(([date, dayPhotos], gi) => (
-                <Reveal key={date} delay={gi * 80}>
-                  <div>
-                    <div className="mb-4 flex items-center gap-3">
-                      <span className="h-2 w-2 shrink-0 rounded-full bg-primary/50" />
-                      <h4 className="text-base font-semibold text-ink">{formatDayLabel(date, today)}</h4>
-                      <span className="text-xs text-muted">
-                        {dayPhotos.length} photo{dayPhotos.length === 1 ? "" : "s"}
-                      </span>
-                    </div>
-                    <div className="flex gap-3 overflow-x-auto pb-2">
-                      {dayPhotos.map((photo, i) => (
+          <div className="flex flex-col gap-14">
+            {groups.map(([tag, tagPhotos], gi) => (
+              <Reveal key={tag} delay={gi * 80}>
+                <div>
+                  <SectionHeading eyebrow="Celebration" title={tag} align="left" className="mb-6 max-w-none" />
+                  <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+                    {tagPhotos.map((photo, i) => (
+                      <Reveal key={photo.url} delay={Math.min(i, 10) * 70} className="h-full">
                         <button
-                          key={photo.url}
                           type="button"
-                          onClick={() => openLightbox(dayPhotos, i)}
-                          className="group relative aspect-square w-28 shrink-0 overflow-hidden rounded-xl bg-white shadow-[var(--shadow-card)] sm:w-36"
+                          onClick={() => openLightbox(tagPhotos, i)}
+                          className="group relative block aspect-square w-full overflow-hidden rounded-[var(--radius-card)] bg-cream-alt shadow-[var(--shadow-card)] transition-shadow duration-300 hover:shadow-[var(--shadow-card-hover)]"
                         >
                           <img
                             src={photo.thumbUrl}
@@ -202,16 +139,17 @@ export default function DailyDarshan() {
                             loading="lazy"
                             className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
                           />
+                          <div className="shimmer-sweep pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                         </button>
-                      ))}
-                    </div>
+                      </Reveal>
+                    ))}
                   </div>
-                </Reveal>
-              ))}
-            </div>
+                </div>
+              </Reveal>
+            ))}
           </div>
-        </section>
-      )}
+        </div>
+      </section>
 
       {activeIndex !== null &&
         lightboxPhotos.length > 0 &&
@@ -265,7 +203,7 @@ export default function DailyDarshan() {
                 className="max-h-[75vh] max-w-full rounded-[var(--radius-card)] object-contain shadow-[0_30px_80px_-20px_rgba(0,0,0,0.65)]"
                 onClick={(e) => e.stopPropagation()}
               />
-              <p className="text-sm text-white/80">{formatDayLabel(lightboxPhotos[activeIndex].darshanDate, today)}</p>
+              <p className="text-sm text-white/80">{lightboxPhotos[activeIndex].tag}</p>
             </div>
           </div>,
           document.body,

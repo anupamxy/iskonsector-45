@@ -11,9 +11,16 @@ function uploadedAt(name: string): number {
   return parseInt(name.split("-")[0], 10);
 }
 
+export const DAILY_DARSHAN_TAG = "Daily Darshan";
+
 /** True if a photo's darshan date (falling back to its upload timestamp for
- * legacy photos with no date metadata) is within the retention window. */
-export function isWithinRetention(name: string, darshanDate?: string, now = Date.now()): boolean {
+ * legacy photos with no date metadata) is within the retention window.
+ *
+ * Only "Daily Darshan"-tagged photos are a rolling window — anything tagged with
+ * a festival or occasion (Janmashtami, Diwali, Kirtan, …) is kept indefinitely,
+ * since the Festival Darshan gallery is meant to be a lasting record, not a feed. */
+export function isWithinRetention(name: string, darshanDate?: string, tag?: string, now = Date.now()): boolean {
+  if (tag && tag !== DAILY_DARSHAN_TAG) return true;
   const reference = darshanDate ? new Date(`${darshanDate}T00:00:00`).getTime() : uploadedAt(name);
   if (Number.isNaN(reference)) return true; // can't tell — keep it rather than silently drop it
   return now - reference <= GALLERY_RETENTION_DAYS * 24 * 60 * 60 * 1000;
