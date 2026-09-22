@@ -150,7 +150,7 @@ export const images = {
   // Real temple photography reused as page-top hero banners, for a consistent look
   // across pages that don't have a dedicated banner of their own.
   pageHero: {
-    about: "/images/leadership/prabhupada-teaching.jpg",
+    about: "/images/about/banner.jpg",
     contact: "/images/gallery/community-06.jpg",
     donate: "/images/decorative/krishna-deity.jpg",
     faq: "/images/gallery/temple-09.jpg",

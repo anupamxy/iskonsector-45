@@ -17,7 +17,7 @@ export default function About() {
         eyebrow="About ISKCON"
         title="Spreading the Timeless Wisdom of the Bhagavad Gita"
         subtitle="From two rooms in New York to a global movement of over 700 temples — the story of Srila Prabhupada's mission, and its home in Sector 45, Gurugram."
-        images={[{ src: images.pageHero.about, position: "center 20%", fit: "contain" }]}
+        images={[{ src: images.pageHero.about, position: "center 35%" }]}
       />
 
       <section className="section-pad">

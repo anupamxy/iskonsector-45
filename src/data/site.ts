@@ -126,7 +126,6 @@ export const footerNav = {
   ],
   involved: [
     { label: "Donate", to: siteInfo.donateLink },
-    { label: "Puja Services", to: "/puja-services" },
     { label: "Life Patron", to: "/life-patron" },
     { label: "Gita Daan", to: "/gita-daan" },
     { label: "DYPH", to: "/dyph" },
