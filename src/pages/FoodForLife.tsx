@@ -58,7 +58,7 @@ export default function FoodForLife() {
       <section className="section-pad bg-cream-alt">
         <div className="container-page">
           <SectionHeading eyebrow="Sponsor Meals" title="Choose a Meal Package" />
-          <div className="grid grid-cols-2 gap-6 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {foodForLife.mealPackages.map((pkg) => (
               <SevaCard
                 key={pkg.label}
@@ -84,7 +84,7 @@ export default function FoodForLife() {
       <section className="section-pad">
         <div className="container-page">
           <SectionHeading eyebrow="Feast Menu" title="Prasadam Feast Options" />
-          <div className="grid grid-cols-2 gap-6 sm:grid-cols-3">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
             {foodForLife.feastTypes.map((feast) => (
               <Card key={feast.name} className="overflow-hidden p-0">
                 {feastImages[feast.name] && (

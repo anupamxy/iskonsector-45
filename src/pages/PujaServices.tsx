@@ -272,7 +272,7 @@ export default function PujaServices() {
                     )}
                     <h4 className="text-lg text-ink">{cat.category}</h4>
                   </div>
-                  <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 lg:grid-cols-5">
                     {cat.items.map((item) => {
                       const active = isSelected(selected, cat.category, item.label);
                       return (

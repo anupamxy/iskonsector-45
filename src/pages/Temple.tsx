@@ -69,7 +69,7 @@ export default function Temple() {
       <section className="section-pad">
         <div className="container-page">
           <SectionHeading eyebrow="Our Programs" title="Choose a Seva to Support" />
-          <div className="grid grid-cols-2 gap-6 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {programs.map(({ icon: Icon, title, body, to, image }) => (
               <Card key={title} className="overflow-hidden">
                 {image && <img src={image} alt={title} className="aspect-video w-full object-cover" />}

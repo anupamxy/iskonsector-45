@@ -174,7 +174,7 @@ export default function FestivalDetail() {
 
       <section id="celebration" className="section-pad">
         <div className="container-page">
-          <div className="grid grid-cols-2 gap-5 sm:grid-cols-4">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-4">
             {whatToExpect.map(({ icon: Icon, title, body }, i) => (
               <Reveal key={title} delay={i * 90} className="h-full">
                 <Card className="group h-full items-center p-5 text-center">
@@ -311,7 +311,7 @@ export default function FestivalDetail() {
             <Reveal>
               <SectionHeading eyebrow="Traditions" title="How the Day Is Observed" />
             </Reveal>
-            <div className="grid grid-cols-2 gap-6 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {festival.howCelebrated.map((item, i) => (
                 <Reveal key={item.title} delay={i * 80} className="h-full">
                   <Card className="h-full p-6">

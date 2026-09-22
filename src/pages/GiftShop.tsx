@@ -21,7 +21,7 @@ export default function GiftShop() {
       <section className="section-pad">
         <div className="container-page">
           <SectionHeading eyebrow="What We Offer" title="Browse Our Categories" />
-          <div className="grid grid-cols-2 gap-6 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {giftShopCategories.map((category) => (
               <Card key={category.title} className="p-6">
                 <span className="flex h-11 w-11 items-center justify-center rounded-full bg-gold/15 text-gold">

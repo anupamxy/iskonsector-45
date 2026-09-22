@@ -86,7 +86,7 @@ export default function Dyph() {
       </div>
 
       <section className="section-pad">
-        <div className="container-page grid grid-cols-2 gap-6 sm:grid-cols-3">
+        <div className="container-page grid grid-cols-1 gap-6 sm:grid-cols-3">
           {info.map(({ icon: Icon, label, value }, i) => (
             <Reveal key={label} delay={i * 90} className="h-full">
               <Card className="group h-full items-center p-6 text-center">
@@ -110,7 +110,7 @@ export default function Dyph() {
               subtitle="Real questions young people actually wrestle with — answered with practical, timeless wisdom."
             />
           </Reveal>
-          <div className="grid grid-cols-2 gap-6 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {dyph.sessions.map((session, i) => {
               const { icon: Icon, tone } = sessionStyles[i % sessionStyles.length];
               return (
@@ -136,7 +136,7 @@ export default function Dyph() {
           <Reveal>
             <SectionHeading eyebrow="Real Stories, Real Change" title="Read Our Testimonials" />
           </Reveal>
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             {dyph.testimonials.map((testimonial, i) => (
               <Reveal key={testimonial.name} delay={i * 90} className="h-full">
                 <Card className="h-full p-6">

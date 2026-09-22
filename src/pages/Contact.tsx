@@ -63,7 +63,7 @@ export default function Contact() {
       />
 
       <section className="section-pad">
-        <div className="container-page grid grid-cols-2 gap-4 sm:grid-cols-4">
+        <div className="container-page grid grid-cols-1 gap-4 sm:grid-cols-4">
           {quickActions.map(({ icon: Icon, label, value, href }) => (
             <a
               key={label}

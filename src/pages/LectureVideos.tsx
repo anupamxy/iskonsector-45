@@ -27,7 +27,7 @@ export default function LectureVideos() {
       <section className="section-pad">
         <div className="container-page">
           <SectionHeading eyebrow="What You'll Find" title="Explore Our Video Library" />
-          <div className="grid grid-cols-2 gap-6 sm:grid-cols-3">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
             {topics.map(({ icon: Icon, title, body }) => (
               <Card key={title} className="p-6">
                 <span className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">

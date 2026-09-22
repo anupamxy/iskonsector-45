@@ -160,7 +160,7 @@ export default function Home() {
             title="Offer Seva to Sri Sri Radha Gopinath"
             subtitle="Sponsor the daily worship of the deities and receive Their special blessings."
           />
-          <div className="grid grid-cols-2 gap-6 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {deitySeva.map((tier) => (
               <SevaCard
                 key={tier.label}
@@ -182,7 +182,7 @@ export default function Home() {
             title="Ways We Serve the Community"
             subtitle="From daily meals to youth programs, explore how ISKCON Sector 45 lives out its mission."
           />
-          <div className="grid grid-cols-2 gap-6 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {programs.map(({ icon: Icon, title, body, to }) => (
               <Card key={title} className="p-6">
                 <span className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-secondary/10 text-secondary">
@@ -285,7 +285,7 @@ export default function Home() {
       <section className="section-pad">
         <div className="container-page">
           <SectionHeading eyebrow="Our Guiding Lights" title="Founder & Leadership" />
-          <div className="grid grid-cols-2 gap-6 sm:grid-cols-3">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
             <Card className="items-center p-6 text-center">
               <img src={founder.image} alt={founder.name} className="aspect-[5/3] w-full max-w-[260px] mx-auto rounded-lg object-cover" />
               <h4 className="mt-4 text-lg text-ink">{founder.name}</h4>
@@ -364,7 +364,7 @@ export default function Home() {
       <section className="section-pad">
         <div className="container-page">
           <SectionHeading eyebrow="Find Your Way Around" title="Explore the Site" />
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 lg:grid-cols-6">
             {exploreLinks.map(({ icon: Icon, label, to }) => (
               <Link
                 key={label}
