@@ -224,7 +224,7 @@ export default function Home() {
               <Reveal
                 key={festival.slug}
                 delay={i * 90}
-                className="w-[calc(50%-12px)] shrink-0 lg:w-[calc(25%-18px)]"
+                className="w-full shrink-0 sm:w-[calc(50%-12px)] lg:w-[calc(25%-18px)]"
               >
                 <Link
                   to={`/festivals/${festival.slug}`}
