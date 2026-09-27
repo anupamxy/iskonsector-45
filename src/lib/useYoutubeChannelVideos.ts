@@ -15,7 +15,7 @@ export function useYoutubeChannelVideos(channelId: string) {
   const apiKey = import.meta.env.VITE_YOUTUBE_API_KEY as string | undefined;
   const [state, setState] = useState<State>({
     videos: [],
-    loading: true,
+    loading: Boolean(apiKey),
     loadingMore: false,
     error: apiKey ? null : "Video library isn't configured yet.",
     hasMore: false,
