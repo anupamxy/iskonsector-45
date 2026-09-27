@@ -34,7 +34,7 @@ export default function LectureVideos() {
         eyebrow="Wisdom & Kirtan"
         title="Lecture Videos"
         subtitle="Our full video library lives on YouTube — Bhagavad Gita classes, kirtans, and festival recordings, updated regularly."
-        images={[{ src: images.pageHero.lectureVideos, position: "center 15%" }]}
+        images={[{ src: images.pageHero.lectureVideos, position: "center 30%" }]}
       />
 
       <section className="section-pad">

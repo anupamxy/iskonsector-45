@@ -161,7 +161,7 @@ export const images = {
     gitaDaan: "/images/leadership/prabhupada.png",
     govindasOnWheel: "/images/gallery/temple-07.jpg",
     lifePatron: "/images/gallery/community-05.jpg",
-    lectureVideos: "/images/leadership/guru.jpg",
+    lectureVideos: "/images/lecture-videos/banner.jpg",
     pujaServices: "/images/decorative/krishna-deity.jpg",
     temple: "/images/gallery/temple-08.jpg",
     legal: "/images/leadership/guru-prasad-swami.jpg",
