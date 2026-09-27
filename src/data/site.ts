@@ -49,6 +49,7 @@ export const siteInfo = {
     facebook: "https://www.facebook.com/share/1Ch1jsKxdX/?mibextid=wwXIfr",
     instagram: "https://www.instagram.com/iskcongurugram45",
     youtube: "https://www.youtube.com/channel/UCT0Bz5LmtYHp0LjtNyYBcjQ",
+    youtubeChannelId: "UCT0Bz5LmtYHp0LjtNyYBcjQ",
   },
   bank: {
     accountHolder: "ISKCON",
