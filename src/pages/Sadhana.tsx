@@ -129,6 +129,23 @@ function Field({ icon, label, hint, children }: { icon: ReactNode; label: string
   );
 }
 
+const nameKey = (name: string) => name.trim().toLowerCase().replace(/\s+/g, " ");
+
+/** Short, stable tag that tells apart devotees sharing a name, e.g. "#A3F". */
+const uidTag = (uid: string) => `#${uid.slice(-3).toUpperCase()}`;
+
+/** uids whose name is also used by someone else on this board. */
+function sharedNameUids(standings: Standing[]) {
+  const byName = new Map<string, number>();
+  for (const s of standings) byName.set(nameKey(s.name), (byName.get(nameKey(s.name)) ?? 0) + 1);
+  return new Set(standings.filter((s) => (byName.get(nameKey(s.name)) ?? 0) > 1).map((s) => s.uid));
+}
+
+function NameTag({ uid, show }: { uid: string; show: boolean }) {
+  if (!show) return null;
+  return <span className="shrink-0 text-[11px] font-normal text-muted">{uidTag(uid)}</span>;
+}
+
 const rankIcons = [Crown, Medal, Medal];
 const rankStyles = ["bg-gold/20 text-gold", "bg-slate-200 text-slate-500", "bg-orange-100 text-orange-700"];
 
@@ -146,7 +163,7 @@ function StatChips({ standing, days }: { standing: Standing; days: number }) {
   );
 }
 
-function Podium({ top, myUid }: { top: Standing[]; myUid?: string }) {
+function Podium({ top, myUid, tagged }: { top: Standing[]; myUid?: string; tagged: Set<string> }) {
   // Visual order: 2nd, 1st, 3rd.
   const order = [1, 0, 2].filter((i) => top[i]);
   const heights = ["h-28", "h-20", "h-14"];
@@ -167,7 +184,7 @@ function Podium({ top, myUid }: { top: Standing[]; myUid?: string }) {
               <Icon size={i === 0 ? 24 : 18} />
             </span>
             <p className="w-full truncate px-1 text-sm font-medium text-ink">
-              {s.name}
+              {s.name} <NameTag uid={s.uid} show={tagged.has(s.uid)} />
               {s.uid === myUid && <span className="ml-1 text-[10px] font-semibold text-secondary">(YOU)</span>}
             </p>
             <p className="font-display text-lg text-primary">{s.points}</p>
@@ -187,7 +204,19 @@ function Podium({ top, myUid }: { top: Standing[]; myUid?: string }) {
   );
 }
 
-function StandingRow({ standing, rank, isMe, days }: { standing: Standing; rank: number; isMe: boolean; days: number }) {
+function StandingRow({
+  standing,
+  rank,
+  isMe,
+  days,
+  tagged,
+}: {
+  standing: Standing;
+  rank: number;
+  isMe: boolean;
+  days: number;
+  tagged: boolean;
+}) {
   const RankIcon = rank <= 3 ? rankIcons[rank - 1] : null;
   return (
     <li
@@ -207,6 +236,7 @@ function StandingRow({ standing, rank, isMe, days }: { standing: Standing; rank:
       <div className="min-w-0 flex-1">
         <p className="flex items-center gap-2 font-medium text-ink">
           <span className="truncate">{standing.name}</span>
+          <NameTag uid={standing.uid} show={tagged} />
           {isMe && <span className="rounded-full bg-secondary px-2 py-0.5 text-[10px] font-semibold text-white">YOU</span>}
         </p>
         <div className="mt-1">
@@ -248,6 +278,8 @@ export default function Sadhana() {
   const [submitting, setSubmitting] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
   const [savedFor, setSavedFor] = useState<string | null>(null);
+  /** A name the devotee chose to keep even though someone else already uses it. */
+  const [keptSharedName, setKeptSharedName] = useState<string | null>(null);
 
   const [board, setBoard] = useState<Board>("week");
   const [weekStandings, setWeekStandings] = useState<Standing[] | null>(null);
@@ -331,6 +363,8 @@ export default function Sadhana() {
   const standings = board === "week" ? weekStandings : kartikStandings;
   const boardDays = board === "week" ? 7 : kartikDays;
 
+  const taggedUids = useMemo(() => sharedNameUids(standings ?? []), [standings]);
+
   const myWeekRank = useMemo(
     () => (user && weekStandings ? weekStandings.findIndex((s) => s.uid === user.uid) + 1 : 0),
     [user, weekStandings],
@@ -343,6 +377,19 @@ export default function Sadhana() {
     const trimmedName = name.trim().replace(/\s+/g, " ");
     if (!trimmedName) {
       setFormError("Please enter your name.");
+      return;
+    }
+
+    // Same name as someone else already on the board? Ask once for a surname or area so
+    // devotees can tell each other apart — entries never mix either way (they're keyed by uid).
+    const takenBy = [...(weekStandings ?? []), ...(kartikStandings ?? [])].find(
+      (s) => nameKey(s.name) === nameKey(trimmedName) && s.uid !== user?.uid,
+    );
+    if (takenBy && keptSharedName !== nameKey(trimmedName)) {
+      setKeptSharedName(nameKey(trimmedName));
+      setFormError(
+        `Another devotee is already on the leaderboard as “${takenBy.name}”. Please add your surname or area (e.g. “${trimmedName} (Tower B)”) — or tap Offer again to keep this name.`,
+      );
       return;
     }
 
@@ -372,8 +419,16 @@ export default function Sadhana() {
       saveName(entry.name);
       setSavedFor(date);
       setRefresh((r) => r + 1);
-    } catch {
-      setFormError("Couldn't save your sadhana. Please check your connection and try again.");
+    } catch (err) {
+      const code = (err as { code?: string }).code ?? "";
+      console.error("Saving sadhana failed:", err);
+      setFormError(
+        code === "auth/admin-restricted-operation" || code === "auth/operation-not-allowed"
+          ? "Sadhana saving isn't switched on yet (anonymous sign-in is disabled). Please let the temple team know."
+          : code === "permission-denied"
+            ? "Your entry was rejected — only today's or yesterday's sadhana can be saved. If this keeps happening, please let the temple team know."
+            : "Couldn't save your sadhana. Please check your connection and try again.",
+      );
     } finally {
       setSubmitting(false);
     }
@@ -676,10 +731,17 @@ export default function Sadhana() {
             </div>
           ) : (
             <>
-              <Podium top={standings.slice(0, 3)} myUid={user?.uid} />
+              <Podium top={standings.slice(0, 3)} myUid={user?.uid} tagged={taggedUids} />
               <ol className="flex flex-col gap-2.5">
                 {standings.map((s, i) => (
-                  <StandingRow key={s.uid} standing={s} rank={i + 1} isMe={s.uid === user?.uid} days={boardDays} />
+                  <StandingRow
+                    key={s.uid}
+                    standing={s}
+                    rank={i + 1}
+                    isMe={s.uid === user?.uid}
+                    days={boardDays}
+                    tagged={taggedUids.has(s.uid)}
+                  />
                 ))}
               </ol>
             </>
