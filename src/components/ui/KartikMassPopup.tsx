@@ -82,17 +82,8 @@ export default function KartikMassPopup() {
         <div className="pointer-events-none absolute -inset-3 -z-10 animate-glow-pulse rounded-[calc(var(--radius-lg)+14px)] bg-gold/30 blur-2xl" />
 
         <div className="relative overflow-hidden rounded-[var(--radius-lg)] bg-gradient-to-b from-ink to-ink-deep shadow-[0_30px_80px_-20px_rgba(0,0,0,0.65)]">
-          {/* Rising embers */}
-          <div className="pointer-events-none absolute inset-0 overflow-hidden">
-            {EMBERS.map((ember, i) => (
-              <span
-                key={i}
-                className="animate-rise-fade absolute bottom-0 h-1.5 w-1.5 rounded-full bg-gold shadow-[0_0_8px_2px_rgba(212,175,55,0.7)]"
-                style={{ left: ember.left, animationDelay: ember.delay, animationDuration: ember.duration }}
-              />
-            ))}
-          </div>
-
+          {/* Close button sits outside the scrollable area below, so it's always
+           * reachable even when the card's content is taller than the screen. */}
           <button
             type="button"
             onClick={close}
@@ -102,54 +93,72 @@ export default function KartikMassPopup() {
             <X size={18} />
           </button>
 
-          <div className="relative aspect-square w-full overflow-hidden">
-            <img src={festival.bannerImage} alt={festival.name} className="h-full w-full object-cover" />
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink via-transparent to-transparent" />
-          </div>
-
-          <div className="relative px-7 pb-7 pt-2 text-center">
-            <div className="relative mx-auto -mt-8 mb-3 flex h-16 w-16 items-center justify-center">
-              <span className="absolute inset-0 rounded-full bg-ink-deep shadow-[0_0_0_4px_rgba(10,8,20,1)]" />
-              <span className="animate-flame-flicker relative flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-b from-gold to-primary text-white">
-                <Flame size={22} fill="currentColor" />
-              </span>
+          <div className="relative max-h-[85vh] overflow-y-auto">
+            {/* Rising embers */}
+            <div className="pointer-events-none absolute inset-0 overflow-hidden">
+              {EMBERS.map((ember, i) => (
+                <span
+                  key={i}
+                  className="animate-rise-fade absolute bottom-0 h-1.5 w-1.5 rounded-full bg-gold shadow-[0_0_8px_2px_rgba(212,175,55,0.7)]"
+                  style={{ left: ember.left, animationDelay: ember.delay, animationDuration: ember.duration }}
+                />
+              ))}
             </div>
 
-            <p className="text-eyebrow flex items-center justify-center gap-1.5 text-primary-light">
-              {live ? (
-                <>
-                  <span className="relative flex h-2 w-2">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75" />
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-success" />
-                  </span>
-                  Happening Now
-                </>
-              ) : (
-                "The Month Most Dear to Radha-Krishna"
-              )}
-            </p>
-            <h3 className="mt-2 font-display text-2xl text-white">{festival.name}</h3>
-            <p className="mt-2 text-sm leading-relaxed text-white/70">{festival.tagline}</p>
+            <div className="relative h-44 w-full overflow-hidden sm:h-52">
+              <img
+                src={festival.bannerImage}
+                alt={festival.name}
+                className="h-full w-full object-cover"
+                style={{ objectPosition: "center 28%" }}
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink via-transparent to-transparent" />
+            </div>
 
-            {live ? (
-              <div className="mt-5 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-4 py-2 text-sm font-medium text-gold">
-                <Sparkles size={14} /> Deepdaan Tonight, 7:00 – 9:00 PM
+            <div className="relative px-6 pb-6 pt-2 text-center sm:px-7 sm:pb-7">
+              <div className="relative mx-auto -mt-8 mb-3 flex h-16 w-16 items-center justify-center">
+                <span className="absolute inset-0 rounded-full bg-ink-deep shadow-[0_0_0_4px_rgba(10,8,20,1)]" />
+                <span className="animate-flame-flicker relative flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-b from-gold to-primary text-white">
+                  <Flame size={22} fill="currentColor" />
+                </span>
               </div>
-            ) : (
-              <CountdownRow target={festival.date} className="mt-5 flex flex-col items-center" />
-            )}
 
-            <div className="mt-6 flex flex-col items-center gap-3">
-              <Link
-                to={`/festivals/${festival.slug}`}
-                onClick={close}
-                className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-br from-primary to-primary-light px-6 py-3 text-sm font-semibold text-white shadow-[var(--shadow-cta)] transition-transform hover:-translate-y-0.5"
-              >
-                Join the Daily Deepdaan <ArrowRight size={16} />
-              </Link>
-              <button type="button" onClick={close} className="text-sm font-medium text-white/60 hover:text-white">
-                Maybe later
-              </button>
+              <p className="text-eyebrow flex items-center justify-center gap-1.5 text-primary-light">
+                {live ? (
+                  <>
+                    <span className="relative flex h-2 w-2">
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75" />
+                      <span className="relative inline-flex h-2 w-2 rounded-full bg-success" />
+                    </span>
+                    Happening Now
+                  </>
+                ) : (
+                  "The Month Most Dear to Radha-Krishna"
+                )}
+              </p>
+              <h3 className="mt-2 font-display text-2xl text-white">{festival.name}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-white/70">{festival.tagline}</p>
+
+              {live ? (
+                <div className="mt-5 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-4 py-2 text-sm font-medium text-gold">
+                  <Sparkles size={14} /> Deepdaan Tonight, 7:00 – 9:00 PM
+                </div>
+              ) : (
+                <CountdownRow target={festival.date} className="mt-5 flex flex-col items-center" />
+              )}
+
+              <div className="mt-6 flex flex-col items-center gap-3">
+                <Link
+                  to={`/festivals/${festival.slug}`}
+                  onClick={close}
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-br from-primary to-primary-light px-6 py-3 text-sm font-semibold text-white shadow-[var(--shadow-cta)] transition-transform hover:-translate-y-0.5"
+                >
+                  Join the Daily Deepdaan <ArrowRight size={16} />
+                </Link>
+                <button type="button" onClick={close} className="text-sm font-medium text-white/60 hover:text-white">
+                  Maybe later
+                </button>
+              </div>
             </div>
           </div>
         </div>
