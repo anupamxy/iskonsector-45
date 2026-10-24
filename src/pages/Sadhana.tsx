@@ -406,7 +406,12 @@ export default function Sadhana() {
             {kartik?.verse && (
               <figure className="mx-auto mt-5 max-w-[560px]">
                 <blockquote className="font-sanskrit text-lg leading-relaxed text-gold/90 sm:text-xl">
-                  {kartik.verse.split("। ")[0]}।
+                  {kartik.verse.split("। ").map((line, i, lines) => (
+                    <span key={i} className="block">
+                      {line}
+                      {i < lines.length - 1 && "।"}
+                    </span>
+                  ))}
                 </blockquote>
                 <figcaption className="mt-2 text-xs text-white/50">
                   I offer my obeisances to the Supreme Lord, whose form is eternal, full of knowledge and bliss — {kartik.verseRef}
