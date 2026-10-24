@@ -107,11 +107,15 @@ export const images = {
     { src: "/images/govardhan-puja/hero-1.jpg", position: "50% 15%" },
     { src: "/images/govardhan-puja/hero-2.jpg", position: "55% 42%" },
   ],
-  kartikMonthBanner: "/images/kartik-month/hero-1.jpg",
-  kartikMonthCarousel: [
-    { src: "/images/kartik-month/hero-1.jpg", position: "48% 58%" },
-    { src: "/images/kartik-month/hero-2.jpg", position: "50% 85%" },
-  ],
+  kartikMonthBanner: "/images/kartik-month/banner.jpg",
+  // A 2.5:1 version of the same poster for the home hero's video-height band — the
+  // full square artwork sits centered and uncropped, with the extra width filled by
+  // a softly blurred extension of itself rather than empty bars.
+  kartikMonthBannerWide: "/images/kartik-month/banner-wide.jpg",
+  kartikMonthCarousel: [{ src: "/images/kartik-month/banner.jpg", fit: "contain" as const }],
+  sharadPurnimaBanner: "/images/sharad-purnima/banner.jpg",
+  sharadPurnimaBannerWide: "/images/sharad-purnima/banner-wide.jpg",
+  sharadPurnimaCarousel: [{ src: "/images/sharad-purnima/banner.jpg", fit: "contain" as const }],
   ramNavamiBanner: "/images/ramnavami/banner.jpg",
   rathYatra: {
     banner: "/images/rath-yatra/banner.png",

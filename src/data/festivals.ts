@@ -474,16 +474,69 @@ export const festivals: Festival[] = [
     ],
   },
   {
+    slug: "sharad-purnima",
+    name: "Sharad Purnima",
+    heading: "Sharad Purnima — The Night of Rasa-Lila",
+    tagline: "The most radiant full moon of the year, marking Sri Krishna's Rasa-lila with the gopis of Vrindavan.",
+    bannerImage: images.sharadPurnimaBanner,
+    showInHomeHero: true,
+    heroImages: images.sharadPurnimaCarousel,
+    date: "2026-10-26T18:00:00",
+    timeLabel: "Evening Kirtan & Moonlit Darshan — 6:00 PM Onward",
+    significance:
+      "Sharad Purnima, the full moon of the month of Ashwin, is celebrated as the most luminous night of the year — the moon is said to shine with all sixteen of its kalas (digits) in full bloom. It was on this very night that Sri Krishna performed the Rasa-lila, expanding Himself into as many forms as there were gopis so that each could dance with Him in the forests of Vrindavan, a pastime described in the Tenth Canto of Srimad Bhagavatam as the most confidential of all His lilas — an exchange of pure, selfless love (prema) between the soul and the Supreme. Sharad Purnima also marks the threshold of Kartik, the month most dear to Radha and Krishna, which begins this same day — carrying the evening's moonlit devotion straight into a full month of deepened seva.",
+    howCelebrated: [
+      {
+        title: "Evening Kirtan",
+        body: "Devotees gather as dusk falls for kirtan and bhajans glorifying the Rasa-lila, carrying on late into the moonlit night.",
+      },
+      {
+        title: "Rasa-Lila Katha",
+        body: "A reading or discourse on Sri Krishna's Rasa-lila from Srimad Bhagavatam's Tenth Canto, reflecting on its deeper meaning as pure devotional love rather than a worldly pastime.",
+      },
+      {
+        title: "Moonlit Darshan",
+        body: "Sri Sri Radha Gopinath are beautifully adorned for darshan under the full moon, in keeping with the night's especially radiant light.",
+      },
+      {
+        title: "Threshold of Kartik",
+        body: "As the most sacred month of Kartik begins this same evening, the temple's daily Deepdaan lamp offering starts tonight and continues every evening through Kartik Purnima.",
+      },
+    ],
+    faqs: [
+      {
+        question: "What is the Rasa-lila?",
+        answer:
+          "It is Sri Krishna's dance with the gopis of Vrindavan on this full-moon night, described in Srimad Bhagavatam as the most intimate of His pastimes — understood by Vaishnavas as the purest expression of the soul's loving relationship with the Supreme, not a worldly romance.",
+      },
+      {
+        question: "Is Sharad Purnima connected to Kartik month?",
+        answer:
+          "Yes — Kartik, the month most dear to Radha and Krishna, begins this same day. The temple's daily evening lamp offering (Deepdaan) starts tonight and continues every evening through Kartik Purnima on 24 November.",
+      },
+      {
+        question: "Do I need to fast on Sharad Purnima?",
+        answer: "No — it isn't a fasting occasion. Devotees are welcome to join the evening kirtan and darshan regardless.",
+      },
+      {
+        question: "What time should I come?",
+        answer:
+          "The evening program begins around 6:00 PM and continues with kirtan into the night. Please call or WhatsApp us closer to the day to confirm timing.",
+      },
+    ],
+  },
+  {
     slug: "kartik-damodar-month",
     name: "Kartik Damodar Month",
     heading: "Kartik — The Month Most Dear to Radha and Krishna",
     tagline: "A month-long opportunity for lamp offerings, Damodarashtakam, and deepened devotion to Sri Sri Radha Gopinath.",
     bannerImage: images.kartikMonthBanner,
+    bannerPosition: "center 35%",
     showInHomeHero: true,
     heroImages: images.kartikMonthCarousel,
-    date: "2026-10-25T00:00:00",
+    date: "2026-10-26T00:00:00",
     endDate: "2026-11-24T23:59:00",
-    timeLabel: "Daily Damodarashtakam & Lamp Offering — 7:00 PM",
+    timeLabel: "Daily Deepdaan — 7:00 PM to 9:00 PM",
     verse:
       "नमामीश्वरं सच्चिदानन्दरूपं लसत्कुण्डलं गोकुले भ्राजमानम्। यशोदाभियोलूखलाद्धावमानं परामृष्टमत्यन्ततो द्रुत्य गोप्या॥",
     verseRef: "Damodarashtakam, Verse 1",
@@ -491,9 +544,10 @@ export const festivals: Festival[] = [
       "Kartik, also called Damodar month or Urja-vrata, is regarded in the Vaishnava calendar as the month most dear to Srimati Radharani and Sri Krishna — a full month in which even a little devotional service is said to bear boundless fruit. It commemorates the Damodar-lila: young Krishna, caught red-handed stealing butter, was bound around the belly with a rope by His mother Yashoda — an act of loving discipline that could never actually bind the unlimited Supreme Lord, except through the ropes of pure love. Throughout Kartik, devotees offer a ghee lamp to Sri Sri Radha Gopinath each evening while reciting the eight verses of Damodarashtakam, composed by Sage Satyavrata Muni as spoken by Sage Shaunaka, glorifying this pastime and praying for unflinching devotion. The month also intensifies worship of Tulsi Devi, dearest to Krishna, and closes on Kartik Purnima — the anniversary of the Rasa-lila and a night of especially radiant lamp offerings.",
     muhurat: [
       { label: "Observance", value: "Kartik (Damodar / Urja) Vrata" },
-      { label: "Dates", value: "Sunday, 25 October – Tuesday, 24 November 2026" },
+      { label: "Dates", value: "Monday, 26 October – Tuesday, 24 November 2026" },
+      { label: "Begins With", value: "Sharad Purnima, 26 October 2026" },
       { label: "Concludes On", value: "Kartik Purnima, 24 November 2026" },
-      { label: "Daily Offering", value: "Damodarashtakam & Ghee Lamp, 7:00 PM" },
+      { label: "Daily Offering", value: "Damodarashtakam & Ghee Lamp, 7:00 PM – 9:00 PM" },
     ],
     howCelebrated: [
       {
@@ -745,6 +799,7 @@ const VISIBLE_SLUGS = [
   "janmashtami",
   "srila-prabhupada-appearance-day",
   "radhashtami",
+  "sharad-purnima",
   "kartik-damodar-month",
   "diwali",
   "govardhan-puja",

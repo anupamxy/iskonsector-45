@@ -157,4 +157,51 @@
       transform: translateX(-50%);
     }
   }
+
+  /* A living diya flame — subtle jitter in scale/rotation, unlike glow-pulse's flat
+   * opacity breathing, so it reads as fire rather than a generic highlight. */
+  .animate-flame-flicker {
+    animation: flame-flicker 1.8s ease-in-out infinite;
+    transform-origin: 50% 100%;
+  }
+
+  @keyframes flame-flicker {
+    0%,
+    100% {
+      transform: scale(1, 1) rotate(-1deg);
+      opacity: 0.92;
+    }
+    25% {
+      transform: scale(1.08, 0.94) rotate(1.5deg);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(0.94, 1.06) rotate(-2deg);
+      opacity: 0.85;
+    }
+    75% {
+      transform: scale(1.05, 0.97) rotate(2deg);
+      opacity: 1;
+    }
+  }
+
+  /* A single ember/firefly drifting upward and fading out — used in small clusters
+   * with staggered delays for a gently rising field of light. */
+  .animate-rise-fade {
+    animation: rise-fade 4.5s ease-in infinite;
+  }
+
+  @keyframes rise-fade {
+    0% {
+      transform: translateY(0) scale(0.6);
+      opacity: 0;
+    }
+    12% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-120px) scale(1);
+      opacity: 0;
+    }
+  }
 }

@@ -11,14 +11,18 @@ const EXIT_DURATION_MS = 300;
 
 /** A one-time, dismissible welcome popup announcing the next upcoming festival.
  * Shown once per festival (tracked in localStorage) — closing it, or visiting once,
- * won't show it again until a different festival becomes the soonest upcoming one. */
+ * won't show it again until a different festival becomes the soonest upcoming one.
+ * Kartik Damodar month gets its own richer KartikMassPopup instead, since it's the
+ * one occasion that runs a full month — this one steps aside for that slug so the
+ * two never show at once. */
 export default function FestivalPopup() {
   const festival = getUpcomingHomeFestivals()[0];
+  const deferToKartikPopup = festival?.slug === "kartik-damodar-month";
   const [open, setOpen] = useState(false);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    if (!festival) return;
+    if (!festival || deferToKartikPopup) return;
     try {
       if (localStorage.getItem(STORAGE_KEY) === festival.slug) return;
     } catch {
@@ -29,7 +33,7 @@ export default function FestivalPopup() {
       requestAnimationFrame(() => setVisible(true));
     }, SHOW_DELAY_MS);
     return () => clearTimeout(timer);
-  }, [festival]);
+  }, [festival, deferToKartikPopup]);
 
   function close() {
     setVisible(false);
@@ -43,7 +47,7 @@ export default function FestivalPopup() {
     }
   }
 
-  if (!open || !festival) return null;
+  if (!open || !festival || deferToKartikPopup) return null;
 
   const today = isFestivalToday(festival);
 

@@ -4,6 +4,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import BottomAppBar from "./BottomAppBar";
 import FestivalPopup from "../ui/FestivalPopup";
+import KartikMassPopup from "../ui/KartikMassPopup";
 
 export default function Layout() {
   const { pathname } = useLocation();
@@ -20,7 +21,12 @@ export default function Layout() {
       </main>
       <Footer />
       <BottomAppBar />
-      {pathname === "/" && <FestivalPopup />}
+      {pathname === "/" && (
+        <>
+          <FestivalPopup />
+          <KartikMassPopup />
+        </>
+      )}
     </div>
   );
 }

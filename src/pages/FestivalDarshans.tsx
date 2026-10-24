@@ -1,14 +1,15 @@
 import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
+import { Link } from "react-router-dom";
 import { X, ChevronLeft, ChevronRight, PartyPopper, ImageOff, Loader2 } from "lucide-react";
 import { listAll, getDownloadURL, getMetadata, ref } from "firebase/storage";
-import PageHero from "../components/ui/PageHero";
 import SectionHeading from "../components/ui/SectionHeading";
 import Reveal from "../components/ui/Reveal";
+import DarshanGallery from "../components/ui/DarshanGallery";
+import { LotusDivider, CornerFlourish } from "../components/ui/Ornaments";
 import { storage } from "../lib/firebase";
 import { isWithinRetention, DAILY_DARSHAN_TAG } from "../lib/galleryRetention";
 import { readCache, writeCache, FESTIVAL_DARSHAN_CACHE_KEY } from "../lib/photoCache";
-import { images } from "../data/images";
 
 interface Photo {
   name: string;
@@ -86,63 +87,61 @@ export default function FestivalDarshans() {
 
   return (
     <div>
-      <PageHero
-        breadcrumb={[{ label: "Home", to: "/" }, { label: "Darshan", to: "/daily-darshan" }, { label: "Festival Darshan" }]}
-        eyebrow="Celebrations, Preserved"
-        title="Festival Darshan"
-        subtitle="Photos from Janmashtami, Radhashtami, and every other celebration at the temple — grouped by festival."
-        images={[{ src: images.krishnaArt, position: "center 20%" }]}
-      />
-
-      <section className="section-pad relative overflow-hidden">
-        <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 animate-float-slow rounded-full bg-primary/10 blur-3xl" />
+      <section className="section-pad relative overflow-hidden bg-gradient-to-b from-ink via-[#300317] to-ink-deep text-white">
+        <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 animate-float-slow rounded-full bg-primary/15 blur-3xl" />
         <div className="pointer-events-none absolute -left-20 top-40 h-64 w-64 animate-float-slower rounded-full bg-gold/10 blur-3xl" />
 
         <div className="container-page relative">
+          <nav className="mb-5 flex items-center gap-1.5 text-xs text-white/50">
+            <Link to="/" className="hover:text-white">
+              Home
+            </Link>
+            <ChevronRight size={12} />
+            <Link to="/daily-darshan" className="hover:text-white">
+              Darshan
+            </Link>
+            <ChevronRight size={12} />
+            <span className="text-white/80">Festival Darshan</span>
+          </nav>
+          <div className="mb-5 flex justify-start">
+            <LotusDivider />
+          </div>
+          <p className="text-eyebrow mb-3 text-primary-light">Celebrations, Preserved</p>
+          <h1 className="max-w-xl text-[clamp(2.1rem,4.4vw,3.2rem)] text-white">Festival Darshan</h1>
+          <p className="mb-2 mt-4 max-w-xl text-white/70">
+            Photos from Janmashtami, Radhashtami, and every other celebration at the temple — grouped by festival.
+          </p>
           {!photos && !error && (
-            <div className="flex flex-col items-center gap-3 py-16 text-muted">
-              <Loader2 size={28} className="animate-spin text-primary" />
+            <div className="flex flex-col items-center gap-3 py-16 text-white/60">
+              <Loader2 size={28} className="animate-spin text-gold" />
               <p className="text-sm">Loading festival photos…</p>
             </div>
           )}
 
           {error && (
-            <div className="flex flex-col items-center gap-3 py-16 text-center text-muted">
+            <div className="flex flex-col items-center gap-3 py-16 text-center text-white/60">
               <ImageOff size={28} />
               <p className="text-sm">Couldn't load festival photos right now — please check back shortly.</p>
             </div>
           )}
 
           {photos && groups.length === 0 && !error && (
-            <div className="mx-auto flex max-w-md flex-col items-center gap-3 rounded-[var(--radius-card)] border-2 border-dashed border-hairline py-16 text-center text-muted">
-              <PartyPopper size={28} className="animate-glow-pulse text-primary" />
+            <div className="mx-auto flex max-w-md flex-col items-center gap-3 rounded-[var(--radius-card)] border-2 border-dashed border-gold/25 py-16 text-center text-white/60">
+              <PartyPopper size={28} className="animate-glow-pulse text-gold" />
               <p className="text-sm">Festival photos will appear here after the next celebration.</p>
             </div>
           )}
 
-          <div className="flex flex-col gap-14">
+          <div className="flex flex-col gap-16">
             {groups.map(([tag, tagPhotos], gi) => (
               <Reveal key={tag} delay={gi * 80}>
                 <div>
-                  <SectionHeading eyebrow="Celebration" title={tag} align="left" className="mb-6 max-w-none" />
-                  <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-                    {tagPhotos.map((photo, i) => (
-                      <Reveal key={photo.url} delay={Math.min(i, 10) * 70} className="h-full">
-                        <button
-                          type="button"
-                          onClick={() => openLightbox(tagPhotos, i)}
-                          className="group relative block aspect-square w-full overflow-hidden rounded-[var(--radius-card)] bg-cream-alt shadow-[var(--shadow-card)] transition-shadow duration-300 hover:shadow-[var(--shadow-card-hover)]"
-                        >
-                          <img
-                            src={photo.thumbUrl}
-                            alt=""
-                            loading="lazy"
-                            className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
-                          />
-                          <div className="shimmer-sweep pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                        </button>
-                      </Reveal>
-                    ))}
+                  <SectionHeading eyebrow="Celebration" title={tag} light className="mb-4" />
+                  <LotusDivider className="mb-8" />
+                  <div className="relative mx-auto max-w-4xl">
+                    <CornerFlourish className="absolute -left-2 -top-2 h-11 w-11" />
+                    <CornerFlourish className="absolute -right-2 -top-2 h-11 w-11 scale-x-[-1]" />
+                    <DarshanGallery photos={tagPhotos} onOpen={(i) => openLightbox(tagPhotos, i)} />
                   </div>
                 </div>
               </Reveal>
@@ -164,7 +163,7 @@ export default function FestivalDarshans() {
               type="button"
               onClick={() => setActiveIndex(null)}
               aria-label="Close"
-              className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20"
+              className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full border border-gold/30 bg-white/10 text-white hover:bg-white/20"
             >
               <X size={20} />
             </button>
@@ -177,7 +176,7 @@ export default function FestivalDarshans() {
                   setActiveIndex((i) => (i !== null ? i - 1 : i));
                 }}
                 aria-label="Previous photo"
-                className="absolute left-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20"
+                className="absolute left-4 flex h-10 w-10 items-center justify-center rounded-full border border-gold/30 bg-white/10 text-white hover:bg-white/20"
               >
                 <ChevronLeft size={20} />
               </button>
@@ -190,7 +189,7 @@ export default function FestivalDarshans() {
                   setActiveIndex((i) => (i !== null ? i + 1 : i));
                 }}
                 aria-label="Next photo"
-                className="absolute right-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20"
+                className="absolute right-4 flex h-10 w-10 items-center justify-center rounded-full border border-gold/30 bg-white/10 text-white hover:bg-white/20"
               >
                 <ChevronRight size={20} />
               </button>

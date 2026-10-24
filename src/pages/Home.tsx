@@ -107,7 +107,7 @@ export default function Home() {
   return (
     <div>
       {/* Hero */}
-      <HeroBanner media={[images.home.heroVideo]} />
+      <HeroBanner media={[images.home.heroVideo, images.sharadPurnimaBannerWide, images.kartikMonthBannerWide]} />
 
       
 

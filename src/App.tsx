@@ -30,6 +30,7 @@ const DailyDarshan = lazy(() => import("./pages/DailyDarshan"));
 const FestivalDarshans = lazy(() => import("./pages/FestivalDarshans"));
 const AdminGallery = lazy(() => import("./pages/AdminGallery"));
 const AdminPujaBookings = lazy(() => import("./pages/AdminPujaBookings"));
+const Sadhana = lazy(() => import("./pages/Sadhana"));
 
 export default function App() {
   return (
@@ -50,6 +51,7 @@ export default function App() {
         <Route path="/lecture-videos" element={<LectureVideos />} />
         <Route path="/daily-darshan" element={<Suspense fallback={null}><DailyDarshan /></Suspense>} />
         <Route path="/festival-darshan" element={<Suspense fallback={null}><FestivalDarshans /></Suspense>} />
+        <Route path="/sadhana" element={<Suspense fallback={null}><Sadhana /></Suspense>} />
         <Route path="/admin/gallery" element={<Suspense fallback={null}><AdminGallery /></Suspense>} />
         <Route path="/admin/puja-bookings" element={<Suspense fallback={null}><AdminPujaBookings /></Suspense>} />
         <Route path="/donate" element={<Donate />} />
