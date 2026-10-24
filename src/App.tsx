@@ -31,6 +31,7 @@ const FestivalDarshans = lazy(() => import("./pages/FestivalDarshans"));
 const AdminGallery = lazy(() => import("./pages/AdminGallery"));
 const AdminPujaBookings = lazy(() => import("./pages/AdminPujaBookings"));
 const Sadhana = lazy(() => import("./pages/Sadhana"));
+const AdminLeaderboards = lazy(() => import("./pages/AdminLeaderboards"));
 
 export default function App() {
   return (
@@ -53,6 +54,7 @@ export default function App() {
         <Route path="/festival-darshan" element={<Suspense fallback={null}><FestivalDarshans /></Suspense>} />
         <Route path="/sadhana" element={<Suspense fallback={null}><Sadhana /></Suspense>} />
         <Route path="/admin/gallery" element={<Suspense fallback={null}><AdminGallery /></Suspense>} />
+        <Route path="/admin/leaderboards" element={<Suspense fallback={null}><AdminLeaderboards /></Suspense>} />
         <Route path="/admin/puja-bookings" element={<Suspense fallback={null}><AdminPujaBookings /></Suspense>} />
         <Route path="/donate" element={<Donate />} />
         <Route path="/contact" element={<Contact />} />

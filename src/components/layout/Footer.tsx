@@ -4,6 +4,7 @@ import { MapPin, Phone, Mail, Send } from "lucide-react";
 import { siteInfo, footerNav } from "../../data/site";
 import { FacebookIcon, InstagramIcon, YoutubeIcon } from "../ui/SocialIcons";
 import { images } from "../../data/images";
+import { useLiveLeaderboards } from "../../lib/useLiveLeaderboards";
 
 function FooterCol({ title, links }: { title: string; links: { label: string; to: string }[] }) {
   return (
@@ -35,6 +36,7 @@ function FooterCol({ title, links }: { title: string; links: { label: string; to
 
 export default function Footer() {
   const [subscribed, setSubscribed] = useState(false);
+  const liveLeaderboards = useLiveLeaderboards();
 
   return (
     <footer className="bg-ink-deep text-white/80">
@@ -69,7 +71,10 @@ export default function Footer() {
           </div>
         </div>
 
-        <FooterCol title="Explore" links={footerNav.explore} />
+        <FooterCol
+          title="Explore"
+          links={[...footerNav.explore, ...liveLeaderboards.map((lb) => ({ label: lb.navLabel, to: lb.path }))]}
+        />
         <FooterCol title="Get Involved" links={footerNav.involved} />
 
         <div>

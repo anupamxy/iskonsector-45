@@ -13,6 +13,7 @@ import { LogOut, Trash2, UploadCloud, Loader2, Tags } from "lucide-react";
 import PageHero from "../components/ui/PageHero";
 import Button from "../components/ui/Button";
 import AdminLoginForm from "../components/ui/AdminLoginForm";
+import { isAdmin } from "../lib/admin";
 import { auth, storage } from "../lib/firebase";
 import { createThumbnail } from "../lib/imageThumbnail";
 import { isWithinRetention, GALLERY_RETENTION_DAYS, todayISO } from "../lib/galleryRetention";
@@ -313,7 +314,7 @@ export default function AdminGallery() {
         images={[{ src: images.pageHero.contact, position: "center 30%" }]}
       />
 
-      {user === undefined ? null : user ? <UploadPanel user={user} /> : <AdminLoginForm />}
+      {user === undefined ? null : isAdmin(user) ? <UploadPanel user={user} /> : <AdminLoginForm />}
     </div>
   );
 }

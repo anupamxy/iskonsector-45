@@ -111,7 +111,6 @@ export const primaryNav: NavItem[] = [
     children: [
       { label: "Gift Shop", to: "/gift-shop" },
       { label: "Lecture Videos", to: "/lecture-videos" },
-      { label: "Sadhana Leaderboard", to: "/sadhana" },
       { label: "FAQ", to: "/faq" },
     ],
   },
@@ -124,7 +123,6 @@ export const footerNav = {
     { label: "Temple & Seva", to: "/temple" },
     { label: "Festivals", to: "/festivals" },
     { label: "Lecture Videos", to: "/lecture-videos" },
-    { label: "Sadhana Leaderboard", to: "/sadhana" },
     { label: "FAQ", to: "/faq" },
   ],
   involved: [

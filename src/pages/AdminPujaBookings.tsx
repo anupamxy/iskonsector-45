@@ -6,6 +6,7 @@ import clsx from "clsx";
 import PageHero from "../components/ui/PageHero";
 import Button from "../components/ui/Button";
 import AdminLoginForm from "../components/ui/AdminLoginForm";
+import { isAdmin } from "../lib/admin";
 import { auth, db } from "../lib/firebase";
 import { images } from "../data/images";
 
@@ -157,7 +158,7 @@ export default function AdminPujaBookings() {
         images={[{ src: images.pageHero.contact, position: "center 30%" }]}
       />
 
-      {user === undefined ? null : user ? <BookingsPanel user={user} /> : <AdminLoginForm />}
+      {user === undefined ? null : isAdmin(user) ? <BookingsPanel user={user} /> : <AdminLoginForm />}
     </div>
   );
 }

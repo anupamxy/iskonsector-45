@@ -6,6 +6,7 @@ import { siteInfo, primaryNav } from "../../data/site";
 import Button from "../ui/Button";
 import UtilityBar from "./UtilityBar";
 import { images } from "../../data/images";
+import { useLiveLeaderboards } from "../../lib/useLiveLeaderboards";
 
 function Logo() {
   return (
@@ -23,6 +24,13 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openMobileGroup, setOpenMobileGroup] = useState<string | null>(null);
+  const liveLeaderboards = useLiveLeaderboards();
+  // Leaderboards join the Explore menu only once an admin has switched them live.
+  const nav = primaryNav.map((item) =>
+    item.label === "Explore" && item.children
+      ? { ...item, children: [...item.children, ...liveLeaderboards.map((lb) => ({ label: lb.navLabel, to: lb.path }))] }
+      : item,
+  );
 
   useEffect(() => {
     function onScroll() {
@@ -55,7 +63,7 @@ export default function Header() {
           <Logo />
 
           <nav className="hidden items-center gap-0.5 lg:flex xl:gap-1">
-            {primaryNav.map((item) => (
+            {nav.map((item) => (
               <div key={item.label} className="group relative shrink-0">
                 {item.children ? (
                   <>
@@ -137,7 +145,7 @@ export default function Header() {
           </div>
 
           <div className="flex-1 overflow-y-auto p-3">
-            {primaryNav.map((item) => (
+            {nav.map((item) => (
               <div key={item.label} className="border-b border-hairline last:border-b-0">
                 {item.children ? (
                   <>

@@ -6,6 +6,7 @@ import { BookOpen, Check, Crown, Flame, Headphones, Loader2, Medal, Minus, Plus,
 import clsx from "clsx";
 import { auth, db } from "../lib/firebase";
 import { getFestival } from "../data/festivals";
+import { useLeaderboardAccess } from "../lib/useLeaderboardAccess";
 import {
   MAX_DAILY_POINTS,
   SADHANA_RULES,
@@ -253,7 +254,7 @@ function StandingRow({
 
 type Board = "week" | "kartik";
 
-export default function Sadhana() {
+function SadhanaBoard() {
   const today = istToday();
   const yesterday = addDays(today, -1);
   const thisWeek = weekStart(today);
@@ -777,5 +778,54 @@ export default function Sadhana() {
         </div>
       </section>
     </div>
+  );
+}
+
+export default function Sadhana() {
+  const access = useLeaderboardAccess("sadhana");
+
+  if (access === "loading") {
+    return (
+      <div className="flex min-h-[60vh] items-center justify-center bg-gradient-to-b from-ink-deep to-ink text-gold">
+        <Loader2 className="animate-spin" />
+      </div>
+    );
+  }
+
+  if (access === "hidden") {
+    return (
+      <section className="relative flex min-h-[70vh] items-center overflow-hidden bg-gradient-to-b from-ink-deep via-ink to-secondary-deep py-20 text-center text-white">
+        <Embers />
+        <div className="container-page relative mx-auto max-w-[560px]">
+          <Diya size={56} />
+          <p className="text-eyebrow mt-6 text-gold">Coming Soon</p>
+          <h1 className="mt-3 text-[clamp(1.9rem,4.2vw,2.8rem)] text-white">Sadhana Leaderboard</h1>
+          <p className="mt-4 text-sm leading-relaxed text-white/70">
+            This page isn't open yet. Please keep chanting Hare Krishna — we'll announce it in the temple WhatsApp group
+            as soon as it opens.
+          </p>
+          <Link
+            to="/"
+            className="mt-8 inline-flex items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary-light px-7 py-3 text-sm font-semibold text-white shadow-[var(--shadow-cta)]"
+          >
+            Back to Home
+          </Link>
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <>
+      {access === "preview" && (
+        <div className="bg-gold px-4 py-2.5 text-center text-sm font-medium text-ink-deep">
+          Admin preview — this leaderboard is hidden from the public.{" "}
+          <Link to="/admin/leaderboards" className="underline">
+            Make it live
+          </Link>
+        </div>
+      )}
+      <SadhanaBoard />
+    </>
   );
 }
