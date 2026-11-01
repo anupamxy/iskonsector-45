@@ -10,7 +10,7 @@ import GovindasOnWheel from "./pages/GovindasOnWheel";
 import LifePatron from "./pages/LifePatron";
 import Dyph from "./pages/Dyph";
 import GitaDaan from "./pages/GitaDaan";
-import PujaServices from "./pages/PujaServices";
+// import PujaServices from "./pages/PujaServices";
 import Festivals from "./pages/Festivals";
 import FestivalDetail from "./pages/FestivalDetail";
 import GiftShop from "./pages/GiftShop";
@@ -45,7 +45,7 @@ export default function App() {
         <Route path="/life-patron" element={<LifePatron />} />
         <Route path="/dyph" element={<Dyph />} />
         <Route path="/gita-daan" element={<GitaDaan />} />
-        <Route path="/puja-services" element={<PujaServices />} />
+        {/* <Route path="/puja-services" element={<PujaServices />} /> */}
         <Route path="/festivals" element={<Festivals />} />
         <Route path="/festivals/:slug" element={<FestivalDetail />} />
         <Route path="/gift-shop" element={<GiftShop />} />
